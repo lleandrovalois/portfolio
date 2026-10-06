@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: dash-solutions
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8086}:80"
+    environment:
+      - VIRTUAL_HOST=dash.klynner.com.br
+      - LETSENCRYPT_HOST=dash.klynner.com.br
