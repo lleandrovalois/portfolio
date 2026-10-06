@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dash Solutions | Infraestrutura, Software e Inteligência Artificial</title>
+  <meta name="description"
+    content="Dash Solutions: Soluções corporativas de alto impacto em desenvolvimento de software, inteligência artificial, governança ITSM, nuvem e cibersegurança.">
+  <meta name="theme-color" content="#001F35">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Dash Solutions | Para quem quer mais tecnologia">
+  <meta property="og:description"
+    content="Engenharia de software personalizada, infraestrutura em nuvem, cibersegurança e governança com método e disciplina.">
+
+  <!-- Google Fonts: Manrope & Libre Baskerville (Identidade Visual G4) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Admin Floating Top Bar (Visível apenas quando autenticado como Adm) -->
+  <aside class="admin-top-bar" id="admin-top-bar" aria-label="Barra de Administração">
+    <div class="admin-bar-left">
+      <div class="admin-badge-indicator">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <span>MODO ADMINISTRADOR DASH</span>
+      </div>
+      <span style="font-size:0.8rem; color:var(--text-muted);">Clique nos botões "Editar" direto nas seções ou abra o
+        Painel CMS</span>
+    </div>
+    <div class="admin-bar-actions">
+      <button class="admin-btn gold" id="admin-add-card-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        <span>+ Nova Solução</span>
+      </button>
+      <button class="admin-btn" id="open-cms-panel-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="3" y1="9" x2="21" y2="9"></line>
+          <line x1="9" y1="21" x2="9" y2="9"></line>
+        </svg>
+        <span>Painel CMS</span>
+      </button>
+      <button class="admin-btn" id="admin-logout-btn" title="Sair do modo administrativo">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        <span>Sair</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Top Announcement Bar (G4 Signature Style) -->
+  <div class="announcement-bar">
+    <div class="container">
+      <div class="announcement-text">
+        <span class="announcement-badge" id="top-announcement-badge">EXCLUSIVO</span>
+        <span id="top-announcement-text">Excelência em Infraestrutura e Transformação Digital Corporativa |</span>
+        <a href="#contato" class="announcement-link">
+          <span id="top-announcement-link-text">Agende um diagnóstico técnico gratuito</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </a>
+      </div>
+      <div class="announcement-contacts">
+        <span>São Paulo • Berrini</span>
+        <a href="mailto:contato@dashsolutions.com.br" id="company-email-text">contato@dashsolutions.com.br</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <nav class="navbar" aria-label="Navegação Principal">
+        <!-- Logo Dash Solutions -->
+        <a href="#home" class="brand-logo" aria-label="Dash Solutions Home">
+          <div class="logo-symbol">
+            DS
+          </div>
+          <div class="logo-text">
+            <span class="title">DASH <span>SOLUTIONS</span></span>
+            <span class="subtitle">ENTERPRISE TECHNOLOGY</span>
+          </div>
+        </a>
+
+        <!-- Menus solicitados: Home | Portfolio | Sobre | Contato -->
+        <ul class="nav-menu">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#portfolio" class="nav-link">Portfólio</a></li>
+          <li><a href="#sobre" class="nav-link">Sobre</a></li>
+          <li><a href="#contato" class="nav-link">Contato</a></li>
+        </ul>
+
+        <!-- Action CTAs -->
+        <div class="nav-actions">
+          <button class="btn btn-secondary btn-sm" id="open-admin-login-btn"
+            title="Área de Gestão / Login do Administrador">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span>Gestão</span>
+          </button>
+          <a href="#contato" class="btn btn-primary btn-sm">
+            <span>Falar com Especialista</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </a>
+          <button class="mobile-toggle" aria-label="Abrir menu de navegação">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="home">
+    <div class="hero-glow-1"></div>
+    <div class="hero-glow-2"></div>
+    <div class="container">
+      <div class="hero-content">
+        <!-- Left Column -->
+        <div class="hero-text-block">
+          <div class="hero-tag">
+            <span class="dot"></span>
+            <span id="hero-tag-text">Tecnologia de Alta Performance & Governança</span>
+          </div>
+          <h1 class="hero-title" id="hero-title-text">
+            Para quem busca <br>
+            <span class="serif-italic">robustez, método</span> e escala contínua.
+          </h1>
+          <p class="hero-subtitle" id="hero-subtitle-text">
+            Unimos engenharia de software de ponta, inteligência artificial aplicada, sustentação de infraestrutura
+            crítica e cibersegurança em um único ecossistema corporativo.
+          </p>
+          <div class="hero-ctas">
+            <a href="#portfolio" class="btn btn-primary btn-lg">
+              <span>Explorar o Portfólio</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </a>
+            <a href="#contato" class="btn btn-secondary btn-lg">
+              <span>Diagnóstico de TI Gratuito</span>
+            </a>
+          </div>
+
+          <!-- Trust Badges List -->
+          <div class="hero-badges-list">
+            <div class="hero-badge-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+              <span>SLA Corporativo 24/7</span>
+            </div>
+            <div class="hero-badge-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Conformidade ISO & LGPD</span>
+            </div>
+            <div class="hero-badge-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                </polygon>
+              </svg>
+              <span>Metodologia Ágil & ITIL 4</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column (Luxury Hero Image Carousel & Live Operations Showcase) -->
+        <div class="hero-visual">
+          <div class="section-admin-control hero-carousel-admin-control">
+            <button class="section-edit-btn" onclick="openHeroCarouselEditorModal()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+              </svg>
+              <span>Editar Carrossel do Banner</span>
+            </button>
+          </div>
+
+          <div class="hero-carousel-wrapper">
+            <div class="hero-carousel-container" id="hero-carousel-container">
+              <!-- Renderizado dinamicamente por script.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Authority Metrics Bar (Totalmente Editável) -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="section-admin-control">
+        <button class="section-edit-btn" onclick="openMetricsEditorModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+          <span>Editar Métricas & Indicadores</span>
+        </button>
+      </div>
+
+      <div class="stats-grid" id="stats-grid-container">
+        <!-- Renderizado dinamicamente por script.js a partir de siteContent.metrics -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section class="solutions-section" id="portfolio">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">PORTFÓLIO COMPLETO</span>
+        <h2 class="section-title">Soluções Corporativas Dash Solutions</h2>
+        <p class="section-subtitle">
+          Cada projeto é tratado como um investimento estratégico. Conheça nossos pilares de entrega tecnológica com
+          metodologia, disciplina e resultados mensuráveis.
+        </p>
+      </div>
+
+      <!-- Controls: Search & Category Chips -->
+      <div class="portfolio-controls">
+        <div class="search-box-wrapper">
+          <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="search-solutions" class="search-input"
+            placeholder="Buscar por serviço ou tecnologia (ex: IA, firewall, backup, nuvem...)"
+            aria-label="Buscar serviço">
+        </div>
+
+        <div class="filter-chips">
+          <button class="filter-chip active" data-category="all">Todas as Soluções</button>
+          <button class="filter-chip" data-category="software-ia">Software & IA</button>
+          <button class="filter-chip" data-category="infra-nuvem">Infraestrutura & Nuvem</button>
+          <button class="filter-chip" data-category="seguranca">Segurança & Continuidade</button>
+          <button class="filter-chip" data-category="governanca">Governança & Gestão</button>
+        </div>
+      </div>
+
+      <!-- Grid with Portfolio Cards -->
+      <div class="solutions-grid" id="solutions-grid">
+        <!-- Rendered dynamically by script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section (Sobre Nós - Totalmente Editável) -->
+  <section class="about-section" id="sobre">
+    <div class="container">
+      <div class="section-admin-control">
+        <button class="section-edit-btn" onclick="openAboutEditorModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+          <span>Editar Seção Sobre Nós & Pilares</span>
+        </button>
+      </div>
+
+      <div class="about-grid" id="about-grid-container">
+        <!-- Renderizado dinamicamente por script.js a partir de siteContent.about -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Methodology / Framework Section (Totalmente Editável) -->
+  <section class="methodology-section" id="metodologia">
+    <div class="container">
+      <div class="section-admin-control">
+        <button class="section-edit-btn" onclick="openFrameworkEditorModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+          <span>Editar Framework & Metodologia</span>
+        </button>
+      </div>
+
+      <div class="section-header" id="framework-header">
+        <span class="section-tag" id="framework-tag-text">NOSSO FRAMEWORK</span>
+        <h2 class="section-title" id="framework-title-text">Como Entregamos Resultados de Ponta a Ponta</h2>
+        <p class="section-subtitle" id="framework-subtitle-text">
+          Uma esteira disciplinada que garante previsibilidade, clareza e ausência de surpresas no orçamento.
+        </p>
+      </div>
+
+      <div class="steps-grid" id="framework-steps-grid">
+        <!-- Renderizado dinamicamente por script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section (Contato) -->
+  <section class="contact-section" id="contato">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Contact Info Left -->
+        <div class="contact-info-panel">
+          <div>
+            <span class="section-tag">FALE CONOSCO</span>
+            <h2 class="section-title" style="margin-bottom:16px;">Pronto para Elevar o Nível da Sua Tecnologia?</h2>
+            <p style="font-size:1.05rem; line-height:1.6;">
+              Agende uma reunião estratégica com nossos arquitetos de soluções. Avaliaremos o cenário da sua empresa e
+              apresentaremos um plano de ação personalizado.
+            </p>
+          </div>
+
+          <div class="contact-info-list">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </div>
+              <div class="contact-details">
+                <h4>Endereço Corporativo</h4>
+                <p id="company-address-text">Av. Engenheiro Luís Carlos Berrini, 105 - São Paulo, SP</p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+              <div class="contact-details">
+                <h4>E-mail de Contato</h4>
+                <a href="mailto:contato@dashsolutions.com.br">contato@dashsolutions.com.br</a>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                  </path>
+                </svg>
+              </div>
+              <div class="contact-details">
+                <h4>Telefone & WhatsApp</h4>
+                <a href="tel:+5591987325580" id="company-phone-text">+55 (11) 99999-9999</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form Right -->
+        <div class="contact-form-card">
+          <div class="form-header">
+            <h3>Solicite uma Proposta sob Medida</h3>
+            <p>Preencha os campos abaixo. Retornamos em menos de 2 horas em dias úteis.</p>
+          </div>
+
+          <form id="contact-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="nome">Nome Completo *</label>
+                <input class="form-input" type="text" id="nome" name="nome" placeholder="Seu nome" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="email">E-mail Corporativo *</label>
+                <input class="form-input" type="email" id="email" name="email" placeholder="seu.nome@empresa.com.br"
+                  required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="telefone">WhatsApp / Celular *</label>
+                <input class="form-input" type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999"
+                  required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="empresa">Nome da Empresa *</label>
+                <input class="form-input" type="text" id="empresa" name="empresa" placeholder="Empresa S/A" required>
+              </div>
+            </div>
+
+            <!-- Service Checkboxes Selection -->
+            <div class="form-group" style="margin-bottom: 12px;">
+              <span class="service-select-label">Selecione os Serviços de Interesse:</span>
+              <div class="service-checkboxes-container" id="contact-service-checkboxes">
+                <!-- Checkboxes populated automatically from portfolioServices -->
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 24px;">
+              <label class="form-label" for="mensagem">Descreva o Desafio da sua Empresa</label>
+              <textarea class="form-textarea" id="mensagem" name="mensagem"
+                placeholder="Conte-nos brevemente o momento atual e as principais dores da sua infraestrutura ou sistemas..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary form-submit-btn btn-lg">
+              <span>Enviar Solicitação de Diagnóstico</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (Dash Solutions Signature Footer) -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <!-- Col 1: Brand -->
+        <div class="footer-brand">
+          <div class="brand-logo">
+            <div class="logo-symbol">DS</div>
+            <div class="logo-text">
+              <span class="title">DASH <span>SOLUTIONS</span></span>
+              <span class="subtitle">ENTERPRISE TECHNOLOGY</span>
+            </div>
+          </div>
+          <p>
+            Reunindo engenharia rigorosa, governança e tecnologia de vanguarda para orientar empresas reais que buscam
+            escala sem vulnerabilidades.
+          </p>
+        </div>
+
+        <!-- Col 2: Soluções -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Principais Soluções</h4>
+          <ul class="footer-links">
+            <li><a href="#portfolio" onclick="resetFilters()">Desenvolvimento de Software</a></li>
+            <li><a href="#portfolio" onclick="resetFilters()">Implementação de IA</a></li>
+            <li><a href="#portfolio" onclick="resetFilters()">Sistemas de ITSM</a></li>
+            <li><a href="#portfolio" onclick="resetFilters()">Arquitetura em Nuvem</a></li>
+            <li><a href="#portfolio" onclick="resetFilters()">Firewall e Cibersegurança</a></li>
+            <li><a href="#portfolio" onclick="resetFilters()">Rotinas de Backup 3-2-1</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Navegação -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Navegação</h4>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#portfolio">Portfólio</a></li>
+            <li><a href="#sobre">Sobre Nós</a></li>
+            <li><a href="#contato">Diagnóstico Gratuito</a></li>
+            <li><a href="javascript:void(0)" id="footer-admin-btn" style="color:var(--gold-light);">🔒 Área do
+                Administrador</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Newsletter -->
+        <div class="footer-col footer-newsletter">
+          <h4 class="footer-col-title">Radar Tecnológico</h4>
+          <p>Receba insights executivos sobre tendências de IA, cibersegurança e infraestrutura para negócios.</p>
+          <form class="newsletter-form"
+            onsubmit="event.preventDefault(); showToast('Inscrição confirmada com sucesso!');">
+            <input type="email" class="newsletter-input" placeholder="Seu e-mail corporativo" required>
+            <button type="submit" class="btn btn-primary btn-sm">Assinar</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 Dash Solutions. Todos os direitos reservados.
+        </div>
+        <div class="footer-social-links">
+          <a href="#" class="social-icon-btn" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+          </a>
+          <a href="#" class="social-icon-btn" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+          <a href="#" class="social-icon-btn" aria-label="YouTube">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z">
+              </path>
+              <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Detalhes do Serviço -->
+  <div class="modal-overlay" id="service-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="Fechar detalhes">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-header">
+        <span class="modal-badge" id="modal-badge">Categoria</span>
+        <h3 class="modal-title" id="modal-title">Título do Serviço</h3>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-desc" id="modal-desc">Descrição completa do serviço.</p>
+
+        <div>
+          <h4 class="modal-deliverables-title">Entregáveis e Escopo Técnico:</h4>
+          <ul class="modal-deliverables-list" id="modal-deliverables-list">
+            <!-- Populated dynamically -->
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="modal-deliverables-title">Tecnologias e Padrões Utilizados:</h4>
+          <div class="modal-techs" id="modal-techs">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-primary" id="modal-select-service-btn" style="flex:1;">
+            <span>Solicitar Diagnóstico para esta Solução</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Login Administrativo -->
+  <div class="modal-overlay" id="admin-login-modal" role="dialog" aria-modal="true" aria-labelledby="admin-login-title">
+    <div class="modal-card" style="max-width: 440px;">
+      <button class="modal-close-btn" id="close-admin-login-btn" aria-label="Fechar login">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-header" style="text-align:center;">
+        <span class="modal-badge">ACESSO RESTRITO</span>
+        <h3 class="modal-title" id="admin-login-title" style="font-size:1.5rem;">Gestão Dash Solutions</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted); margin-top:6px;">Autentique-se para gerenciar cards e
+          conteúdos do site.</p>
+      </div>
+
+      <div class="modal-body">
+        <form id="admin-login-form">
+          <div class="form-group" style="margin-bottom:14px;">
+            <label class="form-label" for="admin-user-input">Usuário</label>
+            <input class="form-input" type="text" id="admin-user-input" placeholder="admin" required
+              autocomplete="username">
+          </div>
+          <div class="form-group" style="margin-bottom:20px;">
+            <label class="form-label" for="admin-pass-input">Senha</label>
+            <input class="form-input" type="password" id="admin-pass-input" placeholder="••••••••" required
+              autocomplete="current-password">
+          </div>
+          <p
+            style="font-size:0.75rem; color:var(--gold-light); margin-bottom:16px; background:rgba(185,145,91,0.1); padding:8px 12px; border-radius:6px; border:1px solid var(--border-subtle);">
+            🔑 <strong>Acesso Padrão:</strong> usuário <code>admin</code> e senha <code>dash@2026</code>
+          </p>
+          <button type="submit" class="btn btn-primary form-submit-btn">
+            <span>Entrar no Painel</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Direto: Editor de Métricas & Indicadores -->
+  <div class="modal-overlay" id="metrics-editor-modal" role="dialog" aria-modal="true"
+    aria-labelledby="metrics-editor-title">
+    <div class="modal-card" style="max-width: 760px;">
+      <button class="modal-close-btn" onclick="closeMetricsEditorModal()" aria-label="Fechar editor de métricas">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-header">
+        <span class="modal-badge">GESTOR DE NÚMEROS DE AUTORIDADE</span>
+        <h3 class="modal-title" id="metrics-editor-title">Editar os 4 Indicadores da Barra de Métricas</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted); margin-top:4px;">Altere os números de destaque, rótulos e
+          descrições técnicas.</p>
+      </div>
+
+      <div class="modal-body">
+        <form id="metrics-editor-form">
+          <div style="display:flex; flex-direction:column; gap:20px;">
+            <!-- Métrica 1 -->
+            <div
+              style="background:rgba(0,31,53,0.6); padding:16px; border-radius:8px; border:1px solid var(--border-glass);">
+              <h4 style="color:var(--gold-light); font-size:0.95rem; margin-bottom:10px;">Indicador 1 (ex: Uptime)</h4>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="edit-metric-0-val">Valor em Destaque *</label>
+                  <input class="form-input" type="text" id="edit-metric-0-val" required placeholder="+99.9%">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="edit-metric-0-label">Rótulo / Título *</label>
+                  <input class="form-input" type="text" id="edit-metric-0-label" required
+                    placeholder="Uptime Garantido">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-metric-0-desc">Subtítulo / Descrição Breve</label>
+                  <input class="form-input" type="text" id="edit-metric-0-desc"
+                    placeholder="SLA rigoroso com monitoramento proativo">
+                </div>
+              </div>
+            </div>
+
+            <!-- Métrica 2 -->
+            <div
+              style="background:rgba(0,31,53,0.6); padding:16px; border-radius:8px; border:1px solid var(--border-glass);">
+              <h4 style="color:var(--gold-light); font-size:0.95rem; margin-bottom:10px;">Indicador 2 (ex: Gestão)</h4>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="edit-metric-1-val">Valor em Destaque *</label>
+                  <input class="form-input" type="text" id="edit-metric-1-val" required placeholder="100%">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="edit-metric-1-label">Rótulo / Título *</label>
+                  <input class="form-input" type="text" id="edit-metric-1-label" required
+                    placeholder="Gestão Sob Medida">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-metric-1-desc">Subtítulo / Descrição Breve</label>
+                  <input class="form-input" type="text" id="edit-metric-1-desc"
+                    placeholder="Projetos alinhados com metas de faturamento">
+                </div>
+              </div>
+            </div>
+
+            <!-- Métrica 3 -->
+            <div
+              style="background:rgba(0,31,53,0.6); padding:16px; border-radius:8px; border:1px solid var(--border-glass);">
+              <h4 style="color:var(--gold-light); font-size:0.95rem; margin-bottom:10px;">Indicador 3 (ex: Experiência)
+              </h4>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="edit-metric-2-val">Valor em Destaque *</label>
+                  <input class="form-input" type="text" id="edit-metric-2-val" required placeholder="+10 anos">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="edit-metric-2-label">Rótulo / Título *</label>
+                  <input class="form-input" type="text" id="edit-metric-2-label" required
+                    placeholder="Experiência Corporativa">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-metric-2-desc">Subtítulo / Descrição Breve</label>
+                  <input class="form-input" type="text" id="edit-metric-2-desc"
+                    placeholder="Liderando infraestrutura em alta complexidade">
+                </div>
+              </div>
+            </div>
+
+            <!-- Métrica 4 -->
+            <div
+              style="background:rgba(0,31,53,0.6); padding:16px; border-radius:8px; border:1px solid var(--border-glass);">
+              <h4 style="color:var(--gold-light); font-size:0.95rem; margin-bottom:10px;">Indicador 4 (ex: Suporte 24/7)
+              </h4>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="edit-metric-3-val">Valor em Destaque *</label>
+                  <input class="form-input" type="text" id="edit-metric-3-val" required placeholder="24/7">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="edit-metric-3-label">Rótulo / Título *</label>
+                  <input class="form-input" type="text" id="edit-metric-3-label" required
+                    placeholder="Sustentação Crítica">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-metric-3-desc">Subtítulo / Descrição Breve</label>
+                  <input class="form-input" type="text" id="edit-metric-3-desc"
+                    placeholder="Engenheiros prontos para qualquer incidente">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:24px;">
+            <button type="button" class="btn btn-secondary"
+              onclick="closeMetricsEditorModal(); openAdminDrawer('metrics');">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              <span>Voltar ao Painel</span>
+            </button>
+            <div style="display:flex; gap:12px;">
+              <button type="button" class="btn btn-secondary" onclick="closeMetricsEditorModal()">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Salvar Todas as Métricas</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Direto: Editor da Seção Sobre Nós & Pilares -->
+  <div class="modal-overlay" id="about-editor-modal" role="dialog" aria-modal="true"
+    aria-labelledby="about-editor-title">
+    <div class="modal-card" style="max-width: 820px;">
+      <button class="modal-close-btn" onclick="closeAboutEditorModal()" aria-label="Fechar editor sobre nós">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-header">
+        <span class="modal-badge">GESTOR INSTITUCIONAL</span>
+        <h3 class="modal-title" id="about-editor-title">Editar Seção Sobre Nós, Pilares e Ecossistema</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted); margin-top:4px;">Atualize o manifesto, citação, os 3
+          pilares e as tecnologias homologadas.</p>
+      </div>
+
+      <div class="modal-body">
+        <form id="about-editor-form">
+          <div style="display:flex; flex-direction:column; gap:20px;">
+            <!-- Textos Principais -->
+            <div
+              style="background:rgba(0,31,53,0.6); padding:18px; border-radius:8px; border:1px solid var(--border-glass);">
+              <h4 style="color:var(--gold-light); font-size:1rem; margin-bottom:12px;">Texto Principal & Manifesto</h4>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="edit-about-tag">Tag da Seção</label>
+                  <input class="form-input" type="text" id="edit-about-tag" placeholder="SOBRE NÓS">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="edit-about-title">Título da Seção *</label>
+                  <input class="form-input" type="text" id="edit-about-title" required
+                    placeholder="Tecnologia com visão de negócios...">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-about-quote-field">Citação em Destaque (Itálico) *</label>
+                  <textarea class="form-textarea" id="edit-about-quote-field" style="min-height:75px;"
+                    required></textarea>
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-about-desc-field">Descrição Geral *</label>
+                  <textarea class="form-textarea" id="edit-about-desc-field" style="min-height:90px;"
+                    required></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Os 3 Pilares -->
+            <div
+              style="background:rgba(0,31,53,0.6); padding:18px; border-radius:8px; border:1px solid var(--border-glass);">
+              <h4 style="color:var(--gold-light); font-size:1rem; margin-bottom:12px;">Os 3 Pilares Metodológicos</h4>
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-pillar-1-title">Pilar 01 - Título *</label>
+                  <input class="form-input" type="text" id="edit-pillar-1-title" required>
+                  <label class="form-label" for="edit-pillar-1-desc" style="margin-top:6px;">Pilar 01 - Descrição
+                    *</label>
+                  <textarea class="form-textarea" id="edit-pillar-1-desc" style="min-height:60px;" required></textarea>
+                </div>
+
+                <div class="form-group full-width" style="margin-top:10px;">
+                  <label class="form-label" for="edit-pillar-2-title">Pilar 02 - Título *</label>
+                  <input class="form-input" type="text" id="edit-pillar-2-title" required>
+                  <label class="form-label" for="edit-pillar-2-desc" style="margin-top:6px;">Pilar 02 - Descrição
+                    *</label>
+                  <textarea class="form-textarea" id="edit-pillar-2-desc" style="min-height:60px;" required></textarea>
+                </div>
+
+                <div class="form-group full-width" style="margin-top:10px;">
+                  <label class="form-label" for="edit-pillar-3-title">Pilar 03 - Título *</label>
+                  <input class="form-input" type="text" id="edit-pillar-3-title" required>
+                  <label class="form-label" for="edit-pillar-3-desc" style="margin-top:6px;">Pilar 03 - Descrição
+                    *</label>
+                  <textarea class="form-textarea" id="edit-pillar-3-desc" style="min-height:60px;" required></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ecossistema Tecnológico -->
+            <div
+              style="background:rgba(0,31,53,0.6); padding:18px; border-radius:8px; border:1px solid var(--border-glass);">
+              <h4 style="color:var(--gold-light); font-size:1rem; margin-bottom:12px;">Ecossistema Tecnológico
+                Homologado</h4>
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-ecosystem-title">Título do Painel *</label>
+                  <input class="form-input" type="text" id="edit-ecosystem-title" required
+                    placeholder="Ecossistema Tecnológico Homologado">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-ecosystem-subtitle">Subtítulo do Painel</label>
+                  <input class="form-input" type="text" id="edit-ecosystem-subtitle"
+                    placeholder="Trabalhamos exclusivamente com as tecnologias...">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-ecosystem-techs">Lista de Tecnologias / Badges (separadas por
+                    vírgula) *</label>
+                  <textarea class="form-textarea" id="edit-ecosystem-techs" style="min-height:75px;" required
+                    placeholder="Amazon Web Services, Microsoft Azure, Google Cloud, Cisco..."></textarea>
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-ecosystem-certs">Certificações e Selos (separadas por
+                    vírgula)</label>
+                  <input class="form-input" type="text" id="edit-ecosystem-certs"
+                    placeholder="✓ ISO/IEC 27001 Aligned, ✓ ITIL 4 Certified, ✓ LGPD Compliant">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:24px;">
+            <button type="button" class="btn btn-secondary"
+              onclick="closeAboutEditorModal(); openAdminDrawer('about');">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              <span>Voltar ao Painel</span>
+            </button>
+            <div style="display:flex; gap:12px;">
+              <button type="button" class="btn btn-secondary" onclick="closeAboutEditorModal()">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Salvar Seção Sobre Nós</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Painel CMS Completo (Drawer / Drawer Overlay) -->
+  <div class="admin-drawer-overlay" id="admin-drawer-overlay" role="dialog" aria-modal="true">
+    <div class="admin-drawer-card">
+      <div class="admin-drawer-header">
+        <div class="admin-drawer-title">
+          <div class="logo-symbol" style="width:36px; height:36px; font-size:1rem;">DS</div>
+          <span>Painel de Gestão Dash Solutions</span>
+        </div>
+        <button class="modal-close-btn" id="close-cms-panel-btn" style="position:static;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Tabs de Gestão -->
+      <div class="admin-tabs" style="overflow-x:auto;">
+        <button class="admin-tab-btn active" data-tab="portfolio">Cards do Portfólio</button>
+        <button class="admin-tab-btn" data-tab="carousel">Carrossel do Banner</button>
+        <button class="admin-tab-btn" data-tab="metrics">Métricas & Indicadores</button>
+        <button class="admin-tab-btn" data-tab="about">Sobre Nós & Pilares</button>
+        <button class="admin-tab-btn" data-tab="framework">Framework & Processo</button>
+        <button class="admin-tab-btn" data-tab="content">Hero & Contato</button>
+        <button class="admin-tab-btn" data-tab="backup">Backup & Dados</button>
+      </div>
+
+      <div class="admin-drawer-body">
+        <!-- Aba 1: Portfólio CRUD -->
+        <div class="admin-tab-content active" id="tab-portfolio">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div>
+              <h4 style="font-size:1.15rem; color:#FFFFFF;">Gerenciamento de Soluções</h4>
+              <p style="font-size:0.85rem; color:var(--text-muted);">Edite títulos, descrições ou adicione novos
+                serviços ao site.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openCardEditorModal(null)">
+              + Adicionar Nova Solução
+            </button>
+          </div>
+
+          <table class="cms-portfolio-table">
+            <thead>
+              <tr>
+                <th>Título da Solução</th>
+                <th>Categoria</th>
+                <th>Tecnologias</th>
+                <th style="text-align:right;">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="cms-portfolio-table-body">
+              <!-- Preenchido dinamicamente -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Aba Carousel: Carrossel do Banner -->
+        <div class="admin-tab-content" id="tab-carousel">
+          <div
+            style="background:rgba(0,31,53,0.6); padding:24px; border-radius:12px; border:1px solid var(--border-glass);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+              <div>
+                <h4 style="font-size:1.15rem; color:#FFFFFF; margin-bottom:6px;">Carrossel de Imagens do Banner
+                  Principal</h4>
+                <p style="font-size:0.875rem; color:var(--text-muted);">Substitua fotos (upload do PC ou links), ajuste
+                  títulos, legendas e adicione novos slides.</p>
+              </div>
+              <button class="btn btn-primary" onclick="openHeroCarouselEditorModal()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                <span>Abrir Editor do Carrossel</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aba 2: Métricas -->
+        <div class="admin-tab-content" id="tab-metrics">
+          <div
+            style="background:rgba(0,31,53,0.6); padding:24px; border-radius:12px; border:1px solid var(--border-glass);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+              <div>
+                <h4 style="font-size:1.15rem; color:#FFFFFF; margin-bottom:6px;">Editar os 4 Indicadores da Barra de
+                  Métricas</h4>
+                <p style="font-size:0.875rem; color:var(--text-muted);">Altere números de autoridade (+120 projetos,
+                  99.98% SLA, +10 anos, 24/7) e seus rótulos.</p>
+              </div>
+              <button class="btn btn-primary" onclick="openMetricsEditorModal()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                <span>Abrir Editor de Métricas</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aba 3: Sobre Nós -->
+        <div class="admin-tab-content" id="tab-about">
+          <div
+            style="background:rgba(0,31,53,0.6); padding:24px; border-radius:12px; border:1px solid var(--border-glass);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+              <div>
+                <h4 style="font-size:1.15rem; color:#FFFFFF; margin-bottom:6px;">Editar Conteúdo Institucional "Sobre
+                  Nós"</h4>
+                <p style="font-size:0.875rem; color:var(--text-muted);">Altere o manifesto, citação, os 3 pilares e o
+                  ecossistema tecnológico homologado.</p>
+              </div>
+              <button class="btn btn-primary" onclick="openAboutEditorModal()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                <span>Abrir Editor do Sobre Nós</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aba Framework: Processo & Metodologia -->
+        <div class="admin-tab-content" id="tab-framework">
+          <div
+            style="background:rgba(0,31,53,0.6); padding:24px; border-radius:12px; border:1px solid var(--border-glass);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+              <div>
+                <h4 style="font-size:1.15rem; color:#FFFFFF; margin-bottom:6px;">Editar Seção "Nosso Framework"</h4>
+                <p style="font-size:0.875rem; color:var(--text-muted);">Altere a esteira disciplinada, os títulos de
+                  cabeçalho e os 4 passos metodológicos de entrega.</p>
+              </div>
+              <button class="btn btn-primary" onclick="openFrameworkEditorModal()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                <span>Abrir Editor do Framework</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aba 4: Textos Gerais do Site (Hero e Contato) -->
+        <div class="admin-tab-content" id="tab-content">
+          <form id="site-content-form">
+            <h4 style="font-size:1.15rem; color:#FFFFFF; margin-bottom:16px;">Editar Hero e Dados de Contato</h4>
+
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label class="form-label" for="edit-hero-title">Título Principal (Hero)</label>
+                <input class="form-input" type="text" id="edit-hero-title" required>
+              </div>
+
+              <div class="form-group full-width">
+                <label class="form-label" for="edit-hero-subtitle">Subtítulo do Hero</label>
+                <textarea class="form-textarea" id="edit-hero-subtitle" style="min-height:70px;" required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="edit-hero-tag">Tag do Hero (Emblema)</label>
+                <input class="form-input" type="text" id="edit-hero-tag">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="edit-announcement-text">Texto do Topo (Barra de Anúncio)</label>
+                <input class="form-input" type="text" id="edit-announcement-text">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="edit-company-email">E-mail Corporativo</label>
+                <input class="form-input" type="email" id="edit-company-email">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="edit-company-phone">Telefone / WhatsApp</label>
+                <input class="form-input" type="text" id="edit-company-phone">
+              </div>
+
+              <div class="form-group full-width">
+                <label class="form-label" for="edit-company-address">Endereço Físico</label>
+                <input class="form-input" type="text" id="edit-company-address">
+              </div>
+            </div>
+
+            <div style="margin-top:20px; text-align:right;">
+              <button type="submit" class="btn btn-primary">Salvar Hero & Contato</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Aba 5: Backup & Configurações -->
+        <div class="admin-tab-content" id="tab-backup">
+          <h4 style="font-size:1.15rem; color:#FFFFFF; margin-bottom:8px;">Segurança de Dados e Restauração</h4>
+          <p style="font-size:0.875rem; color:var(--text-muted); margin-bottom:24px;">
+            Você pode exportar todas as suas alterações em um arquivo JSON para backup ou restaurar os dados originais a
+            qualquer momento.
+          </p>
+
+          <div style="display:flex; flex-direction:column; gap:16px; max-width:400px;">
+            <button class="btn btn-secondary" id="btn-export-backup">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Exportar Backup do Site (JSON)</span>
+            </button>
+
+            <button class="btn btn-secondary" id="btn-import-backup">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              <span>Importar Backup (JSON)</span>
+            </button>
+            <input type="file" id="import-file-input" accept=".json" style="display:none;">
+
+            <hr style="border-color:var(--border-glass); margin:8px 0;">
+
+            <button class="btn btn-danger" id="btn-reset-defaults">
+              <span>Restaurar Configurações Originais</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Edição / Criação de Card do Portfólio -->
+  <div class="modal-overlay" id="card-editor-modal" role="dialog" aria-modal="true"
+    aria-labelledby="card-editor-modal-title">
+    <div class="modal-card admin-form-modal">
+      <button class="modal-close-btn" onclick="closeCardEditorModal()" aria-label="Fechar editor">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-header">
+        <span class="modal-badge">EDITOR DE PORTFÓLIO</span>
+        <h3 class="modal-title" id="card-editor-modal-title">Editar Solução</h3>
+      </div>
+
+      <div class="modal-body">
+        <form id="card-editor-form">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label" for="edit-card-title">Título da Solução *</label>
+              <input class="form-input" type="text" id="edit-card-title" required
+                placeholder="Ex: Gestão de Containers Kubernetes">
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label" for="edit-card-category">Categoria *</label>
+              <select class="form-select" id="edit-card-category" required>
+                <option value="software-ia">Software & IA</option>
+                <option value="infra-nuvem">Infraestrutura & Nuvem</option>
+                <option value="seguranca">Segurança & Continuidade</option>
+                <option value="governanca">Governança & Gestão</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label" for="edit-card-shortdesc">Resumo Comercial (Card Front) *</label>
+              <textarea class="form-textarea" id="edit-card-shortdesc" required
+                placeholder="Texto sucinto que aparece no card..."></textarea>
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label" for="edit-card-longdesc">Descrição Completa (Modal de Detalhes) *</label>
+              <textarea class="form-textarea" id="edit-card-longdesc" required
+                placeholder="Texto aprofundado com a proposta de valor técnica..."></textarea>
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label" for="edit-card-features">3 Destaques do Card (1 por linha) *</label>
+              <textarea class="form-textarea" id="edit-card-features" required
+                placeholder="Destaque 1&#10;Destaque 2&#10;Destaque 3"></textarea>
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label" for="edit-card-deliverables">Entregáveis do Escopo (1 por linha) *</label>
+              <textarea class="form-textarea" id="edit-card-deliverables" required
+                placeholder="Entregável 1&#10;Entregável 2&#10;Entregável 3&#10;Entregável 4"></textarea>
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label" for="edit-card-techs">Tecnologias Utilizadas (separadas por vírgula)</label>
+              <input class="form-input" type="text" id="edit-card-techs"
+                placeholder="Ex: Docker, AWS, Terraform, Linux">
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+            <button type="button" class="btn btn-secondary"
+              onclick="closeCardEditorModal(); openAdminDrawer('portfolio');">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              <span>Voltar ao Painel</span>
+            </button>
+            <div style="display:flex; gap:12px;">
+              <button type="button" class="btn btn-secondary" onclick="closeCardEditorModal()">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Salvar Solução</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Editor da Seção Framework & Metodologia -->
+  <div class="modal-overlay" id="framework-editor-modal" role="dialog" aria-modal="true"
+    aria-labelledby="framework-editor-title">
+    <div class="modal-card" style="max-width: 840px;">
+      <button class="modal-close-btn" onclick="closeFrameworkEditorModal()" aria-label="Fechar editor de metodologia">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-header">
+        <span class="modal-badge">GESTOR METODOLÓGICO</span>
+        <h3 class="modal-title" id="framework-editor-title">Editar Seção "Nosso Framework"</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted); margin-top:4px;">Atualize a esteira de entrega, os
+          títulos e os 4 passos do processo.</p>
+      </div>
+
+      <div class="modal-body">
+        <form id="framework-editor-form">
+          <div style="display:flex; flex-direction:column; gap:20px;">
+            <!-- Cabeçalho da Seção -->
+            <div
+              style="background:rgba(0,31,53,0.6); padding:18px; border-radius:8px; border:1px solid var(--border-glass);">
+              <h4 style="color:var(--gold-light); font-size:1rem; margin-bottom:12px;">Cabeçalho da Seção</h4>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="edit-framework-tag">Tag da Seção</label>
+                  <input class="form-input" type="text" id="edit-framework-tag" placeholder="NOSSO FRAMEWORK">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="edit-framework-title">Título da Seção *</label>
+                  <input class="form-input" type="text" id="edit-framework-title" required
+                    placeholder="Como Entregamos Resultados de Ponta a Ponta">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-framework-subtitle">Subtítulo / Descrição *</label>
+                  <textarea class="form-textarea" id="edit-framework-subtitle" style="min-height:75px;"
+                    required></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Os 4 Passos do Framework -->
+            <div
+              style="background:rgba(0,31,53,0.6); padding:18px; border-radius:8px; border:1px solid var(--border-glass);">
+              <h4 style="color:var(--gold-light); font-size:1rem; margin-bottom:12px;">Os 4 Passos da Esteira</h4>
+              <div class="form-grid">
+                <!-- Passo 1 -->
+                <div class="form-group">
+                  <label class="form-label" for="edit-step-0-num">Número Passo 01</label>
+                  <input class="form-input" type="text" id="edit-step-0-num" required placeholder="01">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="edit-step-0-title">Título Passo 01 *</label>
+                  <input class="form-input" type="text" id="edit-step-0-title" required>
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-step-0-desc">Descrição Passo 01 *</label>
+                  <textarea class="form-textarea" id="edit-step-0-desc" style="min-height:60px;" required></textarea>
+                </div>
+
+                <!-- Passo 2 -->
+                <div class="form-group" style="margin-top:10px;">
+                  <label class="form-label" for="edit-step-1-num">Número Passo 02</label>
+                  <input class="form-input" type="text" id="edit-step-1-num" required placeholder="02">
+                </div>
+                <div class="form-group" style="margin-top:10px;">
+                  <label class="form-label" for="edit-step-1-title">Título Passo 02 *</label>
+                  <input class="form-input" type="text" id="edit-step-1-title" required>
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-step-1-desc">Descrição Passo 02 *</label>
+                  <textarea class="form-textarea" id="edit-step-1-desc" style="min-height:60px;" required></textarea>
+                </div>
+
+                <!-- Passo 3 -->
+                <div class="form-group" style="margin-top:10px;">
+                  <label class="form-label" for="edit-step-2-num">Número Passo 03</label>
+                  <input class="form-input" type="text" id="edit-step-2-num" required placeholder="03">
+                </div>
+                <div class="form-group" style="margin-top:10px;">
+                  <label class="form-label" for="edit-step-2-title">Título Passo 03 *</label>
+                  <input class="form-input" type="text" id="edit-step-2-title" required>
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-step-2-desc">Descrição Passo 03 *</label>
+                  <textarea class="form-textarea" id="edit-step-2-desc" style="min-height:60px;" required></textarea>
+                </div>
+
+                <!-- Passo 4 -->
+                <div class="form-group" style="margin-top:10px;">
+                  <label class="form-label" for="edit-step-3-num">Número Passo 04</label>
+                  <input class="form-input" type="text" id="edit-step-3-num" required placeholder="04">
+                </div>
+                <div class="form-group" style="margin-top:10px;">
+                  <label class="form-label" for="edit-step-3-title">Título Passo 04 *</label>
+                  <input class="form-input" type="text" id="edit-step-3-title" required>
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label" for="edit-step-3-desc">Descrição Passo 04 *</label>
+                  <textarea class="form-textarea" id="edit-step-3-desc" style="min-height:60px;" required></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:24px;">
+            <button type="button" class="btn btn-secondary"
+              onclick="closeFrameworkEditorModal(); openAdminDrawer('framework');">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              <span>Voltar ao Painel</span>
+            </button>
+            <div style="display:flex; gap:12px;">
+              <button type="button" class="btn btn-secondary" onclick="closeFrameworkEditorModal()">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Salvar Metodologia</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Gerenciador do Carrossel de Imagens do Banner Principal -->
+  <div class="modal-overlay" id="hero-carousel-editor-modal" role="dialog" aria-modal="true"
+    aria-labelledby="carousel-editor-title">
+    <div class="modal-card" style="max-width: 860px;">
+      <button class="modal-close-btn" onclick="closeHeroCarouselEditorModal()" aria-label="Fechar editor do carrossel">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-header">
+        <span class="modal-badge">BANNER PRINCIPAL</span>
+        <h3 class="modal-title" id="carousel-editor-title">Gerenciador do Carrossel de Imagens</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted); margin-top:4px;">
+          Substitua as imagens por fotos do seu computador ou links, altere títulos e adicione novos slides.
+        </p>
+      </div>
+
+      <div class="modal-body">
+        <div id="carousel-slides-editor-list" style="display:flex; flex-direction:column; gap:20px;">
+          <!-- Slides gerados dinamicamente via populateCarouselEditor() -->
+        </div>
+
+        <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="addNewCarouselSlide()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>+ Adicionar Novo Slide</span>
+          </button>
+          <span style="font-size:0.8rem; color:var(--text-dim);">Recomendado: 16:9 em alta resolução (PNG ou JPG)</span>
+        </div>
+
+        <div
+          style="display:flex; justify-content:space-between; align-items:center; margin-top:28px; padding-top:16px; border-top:1px solid var(--border-glass);">
+          <button type="button" class="btn btn-secondary"
+            onclick="closeHeroCarouselEditorModal(); openAdminDrawer('carousel');">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            <span>Voltar ao Painel</span>
+          </button>
+          <div style="display:flex; gap:12px;">
+            <button type="button" class="btn btn-secondary" onclick="closeHeroCarouselEditorModal()">Cancelar</button>
+            <button type="button" class="btn btn-primary" onclick="saveCarouselFromForm()">Salvar Carrossel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Actions (WhatsApp & Scroll Top) -->
+  <div class="floating-actions">
+    <button class="scroll-top-btn" aria-label="Voltar ao topo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
+    </button>
+    <a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20as%20solu%C3%A7%C3%B5es%20da%20Dash%20Solutions"
+      target="_blank" class="floating-whatsapp-btn" aria-label="Falar no WhatsApp">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.96.537 1.777.818 2.796.818 3.182 0 5.769-2.587 5.769-5.766 0-3.18-2.587-5.805-5.769-5.805zm3.377 8.214c-.144.405-.837.774-1.17.824-.312.045-.634.07-.1.02-1.745-.339-3.08-1.543-3.83-2.618-.088-.125-.664-.882-.664-1.682 0-.8.419-1.194.568-1.348.149-.153.325-.192.434-.192.108 0 .216.002.311.007.1.005.234-.038.365.276.135.325.46 1.123.5 1.205.041.082.068.179.014.288-.054.108-.081.176-.162.27-.081.095-.171.212-.244.285-.081.082-.166.171-.071.334.095.162.421.695.905 1.125.623.555 1.148.727 1.311.808.162.081.257.068.351-.041.095-.108.405-.473.513-.635.108-.162.216-.135.365-.081.149.054.946.446 1.109.527.162.081.27.122.311.19.041.068.041.392-.103.797zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.66 1.436 5.176L2 22l4.981-1.396C8.423 21.493 10.155 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" />
+      </svg>
+    </a>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
