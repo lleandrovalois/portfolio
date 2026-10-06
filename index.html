@@ -43,7 +43,9 @@
       <button class="admin-btn" onclick="openBrandEditorModal()" title="Personalizar Logotipo do Cliente e Marca">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"></circle>
-          <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83M16.62 12l-5.74 9.94"></path>
+          <path
+            d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83M16.62 12l-5.74 9.94">
+          </path>
         </svg>
         <span>Editar Logo</span>
       </button>
@@ -87,7 +89,7 @@
         </a>
       </div>
       <div class="announcement-contacts">
-        <span>São Paulo • Berrini</span>
+        <span>Belém • Pará</span>
         <a href="mailto:contato@dashsolutions.com.br" id="company-email-text">contato@dashsolutions.com.br</a>
       </div>
     </div>
@@ -469,8 +471,10 @@
               <span class="subtitle">ENTERPRISE TECHNOLOGY</span>
             </div>
           </div>
-          <div class="section-admin-control" style="justify-content: flex-start; margin-top: 10px; margin-bottom: 12px;">
-            <button class="section-edit-btn" onclick="openBrandEditorModal()" style="font-size:0.75rem; padding:4px 10px;">
+          <div class="section-admin-control"
+            style="justify-content: flex-start; margin-top: 10px; margin-bottom: 12px;">
+            <button class="section-edit-btn" onclick="openBrandEditorModal()"
+              style="font-size:0.75rem; padding:4px 10px;">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
@@ -932,9 +936,11 @@
             style="background:rgba(0,31,53,0.6); padding:24px; border-radius:12px; border:1px solid var(--border-glass); margin-bottom:20px;">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
               <div>
-                <h4 style="font-size:1.15rem; color:#FFFFFF; margin-bottom:6px;">Personalizar Logotipo & Identidade Visual</h4>
+                <h4 style="font-size:1.15rem; color:#FFFFFF; margin-bottom:6px;">Personalizar Logotipo & Identidade
+                  Visual</h4>
                 <p style="font-size:0.875rem; color:var(--text-muted);">
-                  Suba a logo do cliente (dimensões recomendadas: <strong>240×60px a 400×100px</strong> em PNG transparente ou SVG), alterne para monograma e personalize nomes e cores.
+                  Suba a logo do cliente (dimensões recomendadas: <strong>240×60px a 400×100px</strong> em PNG
+                  transparente ou SVG), alterne para monograma e personalize nomes e cores.
                 </p>
               </div>
               <button class="btn btn-primary" onclick="openBrandEditorModal()">
@@ -949,7 +955,9 @@
 
           <!-- Preview da Marca no Drawer -->
           <div class="brand-preview-card" style="margin-bottom:24px;">
-            <span style="font-size:0.75rem; letter-spacing:1px; color:var(--text-dim); text-transform:uppercase;">Visualização Atual do Topo</span>
+            <span
+              style="font-size:0.75rem; letter-spacing:1px; color:var(--text-dim); text-transform:uppercase;">Visualização
+              Atual do Topo</span>
             <div class="brand-preview-display" id="drawer-brand-preview-display">
               <!-- Preenchido via updateBrandLivePreview() -->
             </div>
@@ -1435,7 +1443,8 @@
         <span class="modal-badge">IDENTIDADE VISUAL & MARCA</span>
         <h3 class="modal-title" id="brand-editor-title">Personalização da Logo & Marca</h3>
         <p style="font-size:0.875rem; color:var(--text-muted); margin-top:4px;">
-          Configure a logo do cliente (recomendado: <strong>PNG transparente de 240×60px a 400×100px</strong> ou monograma), nome e slogan corporativo.
+          Configure a logo do cliente (recomendado: <strong>PNG transparente de 240×60px a 400×100px</strong> ou
+          monograma), nome e slogan corporativo.
         </p>
       </div>
 
@@ -1458,7 +1467,8 @@
           <div style="margin-bottom:20px;">
             <label class="form-label" style="margin-bottom:8px;">Tipo de Logotipo Principal:</label>
             <div class="brand-type-toggle">
-              <button type="button" class="brand-type-btn active" id="btn-type-monogram" onclick="setBrandType('monogram')">
+              <button type="button" class="brand-type-btn active" id="btn-type-monogram"
+                onclick="setBrandType('monogram')">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="3" y="3" width="18" height="18" rx="4"></rect>
                   <path d="M7 17V7h4a3 3 0 0 1 0 6H7"></path>
@@ -1477,10 +1487,13 @@
           </div>
 
           <!-- Campos do Monograma (Visíveis se logoType === 'monogram') -->
-          <div id="brand-monogram-container" style="background:rgba(0,31,53,0.5); padding:20px; border-radius:10px; border:1px solid var(--border-glass); margin-bottom:20px;">
+          <div id="brand-monogram-container"
+            style="background:rgba(0,31,53,0.5); padding:20px; border-radius:10px; border:1px solid var(--border-glass); margin-bottom:20px;">
             <div class="form-group">
-              <label class="form-label" for="brand-monogram-text-input">Iniciais do Símbolo / Monograma (Máximo 3 letras)</label>
-              <input class="form-input" type="text" id="brand-monogram-text-input" maxlength="4" placeholder="ex: DS, G4, TI" value="DS" oninput="updateBrandLivePreview()">
+              <label class="form-label" for="brand-monogram-text-input">Iniciais do Símbolo / Monograma (Máximo 3
+                letras)</label>
+              <input class="form-input" type="text" id="brand-monogram-text-input" maxlength="4"
+                placeholder="ex: DS, G4, TI" value="DS" oninput="updateBrandLivePreview()">
               <small style="color:var(--text-dim); font-size:0.75rem; display:block; margin-top:4px;">
                 Exibido no emblema de ouro com efeito de brilho suave e borda chanfrada.
               </small>
@@ -1488,13 +1501,16 @@
           </div>
 
           <!-- Campos da Imagem do Cliente (Visíveis se logoType === 'image') -->
-          <div id="brand-image-container" style="background:rgba(0,31,53,0.5); padding:20px; border-radius:10px; border:1px solid var(--border-glass); margin-bottom:20px; display:none;">
-            
+          <div id="brand-image-container"
+            style="background:rgba(0,31,53,0.5); padding:20px; border-radius:10px; border:1px solid var(--border-glass); margin-bottom:20px; display:none;">
+
             <!-- Caixa de Orientação Oficial de Dimensões e Formatos -->
             <div class="brand-guide-box" id="brand-dimensions-guide">
               <div class="brand-guide-header">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                  </path>
                   <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
                   <line x1="12" y1="22.08" x2="12" y2="12"></line>
                 </svg>
@@ -1507,41 +1523,61 @@
                 <div class="brand-guide-card highlight">
                   <div class="brand-card-top">
                     <span class="brand-card-name">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect></svg>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                      </svg>
                       Logo Horizontal
                     </span>
                     <span class="brand-card-tag">Mais comum</span>
                   </div>
                   <div class="brand-guide-dim">240 × 60 px <span>até 400 × 100 px</span></div>
-                  <p>Ícone + nome juntos (proporção ~4:1 ou 3:1). Preenche com perfeição o menu. Recomendamos desmarcar "Exibir Nome da Empresa" abaixo para não duplicar.</p>
+                  <p>Ícone + nome juntos (proporção ~4:1 ou 3:1). Preenche com perfeição o menu. Recomendamos desmarcar
+                    "Exibir Nome da Empresa" abaixo para não duplicar.</p>
                 </div>
 
                 <!-- Card 2: Símbolo / Ícone Quadrado -->
                 <div class="brand-guide-card">
                   <div class="brand-card-top">
                     <span class="brand-card-name">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                      </svg>
                       Ícone / Emblema
                     </span>
                     <span class="brand-card-tag">1:1 Quadrado</span>
                   </div>
                   <div class="brand-guide-dim">80 × 80 px <span>até 160 × 160 px</span></div>
-                  <p>Apenas o símbolo gráfico. Ideal quando você deseja manter o nome da empresa exibido ao lado com a tipografia oficial do site.</p>
+                  <p>Apenas o símbolo gráfico. Ideal quando você deseja manter o nome da empresa exibido ao lado com a
+                    tipografia oficial do site.</p>
                 </div>
               </div>
 
               <div class="brand-guide-tips">
                 <div class="brand-guide-tip-item">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                  <span><strong>Fundo Transparente:</strong> Utilize preferencialmente <strong>PNG transparente</strong> ou vetor <strong>SVG</strong> para evitar caixas brancas sobre o fundo escuro Navy Blue.</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                  </svg>
+                  <span><strong>Fundo Transparente:</strong> Utilize preferencialmente <strong>PNG transparente</strong>
+                    ou vetor <strong>SVG</strong> para evitar caixas brancas sobre o fundo escuro Navy Blue.</span>
                 </div>
                 <div class="brand-guide-tip-item">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                  <span><strong>Nitidez Retina (2x):</strong> Para evitar que a imagem fique borrada em celulares e telas de alta densidade, envie com pelo menos <strong>80px a 120px de altura</strong>. O slider abaixo ajusta o tamanho visual final.</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                  </svg>
+                  <span><strong>Nitidez Retina (2x):</strong> Para evitar que a imagem fique borrada em celulares e
+                    telas de alta densidade, envie com pelo menos <strong>80px a 120px de altura</strong>. O slider
+                    abaixo ajusta o tamanho visual final.</span>
                 </div>
                 <div class="brand-guide-tip-item">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  <span><strong>Sem Margens Vazias:</strong> Remova áreas transparentes excessivas nas bordas do arquivo para que a logo ocupe todo o espaço útil do cabeçalho.</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span><strong>Sem Margens Vazias:</strong> Remova áreas transparentes excessivas nas bordas do arquivo
+                    para que a logo ocupe todo o espaço útil do cabeçalho.</span>
                 </div>
               </div>
             </div>
@@ -1553,83 +1589,106 @@
                 <polyline points="17 8 12 3 7 8"></polyline>
                 <line x1="12" y1="3" x2="12" y2="15"></line>
               </svg>
-              <div style="font-weight:700; color:#FFFFFF; font-size:0.95rem;">Clique para Carregar a Logo do seu Computador</div>
-              <div style="font-size:0.75rem; color:var(--text-muted);">Formatos aceitos: PNG (com transparência recomendado), SVG, JPG ou WebP</div>
-              <div style="display:inline-flex; align-items:center; gap:6px; background:rgba(185,145,91,0.15); border:1px solid rgba(185,145,91,0.3); padding:4px 12px; border-radius:20px; font-size:0.75rem; color:var(--gold-light); font-weight:600; margin-top:4px;">
+              <div style="font-weight:700; color:#FFFFFF; font-size:0.95rem;">Clique para Carregar a Logo do seu
+                Computador</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Formatos aceitos: PNG (com transparência
+                recomendado), SVG, JPG ou WebP</div>
+              <div
+                style="display:inline-flex; align-items:center; gap:6px; background:rgba(185,145,91,0.15); border:1px solid rgba(185,145,91,0.3); padding:4px 12px; border-radius:20px; font-size:0.75rem; color:var(--gold-light); font-weight:600; margin-top:4px;">
                 📐 Dimensões ideais: 240×60px a 400×100px (ou 100×100px para ícone)
               </div>
-              <input type="file" id="brand-logo-file-picker" accept="image/*" style="display:none;" onchange="handleLogoFileUpload(event)">
+              <input type="file" id="brand-logo-file-picker" accept="image/*" style="display:none;"
+                onchange="handleLogoFileUpload(event)">
             </div>
 
             <!-- Feedback Automático das Dimensões Detectadas da Imagem -->
             <div id="brand-logo-dimensions-feedback" style="display:none;"></div>
 
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; gap:12px; flex-wrap:wrap;">
-              <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('brand-logo-file-picker').click()">
+            <div
+              style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; gap:12px; flex-wrap:wrap;">
+              <button type="button" class="btn btn-secondary btn-sm"
+                onclick="document.getElementById('brand-logo-file-picker').click()">
                 📁 Selecionar Arquivo do PC
               </button>
-              <button type="button" class="btn btn-danger btn-sm" id="btn-remove-logo-img" onclick="clearLogoImage()" style="display:none;">
+              <button type="button" class="btn btn-danger btn-sm" id="btn-remove-logo-img" onclick="clearLogoImage()"
+                style="display:none;">
                 🗑️ Remover Imagem da Logo
               </button>
             </div>
 
             <div class="form-group full-width" style="margin-top:16px;">
-              <label class="form-label" for="brand-logo-url-input">Ou informe uma URL / Caminho da Imagem da Logo:</label>
-              <input class="form-input" type="text" id="brand-logo-url-input" placeholder="https://exemplo.com/logo.png ou assets/logo.png" oninput="updateBrandLivePreview()">
+              <label class="form-label" for="brand-logo-url-input">Ou informe uma URL / Caminho da Imagem da
+                Logo:</label>
+              <input class="form-input" type="text" id="brand-logo-url-input"
+                placeholder="https://exemplo.com/logo.png ou assets/logo.png" oninput="updateBrandLivePreview()">
             </div>
 
             <div class="form-group full-width" style="margin-top:12px;">
               <div style="display:flex; justify-content:space-between; align-items:center;">
                 <label class="form-label" for="brand-logo-height-slider">Altura da Imagem no Menu:</label>
-                <span id="brand-logo-height-val" style="color:var(--gold-light); font-weight:700; font-size:0.85rem;">40px</span>
+                <span id="brand-logo-height-val"
+                  style="color:var(--gold-light); font-weight:700; font-size:0.85rem;">40px</span>
               </div>
-              <input type="range" id="brand-logo-height-slider" min="26" max="64" step="2" value="40" style="width:100%; cursor:pointer;" oninput="updateBrandLivePreview()">
-              <small style="color:var(--text-dim); font-size:0.75rem;">Ajuste a escala visual para que o logo do cliente fique proporcional à navegação (recomendado: 36px a 48px).</small>
+              <input type="range" id="brand-logo-height-slider" min="26" max="64" step="2" value="40"
+                style="width:100%; cursor:pointer;" oninput="updateBrandLivePreview()">
+              <small style="color:var(--text-dim); font-size:0.75rem;">Ajuste a escala visual para que o logo do cliente
+                fique proporcional à navegação (recomendado: 36px a 48px).</small>
             </div>
           </div>
 
           <!-- Campos de Nome e Slogan -->
-          <div style="background:rgba(0,31,53,0.5); padding:20px; border-radius:10px; border:1px solid var(--border-glass); margin-bottom:20px;">
+          <div
+            style="background:rgba(0,31,53,0.5); padding:20px; border-radius:10px; border:1px solid var(--border-glass); margin-bottom:20px;">
             <h4 style="font-size:0.95rem; color:#FFFFFF; margin-bottom:12px;">Textos e Tipografia da Marca</h4>
-            
+
             <div class="form-grid">
               <div class="form-group">
                 <label class="form-label" for="brand-name-first-input">Primeira Palavra (Destaque Branco)</label>
-                <input class="form-input" type="text" id="brand-name-first-input" placeholder="ex: DASH" value="DASH" oninput="updateBrandLivePreview()">
+                <input class="form-input" type="text" id="brand-name-first-input" placeholder="ex: DASH" value="DASH"
+                  oninput="updateBrandLivePreview()">
               </div>
               <div class="form-group">
                 <label class="form-label" for="brand-name-second-input">Segunda Palavra (Destaque Dourado)</label>
-                <input class="form-input" type="text" id="brand-name-second-input" placeholder="ex: SOLUTIONS" value="SOLUTIONS" oninput="updateBrandLivePreview()">
+                <input class="form-input" type="text" id="brand-name-second-input" placeholder="ex: SOLUTIONS"
+                  value="SOLUTIONS" oninput="updateBrandLivePreview()">
               </div>
             </div>
 
             <div style="margin-top:10px;">
-              <label class="checkbox-item" for="brand-show-name-chk" style="cursor:pointer; display:inline-flex; align-items:center; gap:8px;">
+              <label class="checkbox-item" for="brand-show-name-chk"
+                style="cursor:pointer; display:inline-flex; align-items:center; gap:8px;">
                 <input type="checkbox" id="brand-show-name-chk" checked onchange="updateBrandLivePreview()">
-                <span style="font-size:0.85rem; color:var(--royal-silver);">Exibir Nome da Empresa ao lado do logotipo (desmarque caso o logo em imagem já contenha o nome do cliente)</span>
+                <span style="font-size:0.85rem; color:var(--royal-silver);">Exibir Nome da Empresa ao lado do logotipo
+                  (desmarque caso o logo em imagem já contenha o nome do cliente)</span>
               </label>
             </div>
 
             <div class="form-group full-width" style="margin-top:16px;">
               <label class="form-label" for="brand-tagline-input">Slogan / Subtítulo Corporativo</label>
-              <input class="form-input" type="text" id="brand-tagline-input" placeholder="ex: ENTERPRISE TECHNOLOGY" value="ENTERPRISE TECHNOLOGY" oninput="updateBrandLivePreview()">
+              <input class="form-input" type="text" id="brand-tagline-input" placeholder="ex: ENTERPRISE TECHNOLOGY"
+                value="ENTERPRISE TECHNOLOGY" oninput="updateBrandLivePreview()">
             </div>
 
             <div style="margin-top:8px;">
-              <label class="checkbox-item" for="brand-show-tagline-chk" style="cursor:pointer; display:inline-flex; align-items:center; gap:8px;">
+              <label class="checkbox-item" for="brand-show-tagline-chk"
+                style="cursor:pointer; display:inline-flex; align-items:center; gap:8px;">
                 <input type="checkbox" id="brand-show-tagline-chk" checked onchange="updateBrandLivePreview()">
-                <span style="font-size:0.85rem; color:var(--royal-silver);">Exibir Slogan / Subtítulo abaixo do nome</span>
+                <span style="font-size:0.85rem; color:var(--royal-silver);">Exibir Slogan / Subtítulo abaixo do
+                  nome</span>
               </label>
             </div>
 
             <div class="form-group full-width" style="margin-top:16px;">
               <label class="form-label" for="brand-footer-desc-input">Texto Institucional da Marca (Rodapé)</label>
-              <textarea class="form-textarea" id="brand-footer-desc-input" rows="2" style="min-height:60px;" placeholder="Breve parágrafo sobre a empresa no rodapé do site"></textarea>
+              <textarea class="form-textarea" id="brand-footer-desc-input" rows="2" style="min-height:60px;"
+                placeholder="Breve parágrafo sobre a empresa no rodapé do site"></textarea>
             </div>
           </div>
 
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:24px; flex-wrap:wrap; gap:12px;">
-            <button type="button" class="btn btn-secondary btn-sm" onclick="resetBrandToDefault()" style="color:var(--text-dim);">
+          <div
+            style="display:flex; justify-content:space-between; align-items:center; margin-top:24px; flex-wrap:wrap; gap:12px;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="resetBrandToDefault()"
+              style="color:var(--text-dim);">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
                 <path d="M3 3v5h5"></path>
