@@ -2118,7 +2118,111 @@ function initContactForm() {
 function initNavbarScroll() {
   const header = document.querySelector('.site-header');
   const scrollTopBtn = document.querySelector('.scroll-top-btn');
+  const navMenu = document.querySelector('.nav-menu');
+  const navLinks = document.querySelectorAll('.nav-menu .nav-link');
+  const indicator = document.getElementById('nav-indicator');
 
+  let isScrollSpyLocked = false;
+  let isScrollTicking = false;
+
+  // Função para posicionar o indicador deslizante no link especificado
+  function moveIndicatorTo(link, smooth = true) {
+    if (!indicator || !navMenu || !link) return;
+
+    // Se estiver em modo mobile (menu empilhado verticalmente), oculta o indicador deslizante
+    if (window.innerWidth <= 992) {
+      indicator.style.opacity = '0';
+      return;
+    }
+
+    const menuRect = navMenu.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+
+    const left = linkRect.left - menuRect.left;
+    const width = linkRect.width;
+
+    if (!smooth) {
+      indicator.style.transition = 'none';
+    } else {
+      indicator.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), width 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease';
+    }
+
+    indicator.style.transform = `translateX(${left}px)`;
+    indicator.style.width = `${width}px`;
+    indicator.style.opacity = '1';
+
+    if (!smooth) {
+      indicator.offsetHeight; // Força repaint
+      indicator.style.transition = '';
+    }
+  }
+
+  // Define qual link do menu está ativo
+  function setActiveLink(targetId, moveIndicator = true) {
+    let matchedLink = null;
+    navLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href === `#${targetId}`) {
+        link.classList.add('active');
+        matchedLink = link;
+      } else {
+        link.classList.remove('active');
+      }
+    });
+
+    if (matchedLink && moveIndicator) {
+      moveIndicatorTo(matchedLink, true);
+    }
+  }
+
+  // Mapeamento das seções físicas do DOM para os IDs do menu
+  const sectionsToWatch = [
+    { elId: 'home', navId: 'home' },
+    { elId: 'portfolio', navId: 'portfolio' },
+    { elId: 'sobre', navId: 'sobre' },
+    { elId: 'metodologia', navId: 'sobre' }, // A esteira metodológica faz parte da experiência Sobre Nós
+    { elId: 'contato', navId: 'contato' }
+  ];
+
+  // ScrollSpy: detecta qual seção está em foco na tela
+  function handleScrollSpy() {
+    if (isScrollSpyLocked) return;
+
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight;
+    const headerHeight = header ? header.offsetHeight : 75;
+
+    // 1. Checa se o usuário chegou próximo ao rodapé da página (ativa Contato)
+    if (windowHeight + scrollY >= docHeight - 80) {
+      setActiveLink('contato');
+      return;
+    }
+
+    // 2. Se o usuário estiver no topo absoluto, ativa Home
+    if (scrollY < 120) {
+      setActiveLink('home');
+      return;
+    }
+
+    // 3. Linha de foco de leitura logo abaixo do cabeçalho fixo
+    const focusLine = scrollY + headerHeight + 120;
+
+    let currentNavId = 'home';
+    for (const item of sectionsToWatch) {
+      const sectionEl = document.getElementById(item.elId);
+      if (sectionEl) {
+        const top = sectionEl.offsetTop;
+        if (top <= focusLine) {
+          currentNavId = item.navId;
+        }
+      }
+    }
+
+    setActiveLink(currentNavId);
+  }
+
+  // Listener de scroll otimizado com requestAnimationFrame
   window.addEventListener('scroll', () => {
     if (window.scrollY > 40) {
       header?.classList.add('scrolled');
@@ -2131,11 +2235,107 @@ function initNavbarScroll() {
     } else {
       scrollTopBtn?.classList.remove('visible');
     }
+
+    if (!isScrollTicking) {
+      window.requestAnimationFrame(() => {
+        handleScrollSpy();
+        isScrollTicking = false;
+      });
+      isScrollTicking = true;
+    }
+  }, { passive: true });
+
+  // Botão flutuante "Voltar ao Topo"
+  scrollTopBtn?.addEventListener('click', () => {
+    isScrollSpyLocked = true;
+    setActiveLink('home', true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      isScrollSpyLocked = false;
+      handleScrollSpy();
+    }, 800);
   });
 
-  scrollTopBtn?.addEventListener('click', () => {
+  // Clique na Logo do Topo (rola suave para Home)
+  document.getElementById('header-brand-logo')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    isScrollSpyLocked = true;
+    setActiveLink('home', true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      isScrollSpyLocked = false;
+      handleScrollSpy();
+    }, 800);
   });
+
+  // Clique nos Links do Menu com rolagem suave e posicionamento instantâneo
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        const targetId = href.substring(1);
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+          e.preventDefault();
+          isScrollSpyLocked = true;
+          setActiveLink(targetId, true);
+
+          const headerHeight = header ? header.offsetHeight : 75;
+          const targetY = targetSection.getBoundingClientRect().top + window.scrollY - headerHeight + 5;
+          window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+
+          setTimeout(() => {
+            isScrollSpyLocked = false;
+            handleScrollSpy();
+          }, 850);
+        }
+      }
+    });
+
+    // Hover interativo: o indicador desliza suavemente até o item apontado pelo mouse
+    link.addEventListener('mouseenter', () => {
+      if (window.innerWidth > 992) {
+        moveIndicatorTo(link, true);
+      }
+    });
+  });
+
+  // Ao remover o mouse do menu, o indicador retorna suavemente para a seção ativa atual
+  navMenu?.addEventListener('mouseleave', () => {
+    if (window.innerWidth > 992) {
+      const activeLink = document.querySelector('.nav-menu .nav-link.active');
+      if (activeLink) {
+        moveIndicatorTo(activeLink, true);
+      }
+    }
+  });
+
+  // Recalcula as posições do indicador em redimensionamentos de tela
+  window.addEventListener('resize', () => {
+    const activeLink = document.querySelector('.nav-menu .nav-link.active');
+    if (activeLink) {
+      moveIndicatorTo(activeLink, false);
+    }
+  });
+
+  // Inicializa o indicador após o carregamento inicial
+  setTimeout(() => {
+    handleScrollSpy();
+    const activeLink = document.querySelector('.nav-menu .nav-link.active');
+    if (activeLink) {
+      moveIndicatorTo(activeLink, false);
+    }
+  }, 100);
+
+  // Recalcula após o carregamento das fontes do navegador
+  if (document.fonts) {
+    document.fonts.ready.then(() => {
+      const activeLink = document.querySelector('.nav-menu .nav-link.active');
+      if (activeLink) {
+        moveIndicatorTo(activeLink, false);
+      }
+    });
+  }
 }
 
 function initMobileMenu() {
