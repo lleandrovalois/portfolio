@@ -6,6 +6,20 @@
 
 // Configuração Padrão Completa dos Textos e Seções do Site
 const defaultSiteContent = {
+  // Identidade da Marca & Logotipo (Totalmente Customizável)
+  brand: {
+    logoType: "monogram", // "monogram" | "image"
+    monogramText: "DS",
+    logoImageUrl: "",
+    logoImageHeight: 40,
+    showName: true,
+    nameFirst: "DASH",
+    nameSecond: "SOLUTIONS",
+    showTagline: true,
+    tagline: "ENTERPRISE TECHNOLOGY",
+    footerDesc: "Reunindo engenharia rigorosa, governança e tecnologia de vanguarda para orientar empresas reais que buscam escala sem vulnerabilidades."
+  },
+
   announcementBadge: "EXCLUSIVO",
   announcementText: "Excelência em Infraestrutura e Transformação Digital Corporativa |",
   announcementLinkText: "Agende um diagnóstico técnico gratuito",
@@ -437,6 +451,7 @@ function loadStoredSiteContent() {
       return {
         ...defaultSiteContent,
         ...parsed,
+        brand: parsed.brand ? { ...defaultSiteContent.brand, ...parsed.brand } : { ...defaultSiteContent.brand },
         metrics: parsed.metrics && parsed.metrics.length ? parsed.metrics : [...defaultSiteContent.metrics],
         about: parsed.about ? { ...defaultSiteContent.about, ...parsed.about } : { ...defaultSiteContent.about },
         framework: parsed.framework ? { ...defaultSiteContent.framework, ...parsed.framework } : { ...defaultSiteContent.framework },
@@ -454,6 +469,7 @@ let siteContent = loadStoredSiteContent();
 
 // Inicialização Principal
 document.addEventListener('DOMContentLoaded', () => {
+  renderBrandLogo();
   renderStatsSection();
   renderAboutSection();
   renderFrameworkSection();
@@ -469,6 +485,264 @@ document.addEventListener('DOMContentLoaded', () => {
   populateContactServiceCheckboxes();
   initAdminSystem();
 });
+
+/* ==========================================================================
+   IDENTIDADE VISUAL DA MARCA & LOGOTIPO DO CLIENTE (CUSTOMIZÁVEL)
+   ========================================================================== */
+function getActiveBrand() {
+  return siteContent.brand || defaultSiteContent.brand;
+}
+
+function buildBrandLogoHTML(brand, options = {}) {
+  let logoGraphic = '';
+
+  if (brand.logoType === 'image' && brand.logoImageUrl) {
+    const height = Math.min(Math.max(brand.logoImageHeight || 40, 24), 70);
+    logoGraphic = `
+      <img src="${escapeHtml(brand.logoImageUrl)}" alt="${escapeHtml(brand.nameFirst || '')} ${escapeHtml(brand.nameSecond || '')}" class="brand-logo-img" style="max-height:${height}px;">
+    `;
+  } else {
+    const symbolText = (brand.monogramText || 'DS').toUpperCase();
+    logoGraphic = `
+      <div class="logo-symbol">${escapeHtml(symbolText)}</div>
+    `;
+  }
+
+  let textMarkup = '';
+  if (brand.showName !== false) {
+    const first = escapeHtml(brand.nameFirst !== undefined ? brand.nameFirst : 'DASH');
+    const second = escapeHtml(brand.nameSecond !== undefined ? brand.nameSecond : 'SOLUTIONS');
+    const titleHtml = `<span class="title">${first} <span>${second}</span></span>`;
+    const subtitleHtml = (brand.showTagline !== false && brand.tagline) 
+      ? `<span class="subtitle">${escapeHtml(brand.tagline)}</span>` 
+      : '';
+    textMarkup = `
+      <div class="logo-text">
+        ${titleHtml}
+        ${subtitleHtml}
+      </div>
+    `;
+  }
+
+  return `${logoGraphic}${textMarkup}`;
+}
+
+function renderBrandLogo() {
+  const brand = getActiveBrand();
+
+  // 1. Header Logo
+  const headerLogo = document.getElementById('header-brand-logo');
+  if (headerLogo) {
+    headerLogo.innerHTML = buildBrandLogoHTML(brand, { isHeader: true });
+  }
+
+  // 2. Footer Logo
+  const footerLogo = document.getElementById('footer-brand-logo');
+  if (footerLogo) {
+    footerLogo.innerHTML = buildBrandLogoHTML(brand, { isFooter: true });
+  }
+
+  // 3. Footer Brand Desc
+  const footerDesc = document.getElementById('footer-brand-desc');
+  if (footerDesc && brand.footerDesc) {
+    footerDesc.textContent = brand.footerDesc;
+  }
+
+  // 4. Footer Copyright Brand
+  const footerCopy = document.getElementById('footer-copyright-brand');
+  if (footerCopy) {
+    const fullName = `${brand.nameFirst || ''} ${brand.nameSecond || ''}`.trim() || 'Dash Solutions';
+    footerCopy.textContent = fullName;
+  }
+
+  // 5. Drawer Header
+  const drawerSymbol = document.getElementById('drawer-logo-symbol');
+  const drawerName = document.getElementById('drawer-brand-name');
+  if (drawerSymbol) {
+    if (brand.logoType === 'image' && brand.logoImageUrl) {
+      drawerSymbol.outerHTML = `<img src="${escapeHtml(brand.logoImageUrl)}" id="drawer-logo-symbol" alt="${escapeHtml(brand.nameFirst || 'Logo')}" style="max-height:36px; max-width:64px; object-fit:contain; border-radius:6px;">`;
+    } else {
+      drawerSymbol.outerHTML = `<div class="logo-symbol" id="drawer-logo-symbol" style="width:36px; height:36px; font-size:1rem;">${escapeHtml(brand.monogramText || 'DS')}</div>`;
+    }
+  }
+  if (drawerName) {
+    const fullName = `${brand.nameFirst || ''} ${brand.nameSecond || ''}`.trim() || 'Dash Solutions';
+    drawerName.textContent = `Painel de Gestão ${fullName}`;
+  }
+
+  // 6. Atualiza document.title
+  const brandFullName = `${brand.nameFirst || ''} ${brand.nameSecond || ''}`.trim() || 'Dash Solutions';
+  document.title = `${brandFullName} | ${brand.tagline || 'Enterprise Technology'}`;
+}
+
+let currentEditingBrandType = 'monogram';
+
+window.openBrandEditorModal = function() {
+  closeAdminDrawer();
+  populateBrandInputs();
+  updateBrandLivePreview();
+  const modal = document.getElementById('brand-editor-modal');
+  modal?.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeBrandEditorModal = function() {
+  const modal = document.getElementById('brand-editor-modal');
+  modal?.classList.remove('active');
+  document.body.style.overflow = '';
+};
+
+window.setBrandType = function(type) {
+  currentEditingBrandType = type;
+  const btnMono = document.getElementById('btn-type-monogram');
+  const btnImg = document.getElementById('btn-type-image');
+  const monoContainer = document.getElementById('brand-monogram-container');
+  const imgContainer = document.getElementById('brand-image-container');
+
+  if (type === 'image') {
+    btnMono?.classList.remove('active');
+    btnImg?.classList.add('active');
+    if (monoContainer) monoContainer.style.display = 'none';
+    if (imgContainer) imgContainer.style.display = 'block';
+  } else {
+    btnMono?.classList.add('active');
+    btnImg?.classList.remove('active');
+    if (monoContainer) monoContainer.style.display = 'block';
+    if (imgContainer) imgContainer.style.display = 'none';
+  }
+  updateBrandLivePreview();
+};
+
+window.populateBrandInputs = function() {
+  const brand = getActiveBrand();
+  currentEditingBrandType = brand.logoType || 'monogram';
+  setBrandType(currentEditingBrandType);
+
+  const monoInput = document.getElementById('brand-monogram-text-input');
+  if (monoInput) monoInput.value = brand.monogramText || 'DS';
+
+  const urlInput = document.getElementById('brand-logo-url-input');
+  if (urlInput) urlInput.value = brand.logoImageUrl || '';
+
+  const removeBtn = document.getElementById('btn-remove-logo-img');
+  if (removeBtn) removeBtn.style.display = brand.logoImageUrl ? 'inline-flex' : 'none';
+
+  const slider = document.getElementById('brand-logo-height-slider');
+  const sliderVal = document.getElementById('brand-logo-height-val');
+  if (slider) slider.value = brand.logoImageHeight || 40;
+  if (sliderVal) sliderVal.textContent = `${brand.logoImageHeight || 40}px`;
+
+  const nameFirst = document.getElementById('brand-name-first-input');
+  if (nameFirst) nameFirst.value = brand.nameFirst !== undefined ? brand.nameFirst : 'DASH';
+
+  const nameSecond = document.getElementById('brand-name-second-input');
+  if (nameSecond) nameSecond.value = brand.nameSecond !== undefined ? brand.nameSecond : 'SOLUTIONS';
+
+  const showNameChk = document.getElementById('brand-show-name-chk');
+  if (showNameChk) showNameChk.checked = brand.showName !== false;
+
+  const taglineInput = document.getElementById('brand-tagline-input');
+  if (taglineInput) taglineInput.value = brand.tagline !== undefined ? brand.tagline : 'ENTERPRISE TECHNOLOGY';
+
+  const showTaglineChk = document.getElementById('brand-show-tagline-chk');
+  if (showTaglineChk) showTaglineChk.checked = brand.showTagline !== false;
+
+  const footerDescInput = document.getElementById('brand-footer-desc-input');
+  if (footerDescInput) footerDescInput.value = brand.footerDesc || defaultSiteContent.brand.footerDesc;
+};
+
+window.updateBrandLivePreview = function() {
+  const brandObj = {
+    logoType: currentEditingBrandType,
+    monogramText: document.getElementById('brand-monogram-text-input')?.value.trim() || 'DS',
+    logoImageUrl: document.getElementById('brand-logo-url-input')?.value.trim() || '',
+    logoImageHeight: parseInt(document.getElementById('brand-logo-height-slider')?.value || '40', 10),
+    showName: document.getElementById('brand-show-name-chk') ? document.getElementById('brand-show-name-chk').checked : true,
+    nameFirst: document.getElementById('brand-name-first-input')?.value.trim() || '',
+    nameSecond: document.getElementById('brand-name-second-input')?.value.trim() || '',
+    showTagline: document.getElementById('brand-show-tagline-chk') ? document.getElementById('brand-show-tagline-chk').checked : true,
+    tagline: document.getElementById('brand-tagline-input')?.value.trim() || '',
+    footerDesc: document.getElementById('brand-footer-desc-input')?.value.trim() || ''
+  };
+
+  const sliderVal = document.getElementById('brand-logo-height-val');
+  if (sliderVal) sliderVal.textContent = `${brandObj.logoImageHeight}px`;
+
+  const removeBtn = document.getElementById('btn-remove-logo-img');
+  if (removeBtn) removeBtn.style.display = brandObj.logoImageUrl ? 'inline-flex' : 'none';
+
+  const previewHtml = buildBrandLogoHTML(brandObj, { isPreview: true });
+
+  const modalPreview = document.getElementById('modal-brand-preview-display');
+  if (modalPreview) modalPreview.innerHTML = previewHtml;
+
+  const drawerPreview = document.getElementById('drawer-brand-preview-display');
+  if (drawerPreview) drawerPreview.innerHTML = previewHtml;
+};
+
+window.handleLogoFileUpload = function(event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    showToast('Por favor, selecione um arquivo de imagem válido (PNG, SVG, JPG, WebP).');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const dataUrl = e.target.result;
+    const urlInput = document.getElementById('brand-logo-url-input');
+    if (urlInput) urlInput.value = dataUrl;
+    setBrandType('image');
+    updateBrandLivePreview();
+    showToast('Logotipo carregado com sucesso! Clique em "Salvar" para aplicar.');
+  };
+  reader.readAsDataURL(file);
+};
+
+window.clearLogoImage = function() {
+  const urlInput = document.getElementById('brand-logo-url-input');
+  if (urlInput) urlInput.value = '';
+  const filePicker = document.getElementById('brand-logo-file-picker');
+  if (filePicker) filePicker.value = '';
+  setBrandType('monogram');
+  updateBrandLivePreview();
+  showToast('Imagem removida. Modo monograma ativado.');
+};
+
+window.saveBrandFromForm = function() {
+  const brandObj = {
+    logoType: currentEditingBrandType,
+    monogramText: document.getElementById('brand-monogram-text-input')?.value.trim() || 'DS',
+    logoImageUrl: document.getElementById('brand-logo-url-input')?.value.trim() || '',
+    logoImageHeight: parseInt(document.getElementById('brand-logo-height-slider')?.value || '40', 10),
+    showName: document.getElementById('brand-show-name-chk') ? document.getElementById('brand-show-name-chk').checked : true,
+    nameFirst: document.getElementById('brand-name-first-input')?.value.trim() || '',
+    nameSecond: document.getElementById('brand-name-second-input')?.value.trim() || '',
+    showTagline: document.getElementById('brand-show-tagline-chk') ? document.getElementById('brand-show-tagline-chk').checked : true,
+    tagline: document.getElementById('brand-tagline-input')?.value.trim() || '',
+    footerDesc: document.getElementById('brand-footer-desc-input')?.value.trim() || defaultSiteContent.brand.footerDesc
+  };
+
+  siteContent.brand = brandObj;
+  localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+
+  renderBrandLogo();
+  closeBrandEditorModal();
+  showToast('Identidade visual e logotipo atualizados com sucesso!');
+};
+
+window.resetBrandToDefault = function() {
+  if (confirm('Deseja restaurar a identidade visual e o logotipo para o padrão original da Dash Solutions?')) {
+    siteContent.brand = JSON.parse(JSON.stringify(defaultSiteContent.brand));
+    localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+    populateBrandInputs();
+    updateBrandLivePreview();
+    renderBrandLogo();
+    showToast('Identidade visual restaurada para o padrão.');
+  }
+};
 
 /* ==========================================================================
    RENDERIZAÇÃO DA SEÇÃO DE MÉTRICAS (BARRA DE INDICADORES)
@@ -703,6 +977,7 @@ function initAdminSystem() {
         else if (overlay.id === 'card-editor-modal') closeCardEditorModal();
         else if (overlay.id === 'framework-editor-modal') closeFrameworkEditorModal();
         else if (overlay.id === 'hero-carousel-editor-modal') closeHeroCarouselEditorModal();
+        else if (overlay.id === 'brand-editor-modal') closeBrandEditorModal();
         else if (overlay.id === 'admin-login-modal') closeAdminLoginModal();
         else if (overlay.id === 'service-modal-overlay') closeServiceModal();
       }
@@ -712,6 +987,7 @@ function initAdminSystem() {
   // Fechar qualquer modal ativo com tecla ESC
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
+      closeBrandEditorModal();
       closeAboutEditorModal();
       closeMetricsEditorModal();
       closeCardEditorModal();
@@ -752,6 +1028,8 @@ function openAdminDrawer(tabName = 'portfolio') {
   });
 
   // Popula formulários do CMS
+  populateBrandInputs();
+  updateBrandLivePreview();
   populateMetricsInputs();
   populateAboutInputs();
   populateFrameworkInputs();
@@ -1421,6 +1699,7 @@ function resetToFactoryDefaults() {
     siteContent = JSON.parse(JSON.stringify(defaultSiteContent));
     localStorage.removeItem('dash_portfolio_services');
     localStorage.removeItem('dash_site_content');
+    renderBrandLogo();
     renderStatsSection();
     renderAboutSection();
     renderFrameworkSection();
@@ -1467,6 +1746,7 @@ function importBackupJSON(e) {
       if (data.siteContent) {
         siteContent = { ...defaultSiteContent, ...data.siteContent };
         localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+        renderBrandLogo();
         renderStatsSection();
         renderAboutSection();
         renderFrameworkSection();

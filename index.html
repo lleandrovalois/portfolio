@@ -40,6 +40,13 @@
         Painel CMS</span>
     </div>
     <div class="admin-bar-actions">
+      <button class="admin-btn" onclick="openBrandEditorModal()" title="Personalizar Logotipo do Cliente e Marca">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83M16.62 12l-5.74 9.94"></path>
+        </svg>
+        <span>Editar Logo</span>
+      </button>
       <button class="admin-btn gold" id="admin-add-card-btn">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -90,16 +97,26 @@
   <header class="site-header" id="site-header">
     <div class="container">
       <nav class="navbar" aria-label="Navegação Principal">
-        <!-- Logo Dash Solutions -->
-        <a href="#home" class="brand-logo" aria-label="Dash Solutions Home">
-          <div class="logo-symbol">
-            DS
-          </div>
-          <div class="logo-text">
-            <span class="title">DASH <span>SOLUTIONS</span></span>
-            <span class="subtitle">ENTERPRISE TECHNOLOGY</span>
-          </div>
-        </a>
+        <!-- Logo Dash Solutions (Customizável pelo Admin) -->
+        <div class="brand-logo-wrapper">
+          <a href="#home" class="brand-logo" id="header-brand-logo" aria-label="Dash Solutions Home">
+            <div class="logo-symbol" id="header-logo-symbol">
+              DS
+            </div>
+            <div class="logo-text" id="header-logo-text">
+              <span class="title" id="header-brand-title">DASH <span>SOLUTIONS</span></span>
+              <span class="subtitle" id="header-brand-subtitle">ENTERPRISE TECHNOLOGY</span>
+            </div>
+          </a>
+          <button class="brand-header-edit-btn" id="header-brand-edit-btn" onclick="openBrandEditorModal()"
+            title="Editar Logotipo e Identidade Visual da Marca">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+            <span>Editar Logo</span>
+          </button>
+        </div>
 
         <!-- Menus solicitados: Home | Portfolio | Sobre | Contato -->
         <ul class="nav-menu">
@@ -444,14 +461,23 @@
       <div class="footer-top">
         <!-- Col 1: Brand -->
         <div class="footer-brand">
-          <div class="brand-logo">
+          <div class="brand-logo" id="footer-brand-logo">
             <div class="logo-symbol">DS</div>
             <div class="logo-text">
               <span class="title">DASH <span>SOLUTIONS</span></span>
               <span class="subtitle">ENTERPRISE TECHNOLOGY</span>
             </div>
           </div>
-          <p>
+          <div class="section-admin-control" style="justify-content: flex-start; margin-top: 10px; margin-bottom: 12px;">
+            <button class="section-edit-btn" onclick="openBrandEditorModal()" style="font-size:0.75rem; padding:4px 10px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+              </svg>
+              <span>Personalizar Marca & Logo</span>
+            </button>
+          </div>
+          <p id="footer-brand-desc">
             Reunindo engenharia rigorosa, governança e tecnologia de vanguarda para orientar empresas reais que buscam
             escala sem vulnerabilidades.
           </p>
@@ -497,7 +523,7 @@
 
       <div class="footer-bottom">
         <div>
-          © 2026 Dash Solutions. Todos os direitos reservados.
+          © 2026 <span id="footer-copyright-brand">Dash Solutions</span>. Todos os direitos reservados.
         </div>
         <div class="footer-social-links">
           <a href="#" class="social-icon-btn" aria-label="LinkedIn">
@@ -878,9 +904,9 @@
   <div class="admin-drawer-overlay" id="admin-drawer-overlay" role="dialog" aria-modal="true">
     <div class="admin-drawer-card">
       <div class="admin-drawer-header">
-        <div class="admin-drawer-title">
-          <div class="logo-symbol" style="width:36px; height:36px; font-size:1rem;">DS</div>
-          <span>Painel de Gestão Dash Solutions</span>
+        <div class="admin-drawer-title" id="drawer-brand-header">
+          <div class="logo-symbol" id="drawer-logo-symbol" style="width:36px; height:36px; font-size:1rem;">DS</div>
+          <span id="drawer-brand-name">Painel de Gestão Dash Solutions</span>
         </div>
         <button class="modal-close-btn" id="close-cms-panel-btn" style="position:static;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -892,6 +918,7 @@
 
       <!-- Tabs de Gestão -->
       <div class="admin-tabs" style="overflow-x:auto;">
+        <button class="admin-tab-btn" data-tab="brand">Identidade & Logo</button>
         <button class="admin-tab-btn active" data-tab="portfolio">Cards do Portfólio</button>
         <button class="admin-tab-btn" data-tab="carousel">Carrossel do Banner</button>
         <button class="admin-tab-btn" data-tab="metrics">Métricas & Indicadores</button>
@@ -902,6 +929,36 @@
       </div>
 
       <div class="admin-drawer-body">
+        <!-- Aba 0: Identidade da Marca & Logotipo -->
+        <div class="admin-tab-content" id="tab-brand">
+          <div
+            style="background:rgba(0,31,53,0.6); padding:24px; border-radius:12px; border:1px solid var(--border-glass); margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+              <div>
+                <h4 style="font-size:1.15rem; color:#FFFFFF; margin-bottom:6px;">Personalizar Logotipo & Identidade Visual</h4>
+                <p style="font-size:0.875rem; color:var(--text-muted);">
+                  Suba o logotipo da sua empresa (PNG/SVG/JPG), alterne para monograma, personalize nomes, cores e o slogan corporativo.
+                </p>
+              </div>
+              <button class="btn btn-primary" onclick="openBrandEditorModal()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                <span>Abrir Editor Completo de Logo</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Preview da Marca no Drawer -->
+          <div class="brand-preview-card" style="margin-bottom:24px;">
+            <span style="font-size:0.75rem; letter-spacing:1px; color:var(--text-dim); text-transform:uppercase;">Visualização Atual do Topo</span>
+            <div class="brand-preview-display" id="drawer-brand-preview-display">
+              <!-- Preenchido via updateBrandLivePreview() -->
+            </div>
+          </div>
+        </div>
+
         <!-- Aba 1: Portfólio CRUD -->
         <div class="admin-tab-content active" id="tab-portfolio">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
@@ -1366,6 +1423,169 @@
     </div>
   </div>
 
+  <!-- Modal: Personalização da Identidade Visual & Logotipo do Cliente -->
+  <div class="modal-overlay" id="brand-editor-modal" role="dialog" aria-modal="true"
+    aria-labelledby="brand-editor-title">
+    <div class="modal-card" style="max-width: 820px;">
+      <button class="modal-close-btn" onclick="closeBrandEditorModal()" aria-label="Fechar editor de identidade">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-header">
+        <span class="modal-badge">IDENTIDADE VISUAL & MARCA</span>
+        <h3 class="modal-title" id="brand-editor-title">Personalização da Logo & Marca</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted); margin-top:4px;">
+          Configure a logo do cliente (carregue um arquivo de imagem do computador ou use monograma), nome da empresa e slogan corporativo.
+        </p>
+      </div>
+
+      <div class="modal-body">
+        <form id="brand-editor-form" onsubmit="event.preventDefault(); saveBrandFromForm();">
+          <!-- Live Preview Card -->
+          <div class="brand-preview-card" style="margin-bottom:24px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+              <span style="font-size:0.75rem; letter-spacing:1px; color:var(--text-dim); text-transform:uppercase;">
+                👁️ Pré-visualização em Tempo Real (Cabeçalho & Rodapé)
+              </span>
+              <span style="font-size:0.7rem; color:var(--gold-light);">Fundo Navy Blue #001F35</span>
+            </div>
+            <div class="brand-preview-display" id="modal-brand-preview-display">
+              <!-- Atualizado em tempo real via JS -->
+            </div>
+          </div>
+
+          <!-- Seleção do Modo de Logo: Monograma vs Imagem -->
+          <div style="margin-bottom:20px;">
+            <label class="form-label" style="margin-bottom:8px;">Tipo de Logotipo Principal:</label>
+            <div class="brand-type-toggle">
+              <button type="button" class="brand-type-btn active" id="btn-type-monogram" onclick="setBrandType('monogram')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="4"></rect>
+                  <path d="M7 17V7h4a3 3 0 0 1 0 6H7"></path>
+                </svg>
+                <span>Monograma (Iniciais / Símbolo)</span>
+              </button>
+              <button type="button" class="brand-type-btn" id="btn-type-image" onclick="setBrandType('image')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <span>Logotipo em Imagem (Upload do Cliente)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Campos do Monograma (Visíveis se logoType === 'monogram') -->
+          <div id="brand-monogram-container" style="background:rgba(0,31,53,0.5); padding:20px; border-radius:10px; border:1px solid var(--border-glass); margin-bottom:20px;">
+            <div class="form-group">
+              <label class="form-label" for="brand-monogram-text-input">Iniciais do Símbolo / Monograma (Máximo 3 letras)</label>
+              <input class="form-input" type="text" id="brand-monogram-text-input" maxlength="4" placeholder="ex: DS, G4, TI" value="DS" oninput="updateBrandLivePreview()">
+              <small style="color:var(--text-dim); font-size:0.75rem; display:block; margin-top:4px;">
+                Exibido no emblema de ouro com efeito de brilho suave e borda chanfrada.
+              </small>
+            </div>
+          </div>
+
+          <!-- Campos da Imagem do Cliente (Visíveis se logoType === 'image') -->
+          <div id="brand-image-container" style="background:rgba(0,31,53,0.5); padding:20px; border-radius:10px; border:1px solid var(--border-glass); margin-bottom:20px; display:none;">
+            <label class="form-label">Arquivo de Logotipo do Cliente (PNG, SVG, JPG, WebP)</label>
+            <div class="brand-dropzone" onclick="document.getElementById('brand-logo-file-picker').click()">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              <div style="font-weight:700; color:#FFFFFF; font-size:0.95rem;">Clique para Carregar a Logo do seu Computador</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Formatos aceitos: PNG (com transparência recomendado), SVG, JPG ou WebP</div>
+              <input type="file" id="brand-logo-file-picker" accept="image/*" style="display:none;" onchange="handleLogoFileUpload(event)">
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; gap:12px; flex-wrap:wrap;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('brand-logo-file-picker').click()">
+                📁 Selecionar Arquivo do PC
+              </button>
+              <button type="button" class="btn btn-danger btn-sm" id="btn-remove-logo-img" onclick="clearLogoImage()" style="display:none;">
+                🗑️ Remover Imagem da Logo
+              </button>
+            </div>
+
+            <div class="form-group full-width" style="margin-top:16px;">
+              <label class="form-label" for="brand-logo-url-input">Ou informe uma URL / Caminho da Imagem da Logo:</label>
+              <input class="form-input" type="text" id="brand-logo-url-input" placeholder="https://exemplo.com/logo.png ou assets/logo.png" oninput="updateBrandLivePreview()">
+            </div>
+
+            <div class="form-group full-width" style="margin-top:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label class="form-label" for="brand-logo-height-slider">Altura da Imagem no Menu:</label>
+                <span id="brand-logo-height-val" style="color:var(--gold-light); font-weight:700; font-size:0.85rem;">40px</span>
+              </div>
+              <input type="range" id="brand-logo-height-slider" min="26" max="64" step="2" value="40" style="width:100%; cursor:pointer;" oninput="updateBrandLivePreview()">
+              <small style="color:var(--text-dim); font-size:0.75rem;">Ajuste a escala visual para que o logo do cliente fique proporcional à navegação.</small>
+            </div>
+          </div>
+
+          <!-- Campos de Nome e Slogan -->
+          <div style="background:rgba(0,31,53,0.5); padding:20px; border-radius:10px; border:1px solid var(--border-glass); margin-bottom:20px;">
+            <h4 style="font-size:0.95rem; color:#FFFFFF; margin-bottom:12px;">Textos e Tipografia da Marca</h4>
+            
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="brand-name-first-input">Primeira Palavra (Destaque Branco)</label>
+                <input class="form-input" type="text" id="brand-name-first-input" placeholder="ex: DASH" value="DASH" oninput="updateBrandLivePreview()">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="brand-name-second-input">Segunda Palavra (Destaque Dourado)</label>
+                <input class="form-input" type="text" id="brand-name-second-input" placeholder="ex: SOLUTIONS" value="SOLUTIONS" oninput="updateBrandLivePreview()">
+              </div>
+            </div>
+
+            <div style="margin-top:10px;">
+              <label class="checkbox-item" for="brand-show-name-chk" style="cursor:pointer; display:inline-flex; align-items:center; gap:8px;">
+                <input type="checkbox" id="brand-show-name-chk" checked onchange="updateBrandLivePreview()">
+                <span style="font-size:0.85rem; color:var(--royal-silver);">Exibir Nome da Empresa ao lado do logotipo (desmarque caso o logo em imagem já contenha o nome do cliente)</span>
+              </label>
+            </div>
+
+            <div class="form-group full-width" style="margin-top:16px;">
+              <label class="form-label" for="brand-tagline-input">Slogan / Subtítulo Corporativo</label>
+              <input class="form-input" type="text" id="brand-tagline-input" placeholder="ex: ENTERPRISE TECHNOLOGY" value="ENTERPRISE TECHNOLOGY" oninput="updateBrandLivePreview()">
+            </div>
+
+            <div style="margin-top:8px;">
+              <label class="checkbox-item" for="brand-show-tagline-chk" style="cursor:pointer; display:inline-flex; align-items:center; gap:8px;">
+                <input type="checkbox" id="brand-show-tagline-chk" checked onchange="updateBrandLivePreview()">
+                <span style="font-size:0.85rem; color:var(--royal-silver);">Exibir Slogan / Subtítulo abaixo do nome</span>
+              </label>
+            </div>
+
+            <div class="form-group full-width" style="margin-top:16px;">
+              <label class="form-label" for="brand-footer-desc-input">Texto Institucional da Marca (Rodapé)</label>
+              <textarea class="form-textarea" id="brand-footer-desc-input" rows="2" style="min-height:60px;" placeholder="Breve parágrafo sobre a empresa no rodapé do site"></textarea>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:24px; flex-wrap:wrap; gap:12px;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="resetBrandToDefault()" style="color:var(--text-dim);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+              </svg>
+              <span>Restaurar Padrão (Dash Solutions)</span>
+            </button>
+            <div style="display:flex; gap:12px;">
+              <button type="button" class="btn btn-secondary" onclick="closeBrandEditorModal()">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Salvar Identidade Visual</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- Floating Actions (WhatsApp & Scroll Top) -->
   <div class="floating-actions">
     <button class="scroll-top-btn" aria-label="Voltar ao topo">
@@ -1373,7 +1593,7 @@
         <polyline points="18 15 12 9 6 15"></polyline>
       </svg>
     </button>
-    <a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20as%20solu%C3%A7%C3%B5es%20da%20Dash%20Solutions"
+    <a href="https://wa.me/5591987325580?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20as%20solu%C3%A7%C3%B5es%20da%20Dash%20Solutions"
       target="_blank" class="floating-whatsapp-btn" aria-label="Falar no WhatsApp">
       <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
         <path
