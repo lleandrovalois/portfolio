@@ -1,0 +1,17 @@
+{
+  "name": "dash-solutions-portfolio",
+  "version": "1.0.0",
+  "description": "Dash Solutions - Website Corporativo & Sistema de Gestão (CMS)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "portfolio",
+    "cms",
+    "dash-solutions"
+  ],
+  "author": "",
+  "license": "ISC"
+}

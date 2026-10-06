@@ -649,6 +649,100 @@ window.populateBrandInputs = function() {
 
   const footerDescInput = document.getElementById('brand-footer-desc-input');
   if (footerDescInput) footerDescInput.value = brand.footerDesc || defaultSiteContent.brand.footerDesc;
+
+  if (brand.logoImageUrl && currentEditingBrandType === 'image') {
+    inspectAndDisplayLogoDimensions(brand.logoImageUrl);
+  } else {
+    inspectAndDisplayLogoDimensions('');
+  }
+};
+
+window.inspectAndDisplayLogoDimensions = function(url) {
+  const feedbackEl = document.getElementById('brand-logo-dimensions-feedback');
+  if (!feedbackEl) return;
+
+  if (!url || typeof url !== 'string' || !url.trim()) {
+    feedbackEl.style.display = 'none';
+    feedbackEl.innerHTML = '';
+    return;
+  }
+
+  const testImg = new Image();
+  testImg.onload = function() {
+    const w = testImg.naturalWidth;
+    const h = testImg.naturalHeight;
+    const isSvg = url.includes('image/svg') || url.toLowerCase().endsWith('.svg');
+
+    feedbackEl.style.display = 'flex';
+
+    if (w === 0 || h === 0) {
+      feedbackEl.style.display = 'none';
+      return;
+    }
+
+    const ratioNum = w / h;
+    const ratioStr = ratioNum.toFixed(1);
+    let ratioLabel = 'Horizontal';
+    if (Math.abs(w - h) <= Math.max(w, h) * 0.1) {
+      ratioLabel = 'Quadrado (1:1)';
+    } else if (w < h) {
+      ratioLabel = 'Vertical';
+    } else if (ratioNum >= 2.5) {
+      ratioLabel = 'Horizontal Panorâmico';
+    }
+
+    let isGood = true;
+    let statusText = 'Excelente proporção';
+    let tip = 'Dimensões adequadas para o cabeçalho.';
+
+    if (isSvg) {
+      isGood = true;
+      statusText = 'Vetor SVG';
+      tip = 'Formato vetorial com nitidez infinita em qualquer resolução.';
+    } else if (h < 50) {
+      isGood = false;
+      statusText = 'Atenção: Altura baixa';
+      tip = `A imagem possui apenas ${h}px de altura. Pode perder nitidez em telas de alta densidade (Retina). Recomendamos mínimo de 80px a 100px.`;
+    } else if (w < h) {
+      isGood = false;
+      statusText = 'Orientação Vertical';
+      tip = 'Imagens verticais podem ficar pequenas no cabeçalho horizontal. Recomendamos logos horizontais (~3:1 ou 4:1) ou símbolo quadrado.';
+    } else if (ratioNum >= 2 && ratioNum <= 5 && h >= 60) {
+      isGood = true;
+      statusText = 'Dimensões Ideais';
+      tip = 'Proporção retangular perfeita para o menu de navegação.';
+    } else if (Math.abs(w - h) <= Math.max(w, h) * 0.1 && h >= 60) {
+      isGood = true;
+      statusText = 'Ícone Quadrado Ideal';
+      tip = 'Símbolo quadrado perfeito para ser exibido junto ao nome da empresa.';
+    } else {
+      isGood = true;
+      statusText = 'Compatível';
+      tip = 'A imagem será ajustada proporcionalmente pelo controle de altura abaixo.';
+    }
+
+    feedbackEl.className = `brand-dim-feedback ${isGood ? 'good' : 'warning'}`;
+    feedbackEl.innerHTML = `
+      <div class="brand-dim-feedback-info">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <div>
+          <div><strong>Dimensões Detectadas:</strong> ${w} × ${h} px <span style="color:var(--text-muted); font-size:0.75rem;">(${ratioLabel} &bull; Proporção ${ratioStr}:1)</span></div>
+          <div style="font-size:0.74rem; color:var(--text-muted); margin-top:2px;">${tip}</div>
+        </div>
+      </div>
+      <span class="brand-dim-feedback-status">${statusText}</span>
+    `;
+  };
+
+  testImg.onerror = function() {
+    feedbackEl.style.display = 'none';
+  };
+
+  testImg.src = url;
 };
 
 window.updateBrandLivePreview = function() {
@@ -670,6 +764,12 @@ window.updateBrandLivePreview = function() {
 
   const removeBtn = document.getElementById('btn-remove-logo-img');
   if (removeBtn) removeBtn.style.display = brandObj.logoImageUrl ? 'inline-flex' : 'none';
+
+  if (currentEditingBrandType === 'image' && brandObj.logoImageUrl) {
+    inspectAndDisplayLogoDimensions(brandObj.logoImageUrl);
+  } else {
+    inspectAndDisplayLogoDimensions('');
+  }
 
   const previewHtml = buildBrandLogoHTML(brandObj, { isPreview: true });
 
@@ -696,7 +796,8 @@ window.handleLogoFileUpload = function(event) {
     if (urlInput) urlInput.value = dataUrl;
     setBrandType('image');
     updateBrandLivePreview();
-    showToast('Logotipo carregado com sucesso! Clique em "Salvar" para aplicar.');
+    inspectAndDisplayLogoDimensions(dataUrl);
+    showToast('Logotipo carregado com sucesso! Verifique as dimensões e clique em "Salvar".');
   };
   reader.readAsDataURL(file);
 };
@@ -708,6 +809,7 @@ window.clearLogoImage = function() {
   if (filePicker) filePicker.value = '';
   setBrandType('monogram');
   updateBrandLivePreview();
+  inspectAndDisplayLogoDimensions('');
   showToast('Imagem removida. Modo monograma ativado.');
 };
 
@@ -878,7 +980,7 @@ function initAdminSystem() {
       showToast('Autenticado com sucesso como Administrador Dash!');
       renderPortfolioCards();
     } else {
-      showToast('Usuário ou senha inválidos. Tente admin / dash@2026');
+      showToast('Usuário ou senha inválidos.');
     }
   });
 
