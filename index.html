@@ -23,6 +23,40 @@
     rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
+
+  <!-- Hidratação Imediata do Tema (Zero Flicker) -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('dash_site_content');
+        if (saved) {
+          var parsed = JSON.parse(saved);
+          if (parsed && parsed.theme && parsed.theme.primaryColor) {
+            var t = parsed.theme;
+            var hexToRgbStr = function(hex) {
+              if (!hex) return '185, 145, 91';
+              var c = hex.replace('#', '').trim();
+              if (c.length === 3) c = c.split('').map(function(x) { return x + x; }).join('');
+              var n = parseInt(c, 16);
+              if (isNaN(n) || c.length !== 6) return '185, 145, 91';
+              return ((n >> 16) & 255) + ', ' + ((n >> 8) & 255) + ', ' + (n & 255);
+            };
+            var root = document.documentElement;
+            root.style.setProperty('--primary-rgb', hexToRgbStr(t.primaryColor));
+            root.style.setProperty('--secondary-rgb', hexToRgbStr(t.secondaryColor || '#C9A96E'));
+            root.style.setProperty('--bg-navy-rgb', hexToRgbStr(t.bgMain || '#001F35'));
+            root.style.setProperty('--bg-deep-rgb', hexToRgbStr(t.bgDeep || '#01121E'));
+            root.style.setProperty('--bg-surface-rgb', hexToRgbStr(t.bgSurface || '#06263F'));
+            root.style.setProperty('--royal-gold', t.primaryColor);
+            root.style.setProperty('--gold-light', t.secondaryColor || '#C9A96E');
+            root.style.setProperty('--navy-blue', t.bgMain || '#001F35');
+            root.style.setProperty('--deep-dark', t.bgDeep || '#01121E');
+            root.style.setProperty('--surface-dark', t.bgSurface || '#06263F');
+          }
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 
 <body>
@@ -947,26 +981,51 @@
             style="background:rgba(var(--bg-navy-rgb),0.6); padding:24px; border-radius:12px; border:1px solid var(--border-glass); margin-bottom:20px;">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
               <div>
-                <h4 style="font-size:1.15rem; color:#FFFFFF; margin-bottom:6px;">Paleta de Cores do Site</h4>
-                <p style="font-size:0.875rem; color:var(--text-muted);">
-                  Alterne entre paletas corporativas homologadas ou abra o estúdio completo para customizar cada tom da marca.
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+                  <h4 style="font-size:1.15rem; color:#FFFFFF; margin:0;">Paleta de Cores do Site</h4>
+                  <span id="drawer-theme-badge" style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; background:rgba(16,185,129,0.15); color:#10B981; border:1px solid rgba(16,185,129,0.3); padding:3px 10px; border-radius:20px; font-weight:600;">
+                    <span style="width:7px; height:7px; border-radius:50%; background:#10B981;"></span>
+                    <span id="drawer-theme-badge-text">Salvo no Navegador & Servidor</span>
+                  </span>
+                </div>
+                <p style="font-size:0.875rem; color:var(--text-muted); margin:0;">
+                  Alterne entre paletas corporativas homologadas ou abra o estúdio completo para customizar cada tom. As cores são persistidas imediatamente.
                 </p>
               </div>
-              <button class="btn btn-primary" onclick="openThemeCustomizerModal()">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M12 2a10 10 0 0 0-10 10c0 5.523 4.477 10 10 10a2 2 0 0 0 2-2v-1.5a1.5 1.5 0 0 1 1.5-1.5H17a5 5 0 0 0 5-5c0-4.418-4.477-8-10-8z"></path>
-                  <circle cx="7.5" cy="10.5" r="1.5" fill="currentColor"></circle>
-                  <circle cx="12" cy="7.5" r="1.5" fill="currentColor"></circle>
-                  <circle cx="16.5" cy="10.5" r="1.5" fill="currentColor"></circle>
-                </svg>
-                <span>Abrir Estúdio Completo de Cores</span>
-              </button>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="resetThemeToDefault()">
+                  Restaurar Padrão
+                </button>
+                <button type="button" class="btn btn-primary" onclick="openThemeCustomizerModal()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 2a10 10 0 0 0-10 10c0 5.523 4.477 10 10 10a2 2 0 0 0 2-2v-1.5a1.5 1.5 0 0 1 1.5-1.5H17a5 5 0 0 0 5-5c0-4.418-4.477-8-10-8z"></path>
+                    <circle cx="7.5" cy="10.5" r="1.5" fill="currentColor"></circle>
+                    <circle cx="12" cy="7.5" r="1.5" fill="currentColor"></circle>
+                    <circle cx="16.5" cy="10.5" r="1.5" fill="currentColor"></circle>
+                  </svg>
+                  <span>Abrir Estúdio Completo de Cores</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Card de status da paleta ativa com feedback de sincronização -->
+            <div id="drawer-theme-active-status" style="margin-top:16px; padding:12px 16px; background:rgba(0,0,0,0.25); border-radius:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; border:1px solid rgba(255,255,255,0.06);">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div id="drawer-status-swatch-dot" style="width:18px; height:18px; border-radius:50%; background:var(--royal-gold); box-shadow:0 0 10px var(--gold-glow);"></div>
+                <div>
+                  <div style="font-size:0.85rem; font-weight:700; color:#FFFFFF;">Paleta Ativa: <span id="drawer-status-theme-name" style="color:var(--gold-light);">Ouro & Marinho Nobre</span></div>
+                  <div style="font-size:0.75rem; color:var(--text-dim);">Sincronização persistente ativa (localStorage + theme.json)</div>
+                </div>
+              </div>
+              <span id="drawer-sync-status-indicator" style="font-size:0.75rem; color:#10B981; font-weight:600; display:flex; align-items:center; gap:4px;">
+                <span>✓ Sincronizado</span>
+              </span>
             </div>
           </div>
 
           <div style="margin-bottom:12px;">
-            <h5 style="font-size:0.9rem; color:#FFFFFF; margin-bottom:12px;">Troca Rápida de Paleta:</h5>
+            <h5 style="font-size:0.9rem; color:#FFFFFF; margin-bottom:12px;">Troca Rápida de Paleta (Clique para aplicar e salvar imediatamente):</h5>
             <div class="theme-palette-grid" id="drawer-theme-palette-presets-container">
               <!-- Gerado via renderThemePresets() -->
             </div>
@@ -1767,7 +1826,7 @@
   <div class="modal-overlay" id="theme-customizer-modal" role="dialog" aria-modal="true"
     aria-labelledby="theme-modal-title">
     <div class="modal-card theme-modal-card">
-      <button class="modal-close-btn" onclick="cancelThemeChanges()" aria-label="Fechar estúdio de cores">
+      <button class="modal-close-btn" onclick="closeThemeCustomizerModal()" aria-label="Fechar estúdio de cores">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -1905,7 +1964,7 @@
             <span>Restaurar Paleta Original (Ouro & Marinho)</span>
           </button>
           <div style="display:flex; gap:12px;">
-            <button type="button" class="btn btn-secondary" onclick="cancelThemeChanges()">Cancelar</button>
+            <button type="button" class="btn btn-secondary" onclick="closeThemeCustomizerModal()">Fechar</button>
             <button type="button" class="btn btn-primary" onclick="saveThemeChanges()">Salvar Identidade de Cores</button>
           </div>
         </div>

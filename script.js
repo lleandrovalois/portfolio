@@ -483,6 +483,7 @@ let siteContent = loadStoredSiteContent();
 document.addEventListener('DOMContentLoaded', () => {
   applyTheme(getActiveTheme());
   renderThemePresets();
+  updateDrawerThemeStatus(getActiveTheme());
   renderBrandLogo();
   renderStatsSection();
   renderAboutSection();
@@ -498,6 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   populateContactServiceCheckboxes();
   initAdminSystem();
+  syncThemeFromServer();
 });
 
 /* ==========================================================================
@@ -1035,8 +1037,95 @@ function getActiveTheme() {
   return siteContent.theme || defaultSiteContent.theme;
 }
 
-// Estado de rascunho do tema
+// Persistência com o Servidor Backend (theme.json)
+async function saveThemeToServer(theme) {
+  try {
+    const res = await fetch('/api/save-theme', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(theme)
+    });
+    if (res.ok) {
+      const data = await res.json();
+      console.log('[CMS] Tema persistido com sucesso no servidor:', data);
+      const syncEl = document.getElementById('drawer-sync-status-indicator');
+      if (syncEl) syncEl.innerHTML = '<span>✓ Sincronizado</span>';
+      return true;
+    }
+  } catch (err) {
+    console.log('[CMS] Modo offline / estático (persiste via localStorage):', err.message);
+  }
+  return false;
+}
+
+// Sincronização Automática com theme.json na Inicialização
+async function syncThemeFromServer() {
+  try {
+    const res = await fetch('theme.json?v=' + Date.now(), { cache: 'no-store' });
+    if (res.ok) {
+      const serverTheme = await res.json();
+      if (serverTheme && serverTheme.primaryColor) {
+        siteContent.theme = { ...defaultSiteContent.theme, ...serverTheme };
+        currentDraftTheme = { ...siteContent.theme };
+        localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+        applyTheme(siteContent.theme);
+        renderThemePresets();
+        populateThemeInputs(siteContent.theme);
+        updateDrawerThemeStatus(siteContent.theme);
+        console.log('[CMS] Tema sincronizado com sucesso do servidor (theme.json):', siteContent.theme.preset || 'custom');
+      }
+    }
+  } catch (err) {
+    console.log('[CMS] Sem conexão com theme.json, usando cache local:', err.message);
+  }
+}
+
+// Atualização do Indicador de Tema Ativo na Gaveta CMS
+function updateDrawerThemeStatus(theme) {
+  const current = theme || getActiveTheme();
+  const nameEl = document.getElementById('drawer-status-theme-name');
+  const dotEl = document.getElementById('drawer-status-swatch-dot');
+  if (nameEl) {
+    const matched = THEME_PRESETS.find(p => p.id === current.preset);
+    nameEl.textContent = matched ? matched.name : `Personalizada (${current.primaryColor})`;
+  }
+  if (dotEl) {
+    dotEl.style.backgroundColor = current.primaryColor || '#B9915B';
+    dotEl.style.boxShadow = `0 0 10px rgba(${hexToRgb(current.primaryColor).str}, 0.5)`;
+  }
+}
+
+// Estado de rascunho do tema e timer de auto-salvamento
 let currentDraftTheme = null;
+let themeAutoSaveTimer = null;
+
+// Função Mestra de Commit e Persistência Imediata de Tema
+function commitAndPersistTheme(themeObj, showToastMsg = null) {
+  if (!themeObj) return;
+  const theme = { ...defaultSiteContent.theme, ...themeObj };
+  siteContent.theme = { ...theme };
+  currentDraftTheme = { ...theme };
+
+  // 1. Salva imediatamente no localStorage (sem perdas entre reloads)
+  localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+
+  // 2. Aplica variáveis CSS instantaneamente no DOM
+  applyTheme(theme);
+
+  // 3. Atualiza controles visuais
+  populateThemeInputs(theme);
+  renderThemePresets();
+  updateThemePreviewShowcase(theme);
+  updateDrawerThemeStatus(theme);
+
+  // 4. Salva no servidor (/api/save-theme -> theme.json)
+  saveThemeToServer(theme);
+
+  // 5. Notificação de confirmação ao usuário
+  if (showToastMsg) {
+    showToast(showToastMsg);
+  }
+}
 
 function applyTheme(themeObj, isPreview = false) {
   if (!themeObj) return;
@@ -1110,32 +1199,37 @@ window.openThemeCustomizerModal = function() {
 };
 
 window.closeThemeCustomizerModal = function() {
+  clearTimeout(themeAutoSaveTimer);
+  if (currentDraftTheme) {
+    commitAndPersistTheme(currentDraftTheme);
+  }
   const modal = document.getElementById('theme-customizer-modal');
   modal?.classList.remove('active');
   document.body.style.overflow = '';
 };
 
 window.cancelThemeChanges = function() {
-  // Reverte qualquer alteração temporária na tela para o tema salvo
   applyTheme(getActiveTheme());
-  closeThemeCustomizerModal();
+  const modal = document.getElementById('theme-customizer-modal');
+  modal?.classList.remove('active');
+  document.body.style.overflow = '';
 };
 
 window.saveThemeChanges = function() {
-  if (!currentDraftTheme) return;
-  siteContent.theme = { ...currentDraftTheme };
-  localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
-  applyTheme(siteContent.theme);
-  renderThemePresets();
-  closeThemeCustomizerModal();
-  showToast('🎨 Identidade visual e paleta de cores atualizadas com sucesso em todo o site!');
+  clearTimeout(themeAutoSaveTimer);
+  if (!currentDraftTheme) currentDraftTheme = { ...getActiveTheme() };
+  commitAndPersistTheme(currentDraftTheme, '🎨 Identidade visual e paleta de cores salvas com sucesso em todo o site!');
+  const modal = document.getElementById('theme-customizer-modal');
+  modal?.classList.remove('active');
+  document.body.style.overflow = '';
 };
 
 window.resetThemeToDefault = function() {
   if (confirm('Deseja restaurar as cores do site para a paleta padrão (Ouro & Marinho Nobre)?')) {
     const defaultPreset = THEME_PRESETS[0];
-    currentDraftTheme = {
+    const defTheme = {
       preset: "default",
+      name: defaultPreset.name,
       primaryColor: defaultPreset.primaryColor,
       secondaryColor: defaultPreset.secondaryColor,
       darkAccent: defaultPreset.darkAccent,
@@ -1143,12 +1237,7 @@ window.resetThemeToDefault = function() {
       bgDeep: defaultPreset.bgDeep,
       bgSurface: defaultPreset.bgSurface
     };
-    siteContent.theme = { ...currentDraftTheme };
-    localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
-    applyTheme(currentDraftTheme);
-    populateThemeInputs(currentDraftTheme);
-    renderThemePresets();
-    showToast('Paleta de cores restaurada para o padrão oficial.');
+    commitAndPersistTheme(defTheme, 'Paleta de cores restaurada para o padrão oficial.');
   }
 };
 
@@ -1156,8 +1245,9 @@ window.selectThemePreset = function(presetId) {
   const preset = THEME_PRESETS.find(p => p.id === presetId);
   if (!preset) return;
 
-  currentDraftTheme = {
+  const newTheme = {
     preset: preset.id,
+    name: preset.name,
     primaryColor: preset.primaryColor,
     secondaryColor: preset.secondaryColor,
     darkAccent: preset.darkAccent,
@@ -1166,9 +1256,7 @@ window.selectThemePreset = function(presetId) {
     bgSurface: preset.bgSurface
   };
 
-  populateThemeInputs(currentDraftTheme);
-  applyTheme(currentDraftTheme, true);
-  renderThemePresets();
+  commitAndPersistTheme(newTheme, `🎨 Paleta "${preset.name}" aplicada e salva com sucesso!`);
 };
 
 window.handleCustomColorInput = function(prop, val) {
@@ -1186,7 +1274,18 @@ window.handleCustomColorInput = function(prop, val) {
   if (hexEl) hexEl.value = val.toUpperCase();
 
   applyTheme(currentDraftTheme, true);
-  renderThemePresets();
+  updateThemePreviewShowcase(currentDraftTheme);
+
+  // Auto-salvamento com debounce (400ms) para persistir sem atrasos nem perda
+  clearTimeout(themeAutoSaveTimer);
+  const syncEl = document.getElementById('drawer-sync-status-indicator');
+  if (syncEl) syncEl.innerHTML = '<span style="color:#F59E0B;">Salvando...</span>';
+
+  themeAutoSaveTimer = setTimeout(() => {
+    if (currentDraftTheme) {
+      commitAndPersistTheme(currentDraftTheme);
+    }
+  }, 400);
 };
 
 window.handleCustomColorHexInput = function(prop, rawVal) {
@@ -1227,10 +1326,7 @@ window.autoHarmonizeCurrentTheme = function() {
   currentDraftTheme.bgDeep = bgDeepHex;
   currentDraftTheme.bgSurface = bgSurfaceHex;
 
-  populateThemeInputs(currentDraftTheme);
-  applyTheme(currentDraftTheme, true);
-  renderThemePresets();
-  showToast('✨ Fundos e contrastes harmonizados automaticamente com base na cor primária!');
+  commitAndPersistTheme(currentDraftTheme, '✨ Fundos e contrastes harmonizados e salvos automaticamente!');
 };
 
 function populateThemeInputs(theme) {
