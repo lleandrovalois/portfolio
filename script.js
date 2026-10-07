@@ -31,43 +31,106 @@ const defaultSiteContent = {
     footerDesc: "Reunindo engenharia rigorosa, governança e tecnologia de vanguarda para orientar empresas reais que buscam escala sem vulnerabilidades."
   },
 
+  // Top Announcement Bar
   announcementBadge: "EXCLUSIVO",
   announcementText: "Excelência em Infraestrutura e Transformação Digital Corporativa |",
   announcementLinkText: "Agende um diagnóstico técnico gratuito",
+  announcementLinkUrl: "#contato",
+  topCity: "Belém • Pará",
+
+  // Navbar CTA
+  navCtaText: "Falar com Especialista",
+  navCtaLink: "#contato",
+
+  // Hero Section
   heroTag: "Tecnologia de Alta Performance & Governança",
   heroTitle: "Para quem busca <br><span class=\"serif-italic\">robustez, método</span> e escala contínua.",
   heroSubtitle: "Unimos engenharia de software de ponta, inteligência artificial aplicada, sustentação de infraestrutura crítica e cibersegurança em um único ecossistema corporativo.",
+  heroPrimaryCtaText: "Explorar o Portfólio",
+  heroPrimaryCtaLink: "#portfolio",
+  heroSecondaryCtaText: "Diagnóstico de TI Gratuito",
+  heroSecondaryCtaLink: "#contato",
 
-  // 4 Métricas de Autoridade (Editáveis)
+  // Selos de Confiança (Hero Badges Dinâmicos)
+  heroBadges: [
+    {
+      id: "badge-1",
+      text: "SLA Corporativo 24/7",
+      icon: "shield"
+    },
+    {
+      id: "badge-2",
+      text: "Conformidade ISO & LGPD",
+      icon: "check"
+    },
+    {
+      id: "badge-3",
+      text: "Metodologia Ágil & ITIL 4",
+      icon: "star"
+    }
+  ],
+
+  // Métricas de Autoridade (Cards Totalmente Dinâmicos)
   metrics: [
     {
+      id: "m-1",
       val: "+99.9%",
       label: "Uptime Garantido",
       desc: "SLA rigoroso com monitoramento proativo"
     },
     {
+      id: "m-2",
       val: "100%",
       label: "Gestão Sob Medida",
       desc: "Projetos alinhados com metas de faturamento"
     },
     {
+      id: "m-3",
       val: "+10 anos",
       label: "Experiência Corporativa",
       desc: "Liderando infraestrutura em alta complexidade"
     },
     {
+      id: "m-4",
       val: "24/7",
       label: "Sustentação Crítica",
       desc: "Engenheiros prontos para qualquer incidente"
     }
   ],
 
-  // Seção Sobre Nós Completa (Editável)
+  // Cabeçalho da Seção de Portfólio
+  portfolioHeader: {
+    tag: "PORTFÓLIO COMPLETO",
+    title: "Soluções Corporativas Dash Solutions",
+    subtitle: "Cada projeto é tratado como um investimento estratégico. Conheça nossos pilares de entrega tecnológica com metodologia, disciplina e resultados mensuráveis."
+  },
+
+  // Seção Sobre Nós Completa (Com Pilares Dinâmicos!)
   about: {
     tag: "SOBRE NÓS",
     title: "Tecnologia com visão de negócios e <span class=\"serif-italic\">mentalidade de dono.</span>",
     quote: "Não acreditamos em tecnologia pela tecnologia. Acreditamos em sistemas que operam sem falhas, processos que eliminam desperdícios e segurança que protege o futuro da empresa.",
     desc: "Nascemos com o propósito de transformar a TI corporativa de um centro de custos reativo em um motor de aceleração e governança para empresas ambiciosas. Unimos expertise em arquitetura de dados e nuvem com a agilidade de desenvolvimento moderno.",
+    pillars: [
+      {
+        id: "pillar-1",
+        num: "01",
+        title: "Governança e Método Rigoroso",
+        desc: "Processos baseados em ITIL 4, frameworks ágeis e padrões internacionais de documentação para que a sua empresa nunca fique refém de indivíduos."
+      },
+      {
+        id: "pillar-2",
+        num: "02",
+        title: "Segurança por Design (Zero-Trust)",
+        desc: "Nenhuma conexão ou usuário é confiado cegamente. Blindagem perimetral, backups imutáveis e resposta imediata a vulnerabilidades."
+      },
+      {
+        id: "pillar-3",
+        num: "03",
+        title: "Inovação Pragmática com IA",
+        desc: "Implementamos Inteligência Artificial onde ela gera economia palpável e ganho real de velocidade, sem modismos passageiros."
+      }
+    ],
     pillar1Num: "01",
     pillar1Title: "Governança e Método Rigoroso",
     pillar1Desc: "Processos baseados em ITIL 4, frameworks ágeis e padrões internacionais de documentação para que a sua empresa nunca fique refém de indivíduos.",
@@ -92,28 +155,32 @@ const defaultSiteContent = {
     ]
   },
 
-  // Seção Metodologia / Nosso Framework (Editável)
+  // Seção Metodologia / Nosso Framework (Passos Dinâmicos!)
   framework: {
     tag: "NOSSO FRAMEWORK",
     title: "Como Entregamos Resultados de <span class=\"serif-italic\">Ponta a Ponta</span>",
     subtitle: "Uma esteira disciplinada que garante previsibilidade, clareza e ausência de surpresas no orçamento.",
     steps: [
       {
+        id: "step-1",
         num: "01",
         title: "Diagnóstico & Assessment",
         desc: "Varredura profunda do parque atual, identificando vulnerabilidades, gargalos de rede e oportunidades imediatas de otimização."
       },
       {
+        id: "step-2",
         num: "02",
         title: "Arquitetura & Desenho",
         desc: "Elaboração da topologia ideal, definição de métricas de SLA, estimativa de custos em nuvem e planejamento de janelas sem downtime."
       },
       {
+        id: "step-3",
         num: "03",
         title: "Implantação & Hardening",
         desc: "Execução técnica com testes de estresse, configuração de segurança, parametrização de ferramentas e capacitação das equipes."
       },
       {
+        id: "step-4",
         num: "04",
         title: "Sustentação & Evolução 24/7",
         desc: "Monitoramento contínuo em tempo real, patches preventivos, relatórios executivos mensais e suporte de engenharia sênior."
@@ -145,6 +212,36 @@ const defaultSiteContent = {
       subtitle: "Proteção perimetral avançada, conformidade rigorosa com a LGPD e resposta imediata a incidentes."
     }
   ],
+
+  // Seção de Contato Completa
+  contact: {
+    tag: "FALE CONOSCO",
+    title: "Pronto para Elevar o Nível da Sua Tecnologia?",
+    subtitle: "Agende uma reunião estratégica com nossos arquitetos de soluções. Avaliaremos o cenário da sua empresa e apresentaremos um plano de ação personalizado.",
+    addressTitle: "Endereço Corporativo",
+    companyAddress: "Av. Engenheiro Luís Carlos Berrini, 105 - São Paulo, SP",
+    emailTitle: "E-mail de Contato",
+    companyEmail: "contato@dashsolutions.com.br",
+    phoneTitle: "Telefone & WhatsApp",
+    companyPhone: "+55 (11) 99999-9999",
+    companyPhoneLink: "https://wa.me/5591987325580",
+    formTitle: "Solicite uma Proposta sob Medida",
+    formSubtitle: "Preencha os campos abaixo. Retornamos em menos de 2 horas em dias úteis.",
+    formButtonText: "Enviar Solicitação de Diagnóstico"
+  },
+
+  // Rodapé Completo
+  footer: {
+    solutionsTitle: "Principais Soluções",
+    navTitle: "Navegação",
+    newsletterTitle: "Radar Tecnológico",
+    newsletterDesc: "Receba insights executivos sobre tendências de IA, cibersegurança e infraestrutura para negócios.",
+    newsletterBtnText: "Assinar",
+    copyrightText: "Dash Solutions. Todos os direitos reservados.",
+    socialLinkedin: "https://linkedin.com",
+    socialInstagram: "https://instagram.com",
+    socialYoutube: "https://youtube.com"
+  },
 
   companyAddress: "Av. Engenheiro Luís Carlos Berrini, 105 - São Paulo, SP",
   companyEmail: "contato@dashsolutions.com.br",
@@ -459,15 +556,69 @@ function loadStoredSiteContent() {
   if (saved) {
     try {
       const parsed = JSON.parse(saved);
+
+      // Migração e garantia de pilares dinâmicos
+      let pillars = parsed.about?.pillars;
+      if (!pillars || !Array.isArray(pillars) || pillars.length === 0) {
+        if (parsed.about && (parsed.about.pillar1Title || defaultSiteContent.about.pillar1Title)) {
+          pillars = [
+            { id: "pillar-1", num: parsed.about.pillar1Num || "01", title: parsed.about.pillar1Title || defaultSiteContent.about.pillar1Title, desc: parsed.about.pillar1Desc || defaultSiteContent.about.pillar1Desc },
+            { id: "pillar-2", num: parsed.about.pillar2Num || "02", title: parsed.about.pillar2Title || defaultSiteContent.about.pillar2Title, desc: parsed.about.pillar2Desc || defaultSiteContent.about.pillar2Desc },
+            { id: "pillar-3", num: parsed.about.pillar3Num || "03", title: parsed.about.pillar3Title || defaultSiteContent.about.pillar3Title, desc: parsed.about.pillar3Desc || defaultSiteContent.about.pillar3Desc }
+          ];
+        } else {
+          pillars = JSON.parse(JSON.stringify(defaultSiteContent.about.pillars));
+        }
+      }
+
+      // Migração e garantia de passos do framework dinâmicos
+      let steps = parsed.framework?.steps;
+      if (!steps || !Array.isArray(steps) || steps.length === 0) {
+        steps = JSON.parse(JSON.stringify(defaultSiteContent.framework.steps));
+      } else {
+        steps = steps.map((s, idx) => ({ ...s, id: s.id || `step-${idx + 1}` }));
+      }
+
+      // Migração e garantia de métricas com ID
+      let metrics = parsed.metrics && parsed.metrics.length 
+        ? parsed.metrics.map((m, idx) => ({ ...m, id: m.id || `m-${idx + 1}` })) 
+        : JSON.parse(JSON.stringify(defaultSiteContent.metrics));
+
+      // Selos de confiança do Hero
+      let heroBadges = parsed.heroBadges && Array.isArray(parsed.heroBadges) && parsed.heroBadges.length
+        ? parsed.heroBadges
+        : JSON.parse(JSON.stringify(defaultSiteContent.heroBadges));
+
       return {
         ...defaultSiteContent,
         ...parsed,
         theme: parsed.theme ? { ...defaultSiteContent.theme, ...parsed.theme } : { ...defaultSiteContent.theme },
         brand: parsed.brand ? { ...defaultSiteContent.brand, ...parsed.brand } : { ...defaultSiteContent.brand },
-        metrics: parsed.metrics && parsed.metrics.length ? parsed.metrics : [...defaultSiteContent.metrics],
-        about: parsed.about ? { ...defaultSiteContent.about, ...parsed.about } : { ...defaultSiteContent.about },
-        framework: parsed.framework ? { ...defaultSiteContent.framework, ...parsed.framework } : { ...defaultSiteContent.framework },
-        heroCarousel: parsed.heroCarousel && parsed.heroCarousel.length ? parsed.heroCarousel : [...defaultSiteContent.heroCarousel]
+        heroBadges: heroBadges,
+        metrics: metrics,
+        portfolioHeader: parsed.portfolioHeader ? { ...defaultSiteContent.portfolioHeader, ...parsed.portfolioHeader } : { ...defaultSiteContent.portfolioHeader },
+        about: {
+          ...defaultSiteContent.about,
+          ...(parsed.about || {}),
+          pillars
+        },
+        framework: {
+          ...defaultSiteContent.framework,
+          ...(parsed.framework || {}),
+          steps
+        },
+        heroCarousel: parsed.heroCarousel && parsed.heroCarousel.length ? parsed.heroCarousel : [...defaultSiteContent.heroCarousel],
+        contact: {
+          ...defaultSiteContent.contact,
+          companyAddress: parsed.companyAddress || defaultSiteContent.companyAddress,
+          companyEmail: parsed.companyEmail || defaultSiteContent.companyEmail,
+          companyPhone: parsed.companyPhone || defaultSiteContent.companyPhone,
+          ...(parsed.contact || {})
+        },
+        footer: {
+          ...defaultSiteContent.footer,
+          ...(parsed.footer || {})
+        }
       };
     } catch (e) {
       console.error("Erro ao carregar conteúdo do site:", e);
@@ -485,6 +636,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderThemePresets();
   updateDrawerThemeStatus(getActiveTheme());
   renderBrandLogo();
+  renderHeroBadges();
   renderStatsSection();
   renderAboutSection();
   renderFrameworkSection();
@@ -1387,28 +1539,126 @@ function renderThemePresets() {
 }
 
 /* ==========================================================================
-   RENDERIZAÇÃO DA SEÇÃO DE MÉTRICAS (BARRA DE INDICADORES)
+   RENDERIZAÇÃO DOS SELOS DE CONFIANÇA DO HERO (TRUST BADGES DINÂMICOS)
+   ========================================================================== */
+function renderHeroBadges() {
+  const container = document.getElementById('hero-badges-container');
+  if (!container) return;
+
+  const badges = siteContent.heroBadges || defaultSiteContent.heroBadges;
+  const getBadgeIcon = (iconName) => {
+    switch (iconName) {
+      case 'check':
+        return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+      case 'star':
+        return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
+      case 'lock':
+        return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`;
+      case 'zap':
+        return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>`;
+      case 'award':
+        return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>`;
+      case 'shield':
+      default:
+        return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>`;
+    }
+  };
+
+  let html = badges.map((b, index) => `
+    <div class="hero-badge-item" data-badge-id="${b.id || index}">
+      ${getBadgeIcon(b.icon)}
+      <span>${escapeHtml(b.text)}</span>
+      <button type="button" class="badge-delete-btn" onclick="deleteHeroBadge(${index})" title="Excluir este selo">✕</button>
+    </div>
+  `).join('');
+
+  html += `
+    <button type="button" class="badge-add-btn" onclick="openSingleBadgeModal(null)" title="Adicionar novo selo">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      <span>+ Adicionar Selo</span>
+    </button>
+  `;
+
+  container.innerHTML = html;
+}
+
+/* ==========================================================================
+   RENDERIZAÇÃO DA SEÇÃO DE MÉTRICAS (CARDS DINÂMICOS COM ADIÇÃO E EXCLUSÃO)
    ========================================================================== */
 function renderStatsSection() {
   const grid = document.getElementById('stats-grid-container');
   if (!grid || !siteContent.metrics) return;
 
-  grid.innerHTML = siteContent.metrics.map((m, index) => `
+  let html = siteContent.metrics.map((m, index) => `
     <div class="stat-card" data-metric-index="${index}">
+      <div class="card-admin-bar">
+        <button class="card-admin-btn" onclick="openSingleMetricModal(${index})" title="Editar esta métrica">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Editar
+        </button>
+        <button class="card-admin-btn danger" onclick="deleteMetric(${index})" title="Excluir esta métrica">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          Excluir
+        </button>
+      </div>
       <div class="stat-number">${escapeHtml(m.val)}</div>
       <div class="stat-label">${escapeHtml(m.label)}</div>
       <div class="stat-desc">${escapeHtml(m.desc)}</div>
     </div>
   `).join('');
+
+  if (isUserAdmin()) {
+    html += `
+      <div class="add-new-card-cta" onclick="openSingleMetricModal(null)" style="padding:24px 16px; cursor:pointer;" title="Incluir novo indicador de métrica">
+        <div class="icon-plus" style="width:40px; height:40px; font-size:1.5rem; margin-bottom:8px;">+</div>
+        <div style="font-size:0.95rem; font-weight:700; color:#FFFFFF;">Adicionar Métrica</div>
+        <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">Novo número de autoridade</div>
+      </div>
+    `;
+  }
+
+  grid.innerHTML = html;
 }
 
 /* ==========================================================================
-   RENDERIZAÇÃO DA SEÇÃO SOBRE NÓS COMPLETA (TEXTOS, PILARES & ECOSSISTEMA)
+   RENDERIZAÇÃO DA SEÇÃO SOBRE NÓS (PILARES DINÂMICOS & ECOSSISTEMA)
    ========================================================================== */
 function renderAboutSection() {
   const container = document.getElementById('about-grid-container');
   if (!container || !siteContent.about) return;
   const ab = siteContent.about;
+  const pillars = ab.pillars || defaultSiteContent.about.pillars;
+
+  let pillarsHtml = pillars.map((pil, index) => `
+    <div class="pillar-item" data-pillar-index="${index}">
+      <div class="card-admin-bar">
+        <button class="card-admin-btn" onclick="openSinglePillarModal(${index})" title="Editar este pilar">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Editar
+        </button>
+        <button class="card-admin-btn danger" onclick="deletePillar(${index})" title="Excluir este pilar">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          Excluir
+        </button>
+      </div>
+      <div class="pillar-item-body">
+        <span class="pillar-number">${escapeHtml(pil.num || `0${index + 1}`)}</span>
+        <div class="pillar-text">
+          <h4>${escapeHtml(pil.title)}</h4>
+          <p>${escapeHtml(pil.desc)}</p>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  if (isUserAdmin()) {
+    pillarsHtml += `
+      <button type="button" class="add-card-inline-btn" onclick="openSinglePillarModal(null)" title="Incluir novo pilar metodológico">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span>+ Adicionar Novo Pilar Metodológico</span>
+      </button>
+    `;
+  }
 
   container.innerHTML = `
     <!-- Left Content -->
@@ -1419,27 +1669,7 @@ function renderAboutSection() {
       <p>${escapeHtml(ab.desc)}</p>
 
       <div class="about-pillars">
-        <div class="pillar-item">
-          <span class="pillar-number">${escapeHtml(ab.pillar1Num || '01')}</span>
-          <div class="pillar-text">
-            <h4>${escapeHtml(ab.pillar1Title)}</h4>
-            <p>${escapeHtml(ab.pillar1Desc)}</p>
-          </div>
-        </div>
-        <div class="pillar-item">
-          <span class="pillar-number">${escapeHtml(ab.pillar2Num || '02')}</span>
-          <div class="pillar-text">
-            <h4>${escapeHtml(ab.pillar2Title)}</h4>
-            <p>${escapeHtml(ab.pillar2Desc)}</p>
-          </div>
-        </div>
-        <div class="pillar-item">
-          <span class="pillar-number">${escapeHtml(ab.pillar3Num || '03')}</span>
-          <div class="pillar-text">
-            <h4>${escapeHtml(ab.pillar3Title)}</h4>
-            <p>${escapeHtml(ab.pillar3Desc)}</p>
-          </div>
-        </div>
+        ${pillarsHtml}
       </div>
     </div>
 
@@ -1466,7 +1696,7 @@ function renderAboutSection() {
 }
 
 /* ==========================================================================
-   APLICAÇÃO DOS TEXTOS GERAIS NO DOM
+   APLICAÇÃO DOS TEXTOS GERAIS NO DOM (CADA CAMPO DE TEXTO DO SITE)
    ========================================================================== */
 function applyGeneralTextsToDOM() {
   const bind = (id, value) => {
@@ -1477,16 +1707,72 @@ function applyGeneralTextsToDOM() {
     const el = document.getElementById(id);
     if (el && value !== undefined) el.innerHTML = value;
   };
+  const bindAttr = (id, attr, value) => {
+    const el = document.getElementById(id);
+    if (el && value !== undefined) el.setAttribute(attr, value);
+  };
 
+  // Top Announcement Bar
   bind('top-announcement-badge', siteContent.announcementBadge);
   bind('top-announcement-text', siteContent.announcementText);
   bind('top-announcement-link-text', siteContent.announcementLinkText);
+  bindAttr('top-announcement-link', 'href', siteContent.announcementLinkUrl || '#contato');
+  bind('top-city-text', siteContent.topCity || 'Belém • Pará');
+
+  // Navbar CTA
+  bind('nav-cta-text', siteContent.navCtaText || 'Falar com Especialista');
+  bindAttr('nav-cta-link', 'href', siteContent.navCtaLink || '#contato');
+
+  // Hero Section
   bind('hero-tag-text', siteContent.heroTag);
   bindHTML('hero-title-text', siteContent.heroTitle);
   bind('hero-subtitle-text', siteContent.heroSubtitle);
-  bind('company-address-text', siteContent.companyAddress);
-  bind('company-email-text', siteContent.companyEmail);
-  bind('company-phone-text', siteContent.companyPhone);
+  bind('hero-primary-cta-text', siteContent.heroPrimaryCtaText || 'Explorar o Portfólio');
+  bindAttr('hero-primary-cta-link', 'href', siteContent.heroPrimaryCtaLink || '#portfolio');
+  bind('hero-secondary-cta-text', siteContent.heroSecondaryCtaText || 'Diagnóstico de TI Gratuito');
+  bindAttr('hero-secondary-cta-link', 'href', siteContent.heroSecondaryCtaLink || '#contato');
+
+  // Portfolio Section Header
+  const pf = siteContent.portfolioHeader || defaultSiteContent.portfolioHeader;
+  bind('portfolio-tag-text', pf.tag);
+  bind('portfolio-title-text', pf.title);
+  bind('portfolio-subtitle-text', pf.subtitle);
+
+  // Contact Section
+  const ct = siteContent.contact || defaultSiteContent.contact;
+  bind('contact-tag-text', ct.tag);
+  bind('contact-title-text', ct.title);
+  bind('contact-subtitle-text', ct.subtitle);
+  bind('contact-address-title', ct.addressTitle || 'Endereço Corporativo');
+  bind('company-address-text', ct.companyAddress || siteContent.companyAddress);
+  bind('contact-email-title', ct.emailTitle || 'E-mail de Contato');
+  bind('company-email-text', ct.companyEmail || siteContent.companyEmail);
+  bind('company-email-link-text', ct.companyEmail || siteContent.companyEmail);
+  bindAttr('company-email-link', 'href', `mailto:${ct.companyEmail || siteContent.companyEmail}`);
+  bind('contact-phone-title', ct.phoneTitle || 'Telefone & WhatsApp');
+  bind('company-phone-text', ct.companyPhone || siteContent.companyPhone);
+  bindAttr('company-phone-link', 'href', ct.companyPhoneLink || `https://wa.me/5591987325580`);
+  bind('contact-form-title', ct.formTitle || 'Solicite uma Proposta sob Medida');
+  bind('contact-form-subtitle', ct.formSubtitle || 'Preencha os campos abaixo. Retornamos em menos de 2 horas em dias úteis.');
+  bind('contact-form-btn-text', ct.formButtonText || 'Enviar Solicitação de Diagnóstico');
+
+  // Floating WhatsApp
+  if (ct.companyPhoneLink) {
+    bindAttr('floating-whatsapp-btn', 'href', ct.companyPhoneLink);
+  }
+
+  // Footer Section
+  const ft = siteContent.footer || defaultSiteContent.footer;
+  bind('footer-brand-desc', siteContent.brand?.footerDesc || defaultSiteContent.brand.footerDesc);
+  bind('footer-solutions-title', ft.solutionsTitle || 'Principais Soluções');
+  bind('footer-nav-title', ft.navTitle || 'Navegação');
+  bind('footer-newsletter-title', ft.newsletterTitle || 'Radar Tecnológico');
+  bind('footer-newsletter-desc', ft.newsletterDesc || 'Receba insights executivos sobre tendências de IA, cibersegurança e infraestrutura para negócios.');
+  bind('footer-newsletter-btn-text', ft.newsletterBtnText || 'Assinar');
+  bind('footer-copyright-text', ft.copyrightText || 'Dash Solutions. Todos os direitos reservados.');
+  bindAttr('footer-social-linkedin', 'href', ft.socialLinkedin || '#');
+  bindAttr('footer-social-instagram', 'href', ft.socialInstagram || '#');
+  bindAttr('footer-social-youtube', 'href', ft.socialYoutube || '#');
 }
 
 /* ==========================================================================
@@ -1695,8 +1981,92 @@ function closeAdminDrawer() {
 }
 
 /* ==========================================================================
-   EDITOR DE MÉTRICAS (INDICADORES)
+   CRUD & MODAIS DINÂMICOS DE MÉTRICAS (INDICADORES DE AUTORIDADE)
    ========================================================================== */
+let editingMetricIndex = null;
+
+window.openSingleMetricModal = function(index = null) {
+  closeAdminDrawer();
+  editingMetricIndex = (index !== null && index >= 0) ? index : null;
+  const modal = document.getElementById('single-metric-editor-modal');
+  const titleEl = document.getElementById('single-metric-modal-title');
+  const valInput = document.getElementById('single-metric-val');
+  const labelInput = document.getElementById('single-metric-label');
+  const descInput = document.getElementById('single-metric-desc');
+
+  const m = siteContent.metrics || defaultSiteContent.metrics;
+  if (editingMetricIndex !== null && m[editingMetricIndex]) {
+    const item = m[editingMetricIndex];
+    if (titleEl) titleEl.textContent = 'Editar Indicador: ' + (item.label || item.val);
+    if (valInput) valInput.value = item.val || '';
+    if (labelInput) labelInput.value = item.label || '';
+    if (descInput) descInput.value = item.desc || '';
+  } else {
+    if (titleEl) titleEl.textContent = 'Adicionar Nova Métrica de Autoridade';
+    if (valInput) valInput.value = '';
+    if (labelInput) labelInput.value = '';
+    if (descInput) descInput.value = '';
+  }
+
+  modal?.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeSingleMetricModal = function() {
+  const modal = document.getElementById('single-metric-editor-modal');
+  modal?.classList.remove('active');
+  document.body.style.overflow = '';
+};
+
+window.saveSingleMetricFromForm = function() {
+  const val = document.getElementById('single-metric-val')?.value.trim();
+  const label = document.getElementById('single-metric-label')?.value.trim();
+  const desc = document.getElementById('single-metric-desc')?.value.trim() || '';
+
+  if (!val || !label) {
+    showToast('Preencha pelo menos o valor e o rótulo da métrica.');
+    return;
+  }
+
+  if (!siteContent.metrics) siteContent.metrics = [];
+
+  if (editingMetricIndex !== null && siteContent.metrics[editingMetricIndex]) {
+    siteContent.metrics[editingMetricIndex] = {
+      ...siteContent.metrics[editingMetricIndex],
+      val,
+      label,
+      desc
+    };
+    showToast('Métrica atualizada com sucesso!');
+  } else {
+    siteContent.metrics.push({
+      id: 'm-' + Date.now(),
+      val,
+      label,
+      desc
+    });
+    showToast('Nova métrica adicionada com sucesso!');
+  }
+
+  localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+  renderStatsSection();
+  renderCMSMetricsList();
+  closeSingleMetricModal();
+};
+
+window.deleteMetric = function(index) {
+  const m = siteContent.metrics || [];
+  if (!m[index]) return;
+
+  if (confirm(`Tem certeza que deseja excluir o indicador "${m[index].label || m[index].val}"?`)) {
+    siteContent.metrics.splice(index, 1);
+    localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+    renderStatsSection();
+    renderCMSMetricsList();
+    showToast('Métrica removida do site.');
+  }
+};
+
 window.openMetricsEditorModal = function() {
   closeAdminDrawer();
   populateMetricsInputs();
@@ -1712,43 +2082,129 @@ window.closeMetricsEditorModal = function() {
 };
 
 function populateMetricsInputs() {
-  const m = siteContent.metrics || defaultSiteContent.metrics;
-  for (let i = 0; i < 4; i++) {
-    const val = m[i] ? m[i].val : '';
-    const label = m[i] ? m[i].label : '';
-    const desc = m[i] ? m[i].desc : '';
-
-    const inputVal = document.getElementById(`edit-metric-${i}-val`);
-    const inputLabel = document.getElementById(`edit-metric-${i}-label`);
-    const inputDesc = document.getElementById(`edit-metric-${i}-desc`);
-
-    if (inputVal) inputVal.value = val;
-    if (inputLabel) inputLabel.value = label;
-    if (inputDesc) inputDesc.value = desc;
-  }
+  renderCMSMetricsList();
 }
 
-function saveMetricsFromForm() {
-  const newMetrics = [];
-  for (let i = 0; i < 4; i++) {
-    newMetrics.push({
-      val: document.getElementById(`edit-metric-${i}-val`)?.value.trim() || '',
-      label: document.getElementById(`edit-metric-${i}-label`)?.value.trim() || '',
-      desc: document.getElementById(`edit-metric-${i}-desc`)?.value.trim() || ''
-    });
+function renderCMSMetricsList() {
+  const container = document.getElementById('cms-metrics-list-container');
+  if (!container) return;
+
+  const m = siteContent.metrics || [];
+  if (m.length === 0) {
+    container.innerHTML = `<p style="color:var(--text-muted); font-size:0.875rem;">Nenhuma métrica cadastrada.</p>`;
+    return;
   }
 
-  siteContent.metrics = newMetrics;
-  localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+  container.innerHTML = m.map((item, idx) => `
+    <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,31,53,0.6); border:1px solid var(--border-glass); border-radius:8px; padding:12px 16px; margin-bottom:8px;">
+      <div>
+        <div style="font-weight:800; color:var(--gold-light); font-size:1.1rem;">${escapeHtml(item.val)}</div>
+        <div style="font-size:0.875rem; color:#FFFFFF;">${escapeHtml(item.label)}</div>
+        <div style="font-size:0.75rem; color:var(--text-muted);">${escapeHtml(item.desc)}</div>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="card-admin-btn" onclick="openSingleMetricModal(${idx})">Editar</button>
+        <button type="button" class="card-admin-btn danger" onclick="deleteMetric(${idx})">Excluir</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.saveMetricsFromForm = function() {
   renderStatsSection();
   closeMetricsEditorModal();
   showToast('Métricas atualizadas com sucesso!');
-  document.querySelector('.metrics-bar')?.scrollIntoView({ behavior: 'smooth' });
-}
+};
 
 /* ==========================================================================
-   EDITOR DA SEÇÃO SOBRE NÓS
+   CRUD & MODAIS DINÂMICOS DE PILARES (SEÇÃO SOBRE NÓS)
    ========================================================================== */
+let editingPillarIndex = null;
+
+window.openSinglePillarModal = function(index = null) {
+  closeAdminDrawer();
+  editingPillarIndex = (index !== null && index >= 0) ? index : null;
+  const modal = document.getElementById('single-pillar-editor-modal');
+  const titleEl = document.getElementById('single-pillar-modal-title');
+  const numInput = document.getElementById('single-pillar-num');
+  const titleInput = document.getElementById('single-pillar-title');
+  const descInput = document.getElementById('single-pillar-desc');
+
+  const pillars = siteContent.about?.pillars || defaultSiteContent.about.pillars;
+  if (editingPillarIndex !== null && pillars[editingPillarIndex]) {
+    const p = pillars[editingPillarIndex];
+    if (titleEl) titleEl.textContent = 'Editar Pilar: ' + (p.title || p.num);
+    if (numInput) numInput.value = p.num || '';
+    if (titleInput) titleInput.value = p.title || '';
+    if (descInput) descInput.value = p.desc || '';
+  } else {
+    const nextNum = String((pillars.length || 0) + 1).padStart(2, '0');
+    if (titleEl) titleEl.textContent = 'Adicionar Novo Pilar Metodológico';
+    if (numInput) numInput.value = nextNum;
+    if (titleInput) titleInput.value = '';
+    if (descInput) descInput.value = '';
+  }
+
+  modal?.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeSinglePillarModal = function() {
+  const modal = document.getElementById('single-pillar-editor-modal');
+  modal?.classList.remove('active');
+  document.body.style.overflow = '';
+};
+
+window.saveSinglePillarFromForm = function() {
+  const num = document.getElementById('single-pillar-num')?.value.trim() || '01';
+  const title = document.getElementById('single-pillar-title')?.value.trim();
+  const desc = document.getElementById('single-pillar-desc')?.value.trim();
+
+  if (!title || !desc) {
+    showToast('Preencha o título e a descrição do pilar.');
+    return;
+  }
+
+  if (!siteContent.about) siteContent.about = { ...defaultSiteContent.about };
+  if (!siteContent.about.pillars) siteContent.about.pillars = [];
+
+  if (editingPillarIndex !== null && siteContent.about.pillars[editingPillarIndex]) {
+    siteContent.about.pillars[editingPillarIndex] = {
+      ...siteContent.about.pillars[editingPillarIndex],
+      num,
+      title,
+      desc
+    };
+    showToast('Pilar atualizado com sucesso!');
+  } else {
+    siteContent.about.pillars.push({
+      id: 'pillar-' + Date.now(),
+      num,
+      title,
+      desc
+    });
+    showToast('Novo pilar adicionado com sucesso!');
+  }
+
+  localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+  renderAboutSection();
+  renderCMSPillarsList();
+  closeSinglePillarModal();
+};
+
+window.deletePillar = function(index) {
+  const pillars = siteContent.about?.pillars || [];
+  if (!pillars[index]) return;
+
+  if (confirm(`Tem certeza que deseja excluir o pilar "${pillars[index].title || pillars[index].num}"?`)) {
+    siteContent.about.pillars.splice(index, 1);
+    localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+    renderAboutSection();
+    renderCMSPillarsList();
+    showToast('Pilar metodológico removido.');
+  }
+};
+
 window.openAboutEditorModal = function() {
   closeAdminDrawer();
   populateAboutInputs();
@@ -1775,21 +2231,39 @@ function populateAboutInputs() {
   setVal('edit-about-title', ab.title);
   setVal('edit-about-quote-field', ab.quote);
   setVal('edit-about-desc-field', ab.desc);
-
-  setVal('edit-pillar-1-title', ab.pillar1Title);
-  setVal('edit-pillar-1-desc', ab.pillar1Desc);
-  setVal('edit-pillar-2-title', ab.pillar2Title);
-  setVal('edit-pillar-2-desc', ab.pillar2Desc);
-  setVal('edit-pillar-3-title', ab.pillar3Title);
-  setVal('edit-pillar-3-desc', ab.pillar3Desc);
-
   setVal('edit-ecosystem-title', ab.ecosystemTitle);
   setVal('edit-ecosystem-subtitle', ab.ecosystemSubtitle);
   setVal('edit-ecosystem-techs', (ab.technologies || []).join(', '));
   setVal('edit-ecosystem-certs', (ab.certifications || []).join(', '));
+
+  renderCMSPillarsList();
 }
 
-function saveAboutFromForm() {
+function renderCMSPillarsList() {
+  const container = document.getElementById('cms-pillars-list-container');
+  if (!container) return;
+
+  const pillars = siteContent.about?.pillars || [];
+  if (pillars.length === 0) {
+    container.innerHTML = `<p style="color:var(--text-muted); font-size:0.875rem;">Nenhum pilar cadastrado.</p>`;
+    return;
+  }
+
+  container.innerHTML = pillars.map((p, idx) => `
+    <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,31,53,0.6); border:1px solid var(--border-glass); border-radius:8px; padding:12px 16px; margin-bottom:8px;">
+      <div>
+        <div style="font-weight:800; color:var(--royal-gold); font-size:0.95rem;">${escapeHtml(p.num)} &bull; ${escapeHtml(p.title)}</div>
+        <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">${escapeHtml(p.desc)}</div>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="card-admin-btn" onclick="openSinglePillarModal(${idx})">Editar</button>
+        <button type="button" class="card-admin-btn danger" onclick="deletePillar(${idx})">Excluir</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.saveAboutFromForm = function() {
   const getVal = (id) => document.getElementById(id)?.value.trim() || '';
 
   const techs = getVal('edit-ecosystem-techs')
@@ -1803,19 +2277,12 @@ function saveAboutFromForm() {
     .filter(Boolean);
 
   siteContent.about = {
+    ...siteContent.about,
     tag: getVal('edit-about-tag') || 'SOBRE NÓS',
     title: getVal('edit-about-title'),
     quote: getVal('edit-about-quote-field'),
     desc: getVal('edit-about-desc-field'),
-    pillar1Num: "01",
-    pillar1Title: getVal('edit-pillar-1-title'),
-    pillar1Desc: getVal('edit-pillar-1-desc'),
-    pillar2Num: "02",
-    pillar2Title: getVal('edit-pillar-2-title'),
-    pillar2Desc: getVal('edit-pillar-2-desc'),
-    pillar3Num: "03",
-    pillar3Title: getVal('edit-pillar-3-title'),
-    pillar3Desc: getVal('edit-pillar-3-desc'),
+    pillars: siteContent.about?.pillars || defaultSiteContent.about.pillars,
     ecosystemTitle: getVal('edit-ecosystem-title'),
     ecosystemSubtitle: getVal('edit-ecosystem-subtitle'),
     technologies: techs.length ? techs : defaultSiteContent.about.technologies,
@@ -1827,34 +2294,96 @@ function saveAboutFromForm() {
   closeAboutEditorModal();
   showToast('Seção Sobre Nós atualizada com sucesso!');
   document.getElementById('sobre')?.scrollIntoView({ behavior: 'smooth' });
-}
+};
 
 /* ==========================================================================
-   RENDERIZAÇÃO DA SEÇÃO FRAMEWORK & METODOLOGIA
+   CRUD & MODAIS DINÂMICOS DE PASSOS (FRAMEWORK & METODOLOGIA)
    ========================================================================== */
-function renderFrameworkSection() {
-  const fw = siteContent.framework || defaultSiteContent.framework;
-  if (!fw) return;
+let editingStepIndex = null;
 
-  const tagEl = document.getElementById('framework-tag-text');
-  const titleEl = document.getElementById('framework-title-text');
-  const subtitleEl = document.getElementById('framework-subtitle-text');
-  const grid = document.getElementById('framework-steps-grid');
+window.openSingleStepModal = function(index = null) {
+  closeAdminDrawer();
+  editingStepIndex = (index !== null && index >= 0) ? index : null;
+  const modal = document.getElementById('single-step-editor-modal');
+  const titleEl = document.getElementById('single-step-modal-title');
+  const numInput = document.getElementById('single-step-num');
+  const titleInput = document.getElementById('single-step-title');
+  const descInput = document.getElementById('single-step-desc');
 
-  if (tagEl) tagEl.textContent = fw.tag || 'NOSSO FRAMEWORK';
-  if (titleEl) titleEl.innerHTML = fw.title || 'Como Entregamos Resultados de Ponta a Ponta';
-  if (subtitleEl) subtitleEl.textContent = fw.subtitle || '';
-
-  if (grid && fw.steps) {
-    grid.innerHTML = fw.steps.map(step => `
-      <div class="step-card">
-        <div class="step-number">${escapeHtml(step.num)}</div>
-        <h3 class="step-title">${escapeHtml(step.title)}</h3>
-        <p class="step-desc">${escapeHtml(step.desc)}</p>
-      </div>
-    `).join('');
+  const steps = siteContent.framework?.steps || defaultSiteContent.framework.steps;
+  if (editingStepIndex !== null && steps[editingStepIndex]) {
+    const s = steps[editingStepIndex];
+    if (titleEl) titleEl.textContent = 'Editar Passo: ' + (s.title || s.num);
+    if (numInput) numInput.value = s.num || '';
+    if (titleInput) titleInput.value = s.title || '';
+    if (descInput) descInput.value = s.desc || '';
+  } else {
+    const nextNum = String((steps.length || 0) + 1).padStart(2, '0');
+    if (titleEl) titleEl.textContent = 'Adicionar Novo Passo do Framework';
+    if (numInput) numInput.value = nextNum;
+    if (titleInput) titleInput.value = '';
+    if (descInput) descInput.value = '';
   }
-}
+
+  modal?.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeSingleStepModal = function() {
+  const modal = document.getElementById('single-step-editor-modal');
+  modal?.classList.remove('active');
+  document.body.style.overflow = '';
+};
+
+window.saveSingleStepFromForm = function() {
+  const num = document.getElementById('single-step-num')?.value.trim() || '01';
+  const title = document.getElementById('single-step-title')?.value.trim();
+  const desc = document.getElementById('single-step-desc')?.value.trim();
+
+  if (!title || !desc) {
+    showToast('Preencha o título e a descrição da etapa.');
+    return;
+  }
+
+  if (!siteContent.framework) siteContent.framework = { ...defaultSiteContent.framework };
+  if (!siteContent.framework.steps) siteContent.framework.steps = [];
+
+  if (editingStepIndex !== null && siteContent.framework.steps[editingStepIndex]) {
+    siteContent.framework.steps[editingStepIndex] = {
+      ...siteContent.framework.steps[editingStepIndex],
+      num,
+      title,
+      desc
+    };
+    showToast('Passo atualizado com sucesso!');
+  } else {
+    siteContent.framework.steps.push({
+      id: 'step-' + Date.now(),
+      num,
+      title,
+      desc
+    });
+    showToast('Novo passo adicionado ao framework!');
+  }
+
+  localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+  renderFrameworkSection();
+  renderCMSStepsList();
+  closeSingleStepModal();
+};
+
+window.deleteStep = function(index) {
+  const steps = siteContent.framework?.steps || [];
+  if (!steps[index]) return;
+
+  if (confirm(`Tem certeza que deseja excluir o passo "${steps[index].title || steps[index].num}"?`)) {
+    siteContent.framework.steps.splice(index, 1);
+    localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+    renderFrameworkSection();
+    renderCMSStepsList();
+    showToast('Passo removido da metodologia.');
+  }
+};
 
 window.openFrameworkEditorModal = function() {
   closeAdminDrawer();
@@ -1883,30 +2412,42 @@ function populateFrameworkInputs() {
   setVal('edit-framework-title', fw.title);
   setVal('edit-framework-subtitle', fw.subtitle);
 
-  (fw.steps || []).forEach((step, i) => {
-    setVal(`edit-step-${i}-num`, step.num);
-    setVal(`edit-step-${i}-title`, step.title);
-    setVal(`edit-step-${i}-desc`, step.desc);
-  });
+  renderCMSStepsList();
 }
 
-function saveFrameworkFromForm() {
-  const getVal = (id) => document.getElementById(id)?.value.trim() || '';
+function renderCMSStepsList() {
+  const container = document.getElementById('cms-steps-list-container');
+  if (!container) return;
 
-  const steps = [];
-  for (let i = 0; i < 4; i++) {
-    steps.push({
-      num: getVal(`edit-step-${i}-num`) || `0${i + 1}`,
-      title: getVal(`edit-step-${i}-title`),
-      desc: getVal(`edit-step-${i}-desc`)
-    });
+  const steps = siteContent.framework?.steps || [];
+  if (steps.length === 0) {
+    container.innerHTML = `<p style="color:var(--text-muted); font-size:0.875rem;">Nenhum passo cadastrado.</p>`;
+    return;
   }
 
+  container.innerHTML = steps.map((s, idx) => `
+    <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,31,53,0.6); border:1px solid var(--border-glass); border-radius:8px; padding:12px 16px; margin-bottom:8px;">
+      <div>
+        <div style="font-weight:800; color:var(--royal-gold); font-size:0.95rem;">${escapeHtml(s.num)} &bull; ${escapeHtml(s.title)}</div>
+        <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">${escapeHtml(s.desc)}</div>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="card-admin-btn" onclick="openSingleStepModal(${idx})">Editar</button>
+        <button type="button" class="card-admin-btn danger" onclick="deleteStep(${idx})">Excluir</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.saveFrameworkFromForm = function() {
+  const getVal = (id) => document.getElementById(id)?.value.trim() || '';
+
   siteContent.framework = {
+    ...siteContent.framework,
     tag: getVal('edit-framework-tag') || 'NOSSO FRAMEWORK',
     title: getVal('edit-framework-title'),
     subtitle: getVal('edit-framework-subtitle'),
-    steps
+    steps: siteContent.framework?.steps || defaultSiteContent.framework.steps
   };
 
   localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
@@ -1914,7 +2455,346 @@ function saveFrameworkFromForm() {
   closeFrameworkEditorModal();
   showToast('Framework metodológico atualizado com sucesso!');
   document.getElementById('metodologia')?.scrollIntoView({ behavior: 'smooth' });
+};
+
+/* ==========================================================================
+   CRUD & MODAL DE HERO TRUST BADGES (SELOS DE CONFIANÇA)
+   ========================================================================== */
+let editingBadgeIndex = null;
+
+window.openSingleBadgeModal = function(index = null) {
+  closeAdminDrawer();
+  editingBadgeIndex = (index !== null && index >= 0) ? index : null;
+  const modal = document.getElementById('single-badge-editor-modal');
+  const titleEl = document.getElementById('single-badge-modal-title');
+  const textInput = document.getElementById('single-badge-text');
+  const iconSelect = document.getElementById('single-badge-icon');
+
+  const badges = siteContent.heroBadges || defaultSiteContent.heroBadges;
+  if (editingBadgeIndex !== null && badges[editingBadgeIndex]) {
+    const b = badges[editingBadgeIndex];
+    if (titleEl) titleEl.textContent = 'Editar Selo: ' + b.text;
+    if (textInput) textInput.value = b.text || '';
+    if (iconSelect) iconSelect.value = b.icon || 'shield';
+  } else {
+    if (titleEl) titleEl.textContent = 'Adicionar Novo Selo de Confiança';
+    if (textInput) textInput.value = '';
+    if (iconSelect) iconSelect.value = 'shield';
+  }
+
+  modal?.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeSingleBadgeModal = function() {
+  const modal = document.getElementById('single-badge-editor-modal');
+  modal?.classList.remove('active');
+  document.body.style.overflow = '';
+};
+
+window.saveSingleBadgeFromForm = function() {
+  const text = document.getElementById('single-badge-text')?.value.trim();
+  const icon = document.getElementById('single-badge-icon')?.value || 'shield';
+
+  if (!text) {
+    showToast('Informe o texto do selo de confiança.');
+    return;
+  }
+
+  if (!siteContent.heroBadges) siteContent.heroBadges = [];
+
+  if (editingBadgeIndex !== null && siteContent.heroBadges[editingBadgeIndex]) {
+    siteContent.heroBadges[editingBadgeIndex] = {
+      ...siteContent.heroBadges[editingBadgeIndex],
+      text,
+      icon
+    };
+    showToast('Selo atualizado com sucesso!');
+  } else {
+    siteContent.heroBadges.push({
+      id: 'badge-' + Date.now(),
+      text,
+      icon
+    });
+    showToast('Novo selo adicionado ao banner!');
+  }
+
+  localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+  renderHeroBadges();
+  renderCMSBadgesList();
+  closeSingleBadgeModal();
+};
+
+window.deleteHeroBadge = function(index) {
+  const badges = siteContent.heroBadges || [];
+  if (!badges[index]) return;
+
+  if (confirm(`Tem certeza que deseja excluir o selo "${badges[index].text}"?`)) {
+    siteContent.heroBadges.splice(index, 1);
+    localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+    renderHeroBadges();
+    renderCMSBadgesList();
+    showToast('Selo removido.');
+  }
+};
+
+function renderCMSBadgesList() {
+  const container = document.getElementById('cms-badges-list-container');
+  if (!container) return;
+
+  const badges = siteContent.heroBadges || [];
+  if (badges.length === 0) {
+    container.innerHTML = `<p style="color:var(--text-muted); font-size:0.875rem;">Nenhum selo cadastrado.</p>`;
+    return;
+  }
+
+  container.innerHTML = badges.map((b, idx) => `
+    <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,31,53,0.6); border:1px solid var(--border-glass); border-radius:8px; padding:10px 14px; margin-bottom:8px;">
+      <div style="font-size:0.875rem; color:#FFFFFF;">${escapeHtml(b.text)} <span style="font-size:0.75rem; color:var(--text-muted);">(${escapeHtml(b.icon)})</span></div>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="card-admin-btn" onclick="openSingleBadgeModal(${idx})">Editar</button>
+        <button type="button" class="card-admin-btn danger" onclick="deleteHeroBadge(${idx})">Excluir</button>
+      </div>
+    </div>
+  `).join('');
 }
+
+/* ==========================================================================
+   MODAIS PARA TEXTOS DAS SEÇÕES (PORTFÓLIO, HERO, CONTATO E RODAPÉ)
+   ========================================================================== */
+window.openPortfolioHeaderModal = function() {
+  closeAdminDrawer();
+  const pf = siteContent.portfolioHeader || defaultSiteContent.portfolioHeader;
+  const tagInput = document.getElementById('edit-portfolio-tag');
+  const titleInput = document.getElementById('edit-portfolio-title');
+  const subtitleInput = document.getElementById('edit-portfolio-subtitle');
+
+  if (tagInput) tagInput.value = pf.tag || '';
+  if (titleInput) titleInput.value = pf.title || '';
+  if (subtitleInput) subtitleInput.value = pf.subtitle || '';
+
+  const modal = document.getElementById('portfolio-header-editor-modal');
+  modal?.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closePortfolioHeaderModal = function() {
+  const modal = document.getElementById('portfolio-header-editor-modal');
+  modal?.classList.remove('active');
+  document.body.style.overflow = '';
+};
+
+window.savePortfolioHeaderFromForm = function() {
+  siteContent.portfolioHeader = {
+    tag: document.getElementById('edit-portfolio-tag')?.value.trim() || 'PORTFÓLIO COMPLETO',
+    title: document.getElementById('edit-portfolio-title')?.value.trim() || 'Soluções Corporativas',
+    subtitle: document.getElementById('edit-portfolio-subtitle')?.value.trim() || ''
+  };
+
+  localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+  applyGeneralTextsToDOM();
+  closePortfolioHeaderModal();
+  showToast('Cabeçalho da seção de portfólio atualizado!');
+};
+
+window.openHeroTextsModal = function() {
+  closeAdminDrawer();
+  const setVal = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.value = val || '';
+  };
+
+  setVal('edit-hero-tag', siteContent.heroTag);
+  setVal('edit-hero-title', siteContent.heroTitle);
+  setVal('edit-hero-subtitle', siteContent.heroSubtitle);
+  setVal('edit-hero-primary-text', siteContent.heroPrimaryCtaText);
+  setVal('edit-hero-primary-link', siteContent.heroPrimaryCtaLink);
+  setVal('edit-hero-secondary-text', siteContent.heroSecondaryCtaText);
+  setVal('edit-hero-secondary-link', siteContent.heroSecondaryCtaLink);
+  setVal('edit-announcement-badge', siteContent.announcementBadge);
+  setVal('edit-announcement-text', siteContent.announcementText);
+  setVal('edit-announcement-link-text', siteContent.announcementLinkText);
+  setVal('edit-announcement-link-url', siteContent.announcementLinkUrl);
+  setVal('edit-top-city', siteContent.topCity);
+  setVal('edit-nav-cta-text', siteContent.navCtaText);
+  setVal('edit-nav-cta-link', siteContent.navCtaLink);
+
+  const modal = document.getElementById('hero-texts-editor-modal');
+  modal?.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeHeroTextsModal = function() {
+  const modal = document.getElementById('hero-texts-editor-modal');
+  modal?.classList.remove('active');
+  document.body.style.overflow = '';
+};
+
+window.saveHeroTextsFromForm = function() {
+  const getVal = (id) => document.getElementById(id)?.value.trim() || '';
+
+  siteContent.heroTag = getVal('edit-hero-tag') || defaultSiteContent.heroTag;
+  siteContent.heroTitle = document.getElementById('edit-hero-title')?.value || defaultSiteContent.heroTitle;
+  siteContent.heroSubtitle = getVal('edit-hero-subtitle') || defaultSiteContent.heroSubtitle;
+  siteContent.heroPrimaryCtaText = getVal('edit-hero-primary-text') || defaultSiteContent.heroPrimaryCtaText;
+  siteContent.heroPrimaryCtaLink = getVal('edit-hero-primary-link') || defaultSiteContent.heroPrimaryCtaLink;
+  siteContent.heroSecondaryCtaText = getVal('edit-hero-secondary-text') || defaultSiteContent.heroSecondaryCtaText;
+  siteContent.heroSecondaryCtaLink = getVal('edit-hero-secondary-link') || defaultSiteContent.heroSecondaryCtaLink;
+  siteContent.announcementBadge = getVal('edit-announcement-badge') || defaultSiteContent.announcementBadge;
+  siteContent.announcementText = getVal('edit-announcement-text') || defaultSiteContent.announcementText;
+  siteContent.announcementLinkText = getVal('edit-announcement-link-text') || defaultSiteContent.announcementLinkText;
+  siteContent.announcementLinkUrl = getVal('edit-announcement-link-url') || defaultSiteContent.announcementLinkUrl;
+  siteContent.topCity = getVal('edit-top-city') || defaultSiteContent.topCity;
+  siteContent.navCtaText = getVal('edit-nav-cta-text') || defaultSiteContent.navCtaText;
+  siteContent.navCtaLink = getVal('edit-nav-cta-link') || defaultSiteContent.navCtaLink;
+
+  localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+  applyGeneralTextsToDOM();
+  closeHeroTextsModal();
+  showToast('Textos e CTAs da Hero salvos com sucesso!');
+};
+
+window.openContactEditorModal = function() {
+  closeAdminDrawer();
+  const ct = siteContent.contact || defaultSiteContent.contact;
+  const setVal = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.value = val || '';
+  };
+
+  setVal('edit-contact-tag', ct.tag);
+  setVal('edit-contact-title', ct.title);
+  setVal('edit-contact-subtitle', ct.subtitle);
+  setVal('edit-contact-address-title', ct.addressTitle);
+  setVal('edit-company-address', ct.companyAddress || siteContent.companyAddress);
+  setVal('edit-contact-email-title', ct.emailTitle);
+  setVal('edit-company-email', ct.companyEmail || siteContent.companyEmail);
+  setVal('edit-contact-phone-title', ct.phoneTitle);
+  setVal('edit-company-phone', ct.companyPhone || siteContent.companyPhone);
+  setVal('edit-company-phone-link', ct.companyPhoneLink);
+  setVal('edit-contact-form-title', ct.formTitle);
+  setVal('edit-contact-form-subtitle', ct.formSubtitle);
+  setVal('edit-contact-form-btn-text', ct.formButtonText);
+
+  const modal = document.getElementById('contact-editor-modal');
+  modal?.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeContactEditorModal = function() {
+  const modal = document.getElementById('contact-editor-modal');
+  modal?.classList.remove('active');
+  document.body.style.overflow = '';
+};
+
+window.saveContactFromForm = function() {
+  const getVal = (id) => document.getElementById(id)?.value.trim() || '';
+
+  const address = getVal('edit-company-address');
+  const email = getVal('edit-company-email');
+  const phone = getVal('edit-company-phone');
+
+  siteContent.companyAddress = address;
+  siteContent.companyEmail = email;
+  siteContent.companyPhone = phone;
+
+  siteContent.contact = {
+    tag: getVal('edit-contact-tag') || 'FALE CONOSCO',
+    title: getVal('edit-contact-title'),
+    subtitle: getVal('edit-contact-subtitle'),
+    addressTitle: getVal('edit-contact-address-title') || 'Endereço Corporativo',
+    companyAddress: address,
+    emailTitle: getVal('edit-contact-email-title') || 'E-mail de Contato',
+    companyEmail: email,
+    phoneTitle: getVal('edit-contact-phone-title') || 'Telefone & WhatsApp',
+    companyPhone: phone,
+    companyPhoneLink: getVal('edit-company-phone-link') || `https://wa.me/55${phone.replace(/\D/g, '')}`,
+    formTitle: getVal('edit-contact-form-title') || 'Solicite uma Proposta sob Medida',
+    formSubtitle: getVal('edit-contact-form-subtitle') || 'Preencha os campos abaixo. Retornamos em menos de 2 horas em dias úteis.',
+    formButtonText: getVal('edit-contact-form-btn-text') || 'Enviar Solicitação de Diagnóstico'
+  };
+
+  localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+  applyGeneralTextsToDOM();
+  closeContactEditorModal();
+  showToast('Informações e formulário de contato salvos com sucesso!');
+};
+
+window.openFooterEditorModal = function() {
+  closeAdminDrawer();
+  const ft = siteContent.footer || defaultSiteContent.footer;
+  const setVal = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.value = val || '';
+  };
+
+  setVal('edit-footer-desc', siteContent.brand?.footerDesc || defaultSiteContent.brand.footerDesc);
+  setVal('edit-footer-solutions-title', ft.solutionsTitle);
+  setVal('edit-footer-nav-title', ft.navTitle);
+  setVal('edit-footer-newsletter-title', ft.newsletterTitle);
+  setVal('edit-footer-newsletter-desc', ft.newsletterDesc);
+  setVal('edit-footer-newsletter-btn-text', ft.newsletterBtnText);
+  setVal('edit-footer-copyright', ft.copyrightText);
+  setVal('edit-footer-social-linkedin', ft.socialLinkedin);
+  setVal('edit-footer-social-instagram', ft.socialInstagram);
+  setVal('edit-footer-social-youtube', ft.socialYoutube);
+
+  const modal = document.getElementById('footer-editor-modal');
+  modal?.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeFooterEditorModal = function() {
+  const modal = document.getElementById('footer-editor-modal');
+  modal?.classList.remove('active');
+  document.body.style.overflow = '';
+};
+
+window.saveFooterFromForm = function() {
+  const getVal = (id) => document.getElementById(id)?.value.trim() || '';
+
+  if (siteContent.brand) {
+    siteContent.brand.footerDesc = getVal('edit-footer-desc');
+  }
+
+  siteContent.footer = {
+    solutionsTitle: getVal('edit-footer-solutions-title') || 'Principais Soluções',
+    navTitle: getVal('edit-footer-nav-title') || 'Navegação',
+    newsletterTitle: getVal('edit-footer-newsletter-title') || 'Radar Tecnológico',
+    newsletterDesc: getVal('edit-footer-newsletter-desc'),
+    newsletterBtnText: getVal('edit-footer-newsletter-btn-text') || 'Assinar',
+    copyrightText: getVal('edit-footer-copyright') || defaultSiteContent.footer.copyrightText,
+    socialLinkedin: getVal('edit-footer-social-linkedin') || '#',
+    socialInstagram: getVal('edit-footer-social-instagram') || '#',
+    socialYoutube: getVal('edit-footer-social-youtube') || '#'
+  };
+
+  localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+  applyGeneralTextsToDOM();
+  closeFooterEditorModal();
+  showToast('Rodapé e redes sociais atualizados com sucesso!');
+};
+
+window.closeAllAdminModals = function() {
+  closeBrandEditorModal();
+  closeAboutEditorModal();
+  closeMetricsEditorModal();
+  closeSingleMetricModal();
+  closeSinglePillarModal();
+  closeSingleStepModal();
+  closeSingleBadgeModal();
+  closePortfolioHeaderModal();
+  closeHeroTextsModal();
+  closeContactEditorModal();
+  closeFooterEditorModal();
+  closeCardEditorModal();
+  closeFrameworkEditorModal();
+  closeHeroCarouselEditorModal();
+  closeAdminLoginModal();
+  closeAdminDrawer();
+  closeServiceModal();
+  if (typeof closeThemeCustomizerModal === 'function') closeThemeCustomizerModal();
+};
 
 /* ==========================================================================
    CARROSSEL DE IMAGENS DO BANNER PRINCIPAL (HERO SECTION)

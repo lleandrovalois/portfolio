@@ -3040,3 +3040,222 @@ body.admin-active .site-header {
   transform: translateY(-1px);
   box-shadow: var(--shadow-gold);
 }
+
+/* ==========================================================================
+   ESTILOS DINÂMICOS PARA CARDS ADICIONÁVEIS / REMOVÍVEIS & ADMIN
+   ========================================================================== */
+
+/* 1. Métricas Grid Dinâmico */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 24px 20px;
+  background: rgba(0, 31, 53, 0.45);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  position: relative;
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stat-card:hover {
+  border-color: var(--royal-gold);
+  background: rgba(6, 38, 63, 0.65);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-card .card-admin-bar {
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--border-glass);
+}
+
+/* 2. Pilares da Seção Sobre Nós */
+.about-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.pillar-item {
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 31, 53, 0.6);
+  border: 1px solid var(--border-glass);
+  padding: 18px 22px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.pillar-item:hover {
+  border-color: var(--royal-gold);
+  background: rgba(6, 38, 63, 0.75);
+}
+
+.pillar-item-body {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.pillar-item .card-admin-bar {
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--border-glass);
+}
+
+/* 3. Passos do Framework / Metodologia */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.step-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  position: relative;
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+}
+
+.step-card:hover {
+  border-color: var(--royal-gold);
+  transform: translateY(-4px);
+  background: rgba(6, 38, 63, 0.85);
+  box-shadow: var(--shadow-sm);
+}
+
+.step-card .card-admin-bar {
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--border-glass);
+}
+
+/* 4. Hero Trust Badges Dinâmicos */
+.hero-badges-list {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-glass);
+  flex-wrap: wrap;
+}
+
+.hero-badge-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  background: rgba(0, 31, 53, 0.5);
+  border: 1px solid var(--border-glass);
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: all var(--transition-fast);
+}
+
+.hero-badge-item:hover {
+  border-color: var(--border-subtle);
+  color: var(--royal-silver);
+}
+
+.hero-badge-item svg {
+  color: var(--gold-light);
+  flex-shrink: 0;
+}
+
+.badge-delete-btn {
+  display: none;
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #f87171;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 6px;
+  padding: 0;
+  line-height: 1;
+  transition: all var(--transition-fast);
+}
+
+.badge-delete-btn:hover {
+  background: #ef4444;
+  color: #FFFFFF;
+}
+
+body.admin-active .badge-delete-btn {
+  display: inline-flex;
+}
+
+.badge-add-btn {
+  display: none;
+  background: rgba(var(--primary-rgb), 0.15);
+  border: 1px dashed var(--royal-gold);
+  color: var(--gold-light);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.badge-add-btn:hover {
+  background: var(--royal-gold);
+  color: var(--navy-blue);
+}
+
+body.admin-active .badge-add-btn {
+  display: inline-flex;
+}
+
+/* 5. Botões de Ação de Adicionar nas Seções */
+.add-card-inline-btn {
+  display: none;
+  background: rgba(var(--primary-rgb), 0.08);
+  border: 2px dashed var(--royal-gold);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  color: var(--gold-light);
+  font-weight: 700;
+  font-size: 0.875rem;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+  width: 100%;
+}
+
+.add-card-inline-btn:hover {
+  background: rgba(var(--primary-rgb), 0.18);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-gold);
+}
+
+body.admin-active .add-card-inline-btn {
+  display: flex;
+}
+
