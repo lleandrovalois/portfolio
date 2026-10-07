@@ -6,6 +6,17 @@
 
 // Configuração Padrão Completa dos Textos e Seções do Site
 const defaultSiteContent = {
+  // Tema & Paleta de Cores Oficial (Totalmente Customizável)
+  theme: {
+    preset: "default",
+    primaryColor: "#B9915B",
+    secondaryColor: "#C9A96E",
+    darkAccent: "#977342",
+    bgMain: "#001F35",
+    bgDeep: "#01121E",
+    bgSurface: "#06263F"
+  },
+
   // Identidade da Marca & Logotipo (Totalmente Customizável)
   brand: {
     logoType: "monogram", // "monogram" | "image"
@@ -451,6 +462,7 @@ function loadStoredSiteContent() {
       return {
         ...defaultSiteContent,
         ...parsed,
+        theme: parsed.theme ? { ...defaultSiteContent.theme, ...parsed.theme } : { ...defaultSiteContent.theme },
         brand: parsed.brand ? { ...defaultSiteContent.brand, ...parsed.brand } : { ...defaultSiteContent.brand },
         metrics: parsed.metrics && parsed.metrics.length ? parsed.metrics : [...defaultSiteContent.metrics],
         about: parsed.about ? { ...defaultSiteContent.about, ...parsed.about } : { ...defaultSiteContent.about },
@@ -469,6 +481,8 @@ let siteContent = loadStoredSiteContent();
 
 // Inicialização Principal
 document.addEventListener('DOMContentLoaded', () => {
+  applyTheme(getActiveTheme());
+  renderThemePresets();
   renderBrandLogo();
   renderStatsSection();
   renderAboutSection();
@@ -845,6 +859,436 @@ window.resetBrandToDefault = function() {
     showToast('Identidade visual restaurada para o padrão.');
   }
 };
+
+/* ==========================================================================
+   ESTÚDIO DE CORES & PALETAS DE IDENTIDADE VISUAL (CUSTOMIZAÇÃO DINÂMICA)
+   ========================================================================== */
+
+const THEME_PRESETS = [
+  {
+    id: "default",
+    name: "Ouro & Marinho Nobre",
+    tag: "Clássico Dash / G4",
+    desc: "A paleta corporativa oficial com sofisticação em tons de ouro e marinho profundo.",
+    primaryColor: "#B9915B",
+    secondaryColor: "#C9A96E",
+    darkAccent: "#977342",
+    bgMain: "#001F35",
+    bgDeep: "#01121E",
+    bgSurface: "#06263F"
+  },
+  {
+    id: "emerald",
+    name: "Esmeralda & Noite Tech",
+    tag: "FinTech & ESG",
+    desc: "Verde esmeralda vibrante e floresta noturna. Transmite sustentabilidade e precisão financeira.",
+    primaryColor: "#10B981",
+    secondaryColor: "#34D399",
+    darkAccent: "#059669",
+    bgMain: "#062822",
+    bgDeep: "#021411",
+    bgSurface: "#0A3830"
+  },
+  {
+    id: "sapphire",
+    name: "Safira & Oceano Azure",
+    tag: "Enterprise Cloud & Cyber",
+    desc: "Azul safira elétrico com tons de oceano escuro. Ideal para empresas de dados, cloud e infraestrutura.",
+    primaryColor: "#0284C7",
+    secondaryColor: "#38BDF8",
+    darkAccent: "#0369A1",
+    bgMain: "#051D38",
+    bgDeep: "#020E1C",
+    bgSurface: "#0A2B52"
+  },
+  {
+    id: "ruby",
+    name: "Rubi Imperial & Grafite",
+    tag: "Executivo & Liderança",
+    desc: "Vermelho rubi requintado e fundo grafite escuro com nuances de vinho. Imponência e governança.",
+    primaryColor: "#E11D48",
+    secondaryColor: "#FB7185",
+    darkAccent: "#9F1239",
+    bgMain: "#260D16",
+    bgDeep: "#13040A",
+    bgSurface: "#3B1424"
+  },
+  {
+    id: "purple",
+    name: "Púrpura Inovação & Noite",
+    tag: "IA & Deep Tech",
+    desc: "Violeta vibrante de alta tecnologia com base ultra dark. Perfeito para inteligência artificial e vanguarda.",
+    primaryColor: "#8B5CF6",
+    secondaryColor: "#A78BFA",
+    darkAccent: "#6D28D9",
+    bgMain: "#1A102F",
+    bgDeep: "#0C0617",
+    bgSurface: "#281A46"
+  },
+  {
+    id: "amber",
+    name: "Âmbar Solar & Ônix Puro",
+    tag: "Minimalista & Arquitetura",
+    desc: "Dourado quente e vibrante sobre fundo ônix neutro de altíssimo contraste.",
+    primaryColor: "#F59E0B",
+    secondaryColor: "#FCD34D",
+    darkAccent: "#B45309",
+    bgMain: "#18181B",
+    bgDeep: "#09090B",
+    bgSurface: "#27272A"
+  },
+  {
+    id: "cyan",
+    name: "Ciano Matrix & Meia-Noite",
+    tag: "Alta Conectividade",
+    desc: "Ciano neon reluzente com fundo ciberespacial escuro. Estilo futurista e dinâmico.",
+    primaryColor: "#06B6D4",
+    secondaryColor: "#67E8F9",
+    darkAccent: "#0E7490",
+    bgMain: "#051E28",
+    bgDeep: "#010F15",
+    bgSurface: "#0A2C3A"
+  },
+  {
+    id: "titanium",
+    name: "Titânio & Prata Real",
+    tag: "Elegância Platina",
+    desc: "Prata escovada com tons de ardósia noturna. Visual clean, discreto e de máxima sobriedade.",
+    primaryColor: "#CBD5E1",
+    secondaryColor: "#F1F5F9",
+    darkAccent: "#94A3B8",
+    bgMain: "#0F172A",
+    bgDeep: "#020617",
+    bgSurface: "#1E293B"
+  }
+];
+
+window.THEME_PRESETS = THEME_PRESETS;
+
+
+// Funções Utilitárias de Cores (Cálculo Harmônico)
+function hexToRgb(hex) {
+  if (!hex || typeof hex !== 'string') return { r: 185, g: 145, b: 91, str: "185, 145, 91" };
+  let cleaned = hex.replace('#', '').trim();
+  if (cleaned.length === 3) {
+    cleaned = cleaned.split('').map(c => c + c).join('');
+  }
+  const num = parseInt(cleaned, 16);
+  if (isNaN(num) || cleaned.length !== 6) {
+    return { r: 185, g: 145, b: 91, str: "185, 145, 91" };
+  }
+  const r = (num >> 16) & 255;
+  const g = (num >> 8) & 255;
+  const b = num & 255;
+  return { r, g, b, str: `${r}, ${g}, ${b}` };
+}
+
+function darkenHex(hex, percent) {
+  const { r, g, b } = hexToRgb(hex);
+  const factor = Math.max(0, 1 - percent / 100);
+  const dr = Math.round(r * factor);
+  const dg = Math.round(g * factor);
+  const db = Math.round(b * factor);
+  return `#${dr.toString(16).padStart(2, '0')}${dg.toString(16).padStart(2, '0')}${db.toString(16).padStart(2, '0')}`;
+}
+
+function lightenHex(hex, percent) {
+  const { r, g, b } = hexToRgb(hex);
+  const factor = Math.min(1, percent / 100);
+  const lr = Math.round(r + (255 - r) * factor);
+  const lg = Math.round(g + (255 - g) * factor);
+  const lb = Math.round(b + (255 - b) * factor);
+  return `#${lr.toString(16).padStart(2, '0')}${lg.toString(16).padStart(2, '0')}${lb.toString(16).padStart(2, '0')}`;
+}
+
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+  if (max === min) {
+    h = s = 0;
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+    h /= 6;
+  }
+  return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+}
+
+function hslToHex(h, s, l) {
+  l /= 100;
+  const a = s * Math.min(l, 1 - l) / 100;
+  const f = n => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color).toString(16).padStart(2, '0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+function getActiveTheme() {
+  return siteContent.theme || defaultSiteContent.theme;
+}
+
+// Estado de rascunho do tema
+let currentDraftTheme = null;
+
+function applyTheme(themeObj, isPreview = false) {
+  if (!themeObj) return;
+  const theme = { ...defaultSiteContent.theme, ...themeObj };
+  
+  const primaryRgb = hexToRgb(theme.primaryColor);
+  const secondaryRgb = hexToRgb(theme.secondaryColor);
+  const darkAccentRgb = hexToRgb(theme.darkAccent || darkenHex(theme.primaryColor, 20));
+  const bgMainRgb = hexToRgb(theme.bgMain);
+  const bgDeepRgb = hexToRgb(theme.bgDeep);
+  const bgSurfaceRgb = hexToRgb(theme.bgSurface);
+
+  const root = document.documentElement;
+  
+  // 1. Tokens de canais RGB
+  root.style.setProperty('--primary-rgb', primaryRgb.str);
+  root.style.setProperty('--secondary-rgb', secondaryRgb.str);
+  root.style.setProperty('--dark-accent-rgb', darkAccentRgb.str);
+  root.style.setProperty('--bg-navy-rgb', bgMainRgb.str);
+  root.style.setProperty('--bg-deep-rgb', bgDeepRgb.str);
+  root.style.setProperty('--bg-surface-rgb', bgSurfaceRgb.str);
+
+  // 2. Cores Hex principais
+  root.style.setProperty('--royal-gold', theme.primaryColor);
+  root.style.setProperty('--gold-light', theme.secondaryColor);
+  root.style.setProperty('--gold-dark', theme.darkAccent || darkenHex(theme.primaryColor, 20));
+  root.style.setProperty('--navy-blue', theme.bgMain);
+  root.style.setProperty('--deep-dark', theme.bgDeep);
+  root.style.setProperty('--surface-dark', theme.bgSurface);
+  root.style.setProperty('--maua-blue', darkenHex(theme.bgMain, 15));
+
+  // 3. Gradientes sincronizados
+  root.style.setProperty('--gold-gradient', `linear-gradient(90deg, ${theme.darkAccent || darkenHex(theme.primaryColor, 20)} 0%, ${theme.secondaryColor} 100%)`);
+  root.style.setProperty('--gold-gradient-hover', `linear-gradient(90deg, ${theme.secondaryColor} 0%, #FFFFFF 100%)`);
+  root.style.setProperty('--gold-gradient-subtle', `linear-gradient(135deg, rgba(${primaryRgb.str}, 0.15) 0%, rgba(${bgMainRgb.str}, 0.4) 100%)`);
+  root.style.setProperty('--hero-gradient', `radial-gradient(circle at 50% 20%, rgba(${bgSurfaceRgb.str}, 0.45) 0%, ${theme.bgMain} 70%, ${theme.bgDeep} 100%)`);
+  root.style.setProperty('--card-gradient', `linear-gradient(180deg, rgba(${bgSurfaceRgb.str}, 0.6) 0%, rgba(${bgMainRgb.str}, 0.9) 100%)`);
+
+  // 4. Efeitos de brilho e sombras
+  root.style.setProperty('--gold-glow', `rgba(${primaryRgb.str}, 0.25)`);
+  root.style.setProperty('--border-subtle', `rgba(${primaryRgb.str}, 0.18)`);
+  root.style.setProperty('--border-hover', `rgba(${secondaryRgb.str}, 0.5)`);
+  root.style.setProperty('--shadow-gold', `0 4px 24px rgba(${primaryRgb.str}, 0.28)`);
+  root.style.setProperty('--shadow-hover', `0 16px 48px rgba(0, 15, 28, 0.6), 0 0 20px rgba(${primaryRgb.str}, 0.25)`);
+
+  // 5. Atualiza label e vitrine de demonstração
+  updateThemePreviewShowcase(theme);
+}
+
+window.applyTheme = applyTheme;
+
+
+function updateThemePreviewShowcase(theme) {
+  const label = document.getElementById('theme-current-preset-label');
+  if (label) {
+    const matched = THEME_PRESETS.find(p => p.id === theme.preset);
+    label.textContent = matched ? `Paleta: ${matched.name}` : `Paleta: Personalizada (${theme.primaryColor})`;
+  }
+}
+
+window.openThemeCustomizerModal = function() {
+  closeAdminDrawer();
+  currentDraftTheme = JSON.parse(JSON.stringify(getActiveTheme()));
+  renderThemePresets();
+  populateThemeInputs(currentDraftTheme);
+  applyTheme(currentDraftTheme, true);
+  
+  const modal = document.getElementById('theme-customizer-modal');
+  modal?.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeThemeCustomizerModal = function() {
+  const modal = document.getElementById('theme-customizer-modal');
+  modal?.classList.remove('active');
+  document.body.style.overflow = '';
+};
+
+window.cancelThemeChanges = function() {
+  // Reverte qualquer alteração temporária na tela para o tema salvo
+  applyTheme(getActiveTheme());
+  closeThemeCustomizerModal();
+};
+
+window.saveThemeChanges = function() {
+  if (!currentDraftTheme) return;
+  siteContent.theme = { ...currentDraftTheme };
+  localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+  applyTheme(siteContent.theme);
+  renderThemePresets();
+  closeThemeCustomizerModal();
+  showToast('🎨 Identidade visual e paleta de cores atualizadas com sucesso em todo o site!');
+};
+
+window.resetThemeToDefault = function() {
+  if (confirm('Deseja restaurar as cores do site para a paleta padrão (Ouro & Marinho Nobre)?')) {
+    const defaultPreset = THEME_PRESETS[0];
+    currentDraftTheme = {
+      preset: "default",
+      primaryColor: defaultPreset.primaryColor,
+      secondaryColor: defaultPreset.secondaryColor,
+      darkAccent: defaultPreset.darkAccent,
+      bgMain: defaultPreset.bgMain,
+      bgDeep: defaultPreset.bgDeep,
+      bgSurface: defaultPreset.bgSurface
+    };
+    siteContent.theme = { ...currentDraftTheme };
+    localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+    applyTheme(currentDraftTheme);
+    populateThemeInputs(currentDraftTheme);
+    renderThemePresets();
+    showToast('Paleta de cores restaurada para o padrão oficial.');
+  }
+};
+
+window.selectThemePreset = function(presetId) {
+  const preset = THEME_PRESETS.find(p => p.id === presetId);
+  if (!preset) return;
+
+  currentDraftTheme = {
+    preset: preset.id,
+    primaryColor: preset.primaryColor,
+    secondaryColor: preset.secondaryColor,
+    darkAccent: preset.darkAccent,
+    bgMain: preset.bgMain,
+    bgDeep: preset.bgDeep,
+    bgSurface: preset.bgSurface
+  };
+
+  populateThemeInputs(currentDraftTheme);
+  applyTheme(currentDraftTheme, true);
+  renderThemePresets();
+};
+
+window.handleCustomColorInput = function(prop, val) {
+  if (!currentDraftTheme) currentDraftTheme = { ...getActiveTheme() };
+  currentDraftTheme[prop] = val;
+  currentDraftTheme.preset = "custom";
+
+  if (prop === 'primaryColor') {
+    currentDraftTheme.darkAccent = darkenHex(val, 20);
+  }
+
+  // Sincroniza o input de texto HEX
+  const hexInputId = `theme-hex-${prop === 'primaryColor' ? 'primary' : prop === 'secondaryColor' ? 'secondary' : prop === 'bgMain' ? 'bg-main' : prop === 'bgDeep' ? 'bg-deep' : 'bg-surface'}`;
+  const hexEl = document.getElementById(hexInputId);
+  if (hexEl) hexEl.value = val.toUpperCase();
+
+  applyTheme(currentDraftTheme, true);
+  renderThemePresets();
+};
+
+window.handleCustomColorHexInput = function(prop, rawVal) {
+  let val = rawVal.trim();
+  if (!val.startsWith('#')) val = '#' + val;
+  if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+    const colorInputId = `theme-color-${prop === 'primaryColor' ? 'primary' : prop === 'secondaryColor' ? 'secondary' : prop === 'bgMain' ? 'bg-main' : prop === 'bgDeep' ? 'bg-deep' : 'bg-surface'}`;
+    const colorEl = document.getElementById(colorInputId);
+    if (colorEl) colorEl.value = val;
+    handleCustomColorInput(prop, val);
+  }
+};
+
+window.autoHarmonizeCurrentTheme = function() {
+  if (!currentDraftTheme) currentDraftTheme = { ...getActiveTheme() };
+  const primaryHex = currentDraftTheme.primaryColor || '#B9915B';
+  const { r, g, b } = hexToRgb(primaryHex);
+  const [h, s, l] = rgbToHsl(r, g, b);
+
+  // Calcula cores harmônicas baseadas no matiz da cor primária
+  // 1. Secundária mais luminosa
+  const secL = Math.min(85, Math.max(l + 14, 60));
+  const secHex = hslToHex(h, Math.min(100, s + 5), secL);
+
+  // 2. Fundo principal escuro com saturação moderada do mesmo matiz
+  const bgMainHex = hslToHex(h, Math.min(45, Math.max(15, Math.round(s * 0.4))), 10);
+
+  // 3. Fundo profundo ultra escuro
+  const bgDeepHex = hslToHex(h, Math.min(45, Math.max(15, Math.round(s * 0.4))), 5);
+
+  // 4. Superfície dos cards
+  const bgSurfaceHex = hslToHex(h, Math.min(45, Math.max(20, Math.round(s * 0.45))), 14);
+
+  currentDraftTheme.preset = "custom";
+  currentDraftTheme.secondaryColor = secHex;
+  currentDraftTheme.darkAccent = darkenHex(primaryHex, 20);
+  currentDraftTheme.bgMain = bgMainHex;
+  currentDraftTheme.bgDeep = bgDeepHex;
+  currentDraftTheme.bgSurface = bgSurfaceHex;
+
+  populateThemeInputs(currentDraftTheme);
+  applyTheme(currentDraftTheme, true);
+  renderThemePresets();
+  showToast('✨ Fundos e contrastes harmonizados automaticamente com base na cor primária!');
+};
+
+function populateThemeInputs(theme) {
+  if (!theme) return;
+  const setField = (prop, colorId, hexId) => {
+    const val = theme[prop] || '';
+    const colorEl = document.getElementById(colorId);
+    const hexEl = document.getElementById(hexId);
+    if (colorEl) colorEl.value = val;
+    if (hexEl) hexEl.value = val.toUpperCase();
+  };
+
+  setField('primaryColor', 'theme-color-primary', 'theme-hex-primary');
+  setField('secondaryColor', 'theme-color-secondary', 'theme-hex-secondary');
+  setField('bgMain', 'theme-color-bg-main', 'theme-hex-bg-main');
+  setField('bgDeep', 'theme-color-bg-deep', 'theme-hex-bg-deep');
+  setField('bgSurface', 'theme-color-bg-surface', 'theme-hex-bg-surface');
+}
+
+function renderThemePresets() {
+  const activeTheme = currentDraftTheme || getActiveTheme();
+  
+  const generateCardsHTML = (isDrawer = false) => {
+    return THEME_PRESETS.map(preset => {
+      const isActive = activeTheme.preset === preset.id;
+      return `
+        <div class="theme-palette-card ${isActive ? 'active' : ''}" onclick="selectThemePreset('${preset.id}')" title="Clique para aplicar a paleta ${escapeHtml(preset.name)}">
+          <div class="theme-active-badge">✓</div>
+          <div class="theme-palette-card-header">
+            <div>
+              <div class="theme-palette-name">${escapeHtml(preset.name)}</div>
+              <div style="font-size:0.75rem; color:var(--text-dim); margin-top:2px;">${escapeHtml(preset.desc)}</div>
+            </div>
+            <span class="theme-palette-tag">${escapeHtml(preset.tag)}</span>
+          </div>
+
+          <div class="theme-swatches">
+            <div class="theme-swatch-dot" style="background:${preset.primaryColor};" title="Primária: ${preset.primaryColor}"></div>
+            <div class="theme-swatch-dot" style="background:${preset.secondaryColor};" title="Secundária: ${preset.secondaryColor}"></div>
+            <div class="theme-swatch-bar" style="background:linear-gradient(90deg, ${preset.bgDeep} 0%, ${preset.bgMain} 50%, ${preset.bgSurface} 100%);" title="Fundos: ${preset.bgDeep} / ${preset.bgMain}"></div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  };
+
+  // Renderiza no Modal
+  const modalContainer = document.getElementById('theme-palette-presets-container');
+  if (modalContainer) {
+    modalContainer.innerHTML = generateCardsHTML(false);
+  }
+
+  // Renderiza no Drawer CMS
+  const drawerContainer = document.getElementById('drawer-theme-palette-presets-container');
+  if (drawerContainer) {
+    drawerContainer.innerHTML = generateCardsHTML(true);
+  }
+}
 
 /* ==========================================================================
    RENDERIZAÇÃO DA SEÇÃO DE MÉTRICAS (BARRA DE INDICADORES)

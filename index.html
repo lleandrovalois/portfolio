@@ -40,6 +40,16 @@
         Painel CMS</span>
     </div>
     <div class="admin-bar-actions">
+      <button class="admin-btn" onclick="openThemeCustomizerModal()" title="Personalizar Cores e Identidade Visual do Site">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2a10 10 0 0 0-10 10c0 5.523 4.477 10 10 10a2 2 0 0 0 2-2v-1.5a1.5 1.5 0 0 1 1.5-1.5H17a5 5 0 0 0 5-5c0-4.418-4.477-8-10-8z"></path>
+          <circle cx="7.5" cy="10.5" r="1.5" fill="currentColor"></circle>
+          <circle cx="12" cy="7.5" r="1.5" fill="currentColor"></circle>
+          <circle cx="16.5" cy="10.5" r="1.5" fill="currentColor"></circle>
+        </svg>
+        <span>Cores do Site</span>
+      </button>
       <button class="admin-btn" onclick="openBrandEditorModal()" title="Personalizar Logotipo do Cliente e Marca">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"></circle>
@@ -919,6 +929,7 @@
 
       <!-- Tabs de Gestão -->
       <div class="admin-tabs" style="overflow-x:auto;">
+        <button class="admin-tab-btn" data-tab="theme">Cores & Paleta</button>
         <button class="admin-tab-btn" data-tab="brand">Identidade & Logo</button>
         <button class="admin-tab-btn active" data-tab="portfolio">Cards do Portfólio</button>
         <button class="admin-tab-btn" data-tab="carousel">Carrossel do Banner</button>
@@ -930,6 +941,38 @@
       </div>
 
       <div class="admin-drawer-body">
+        <!-- Aba: Cores & Paleta de Identidade Visual -->
+        <div class="admin-tab-content" id="tab-theme">
+          <div
+            style="background:rgba(var(--bg-navy-rgb),0.6); padding:24px; border-radius:12px; border:1px solid var(--border-glass); margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+              <div>
+                <h4 style="font-size:1.15rem; color:#FFFFFF; margin-bottom:6px;">Paleta de Cores do Site</h4>
+                <p style="font-size:0.875rem; color:var(--text-muted);">
+                  Alterne entre paletas corporativas homologadas ou abra o estúdio completo para customizar cada tom da marca.
+                </p>
+              </div>
+              <button class="btn btn-primary" onclick="openThemeCustomizerModal()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 2a10 10 0 0 0-10 10c0 5.523 4.477 10 10 10a2 2 0 0 0 2-2v-1.5a1.5 1.5 0 0 1 1.5-1.5H17a5 5 0 0 0 5-5c0-4.418-4.477-8-10-8z"></path>
+                  <circle cx="7.5" cy="10.5" r="1.5" fill="currentColor"></circle>
+                  <circle cx="12" cy="7.5" r="1.5" fill="currentColor"></circle>
+                  <circle cx="16.5" cy="10.5" r="1.5" fill="currentColor"></circle>
+                </svg>
+                <span>Abrir Estúdio Completo de Cores</span>
+              </button>
+            </div>
+          </div>
+
+          <div style="margin-bottom:12px;">
+            <h5 style="font-size:0.9rem; color:#FFFFFF; margin-bottom:12px;">Troca Rápida de Paleta:</h5>
+            <div class="theme-palette-grid" id="drawer-theme-palette-presets-container">
+              <!-- Gerado via renderThemePresets() -->
+            </div>
+          </div>
+        </div>
+
         <!-- Aba 0: Identidade da Marca & Logotipo -->
         <div class="admin-tab-content" id="tab-brand">
           <div
@@ -1450,6 +1493,21 @@
 
       <div class="modal-body">
         <form id="brand-editor-form" onsubmit="event.preventDefault(); saveBrandFromForm();">
+          <!-- Atalho para o Estúdio de Cores -->
+          <div style="background:rgba(var(--primary-rgb),0.08); border:1px solid var(--border-subtle); border-radius:10px; padding:14px 18px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div>
+              <div style="font-weight:700; color:#FFFFFF; font-size:0.9rem; display:flex; align-items:center; gap:6px;">
+                <span>🎨 Paleta de Cores do Site</span>
+              </div>
+              <div style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">
+                Deseja alterar as cores do site para combinar com a logo da marca?
+              </div>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="closeBrandEditorModal(); openThemeCustomizerModal();">
+              🎨 Personalizar Cores
+            </button>
+          </div>
+
           <!-- Live Preview Card -->
           <div class="brand-preview-card" style="margin-bottom:24px;">
             <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
@@ -1701,6 +1759,156 @@
             </div>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Customização de Cores & Paletas da Marca (Modo Administrador) -->
+  <div class="modal-overlay" id="theme-customizer-modal" role="dialog" aria-modal="true"
+    aria-labelledby="theme-modal-title">
+    <div class="modal-card theme-modal-card">
+      <button class="modal-close-btn" onclick="cancelThemeChanges()" aria-label="Fechar estúdio de cores">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-header">
+        <span class="modal-badge">IDENTIDADE VISUAL & DESIGN SYSTEM</span>
+        <h3 class="modal-title" id="theme-modal-title">Estúdio de Cores & Paleta da Marca</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted); margin-top:4px;">
+          Selecione uma paleta corporativa homologada ou customize tons individuais. Todos os elementos, botões, gradientes, cards e reflexos se sincronizam em tempo real.
+        </p>
+      </div>
+
+      <div class="modal-body">
+        <!-- Vitrine de Demonstração / Harmonia ao Vivo -->
+        <div class="theme-showcase-box">
+          <div class="theme-showcase-header">
+            <span style="font-size:0.75rem; letter-spacing:1px; color:var(--text-dim); text-transform:uppercase;">
+              👁️ Pré-visualização da Harmonia dos Elementos
+            </span>
+            <span id="theme-current-preset-label" style="font-size:0.75rem; color:var(--gold-light); font-weight:700;">
+              Paleta: Ouro & Marinho Nobre
+            </span>
+          </div>
+
+          <div class="theme-showcase-grid">
+            <!-- Amostra Logo Symbol -->
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div class="logo-symbol" id="theme-preview-symbol" style="width:40px; height:40px; font-size:1.1rem; flex-shrink:0;">
+                DS
+              </div>
+              <div>
+                <div style="font-weight:800; font-size:0.95rem; line-height:1.2;">
+                  DASH <span style="color:var(--gold-light);">SOLUTIONS</span>
+                </div>
+                <div style="font-size:0.65rem; color:var(--text-muted); letter-spacing:1.5px;">ENTERPRISE TECH</div>
+              </div>
+            </div>
+
+            <!-- Amostra Botões -->
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button type="button" class="btn btn-primary btn-sm">Botão Principal</button>
+              <button type="button" class="btn btn-secondary btn-sm">Secundário</button>
+            </div>
+
+            <!-- Amostra Badge & Título Serif -->
+            <div>
+              <span class="card-category-badge" style="display:inline-block; margin-bottom:4px;">CATEGORIA</span>
+              <div style="font-size:0.85rem; color:var(--royal-silver);">
+                Foco em <span class="serif-italic">resultados</span> reais
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seção 1: Paletas Corporativas Predefinidas -->
+        <div style="margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <h4 style="font-size:1rem; color:#FFFFFF; display:flex; align-items:center; gap:8px;">
+              <span>1. Paletas Corporativas Prontas (Clique para aplicar)</span>
+            </h4>
+            <span style="font-size:0.75rem; color:var(--text-dim);">8 combinações homologadas</span>
+          </div>
+          <div class="theme-palette-grid" id="theme-palette-presets-container">
+            <!-- Gerado dinamicamente via renderThemePresets() -->
+          </div>
+        </div>
+
+        <!-- Seção 2: Personalização Fina de Cores -->
+        <div class="theme-custom-box">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
+            <div>
+              <h4 style="font-size:1rem; color:#FFFFFF;">2. Personalização Fina de Cores (Hex / Color Picker)</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Defina cores específicas para alinhar com o guia de marca exato do cliente.</p>
+            </div>
+            <button type="button" class="theme-magic-btn" onclick="autoHarmonizeCurrentTheme()" title="Gera automaticamente tons escuros de fundo baseados na cor primária">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+              </svg>
+              <span>Harmonizar Fundos com a Cor Primária</span>
+            </button>
+          </div>
+
+          <div class="theme-custom-grid">
+            <div class="theme-color-field">
+              <label for="theme-color-primary">Cor Primária (Destaque & Botões):</label>
+              <div class="theme-picker-group">
+                <input type="color" id="theme-color-primary" oninput="handleCustomColorInput('primaryColor', this.value)">
+                <input type="text" id="theme-hex-primary" maxlength="7" onchange="handleCustomColorHexInput('primaryColor', this.value)">
+              </div>
+            </div>
+
+            <div class="theme-color-field">
+              <label for="theme-color-secondary">Cor Secundária (Luz & Textos):</label>
+              <div class="theme-picker-group">
+                <input type="color" id="theme-color-secondary" oninput="handleCustomColorInput('secondaryColor', this.value)">
+                <input type="text" id="theme-hex-secondary" maxlength="7" onchange="handleCustomColorHexInput('secondaryColor', this.value)">
+              </div>
+            </div>
+
+            <div class="theme-color-field">
+              <label for="theme-color-bg-main">Fundo Principal (Navy/Seções):</label>
+              <div class="theme-picker-group">
+                <input type="color" id="theme-color-bg-main" oninput="handleCustomColorInput('bgMain', this.value)">
+                <input type="text" id="theme-hex-bg-main" maxlength="7" onchange="handleCustomColorHexInput('bgMain', this.value)">
+              </div>
+            </div>
+
+            <div class="theme-color-field">
+              <label for="theme-color-bg-deep">Fundo Profundo (Body & Rodapé):</label>
+              <div class="theme-picker-group">
+                <input type="color" id="theme-color-bg-deep" oninput="handleCustomColorInput('bgDeep', this.value)">
+                <input type="text" id="theme-hex-bg-deep" maxlength="7" onchange="handleCustomColorHexInput('bgDeep', this.value)">
+              </div>
+            </div>
+
+            <div class="theme-color-field">
+              <label for="theme-color-bg-surface">Superfície (Cards & Painéis):</label>
+              <div class="theme-picker-group">
+                <input type="color" id="theme-color-bg-surface" oninput="handleCustomColorInput('bgSurface', this.value)">
+                <input type="text" id="theme-hex-bg-surface" maxlength="7" onchange="handleCustomColorHexInput('bgSurface', this.value)">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botões de Ação do Modal -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; flex-wrap:wrap; gap:12px;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="resetThemeToDefault()" style="color:var(--text-dim);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+              <path d="M3 3v5h5"></path>
+            </svg>
+            <span>Restaurar Paleta Original (Ouro & Marinho)</span>
+          </button>
+          <div style="display:flex; gap:12px;">
+            <button type="button" class="btn btn-secondary" onclick="cancelThemeChanges()">Cancelar</button>
+            <button type="button" class="btn btn-primary" onclick="saveThemeChanges()">Salvar Identidade de Cores</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
