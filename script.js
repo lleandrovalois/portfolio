@@ -2336,11 +2336,15 @@ window.deleteService = function(cardId) {
 };
 
 function resetToFactoryDefaults() {
-  if (confirm("Deseja restaurar todos os serviços originais, métricas e textos padrão do site?")) {
+  if (confirm("Deseja restaurar todos os serviços originais, métricas, textos e paleta de cores padrão do site?")) {
     portfolioServices = JSON.parse(JSON.stringify(defaultPortfolioServices));
     siteContent = JSON.parse(JSON.stringify(defaultSiteContent));
     localStorage.removeItem('dash_portfolio_services');
     localStorage.removeItem('dash_site_content');
+
+    // Restaura e persiste as cores padrão no DOM, localStorage e servidor (theme.json)
+    commitAndPersistTheme(defaultSiteContent.theme);
+
     renderBrandLogo();
     renderStatsSection();
     renderAboutSection();
@@ -2350,16 +2354,33 @@ function resetToFactoryDefaults() {
     renderPortfolioCards();
     renderCMSPortfolioTable();
     populateContactServiceCheckboxes();
-    showToast('Site restaurado para as configurações padrão!');
+    showToast('Site e paleta de cores restaurados para as configurações padrão!');
     closeAdminDrawer();
   }
 }
 
 function exportBackupJSON() {
+  const currentTheme = getActiveTheme();
+  const themePayload = {
+    preset: currentTheme.preset || "custom",
+    name: currentTheme.name || (THEME_PRESETS.find(p => p.id === currentTheme.preset)?.name || "Personalizada"),
+    primaryColor: currentTheme.primaryColor,
+    secondaryColor: currentTheme.secondaryColor,
+    darkAccent: currentTheme.darkAccent,
+    bgMain: currentTheme.bgMain,
+    bgDeep: currentTheme.bgDeep,
+    bgSurface: currentTheme.bgSurface,
+    updatedAt: new Date().toISOString()
+  };
+
   const backupData = {
-    version: "2.0",
+    version: "2.1",
     date: new Date().toISOString(),
-    siteContent,
+    theme: themePayload,
+    siteContent: {
+      ...siteContent,
+      theme: themePayload
+    },
     portfolioServices
   };
 
@@ -2370,7 +2391,7 @@ function exportBackupJSON() {
   a.download = `dash-solutions-backup-${new Date().toISOString().slice(0, 10)}.json`;
   a.click();
   URL.revokeObjectURL(url);
-  showToast('Arquivo de backup exportado com sucesso!');
+  showToast('💾 Backup exportado com sucesso (incluindo cores e identidade visual)!');
 }
 
 function importBackupJSON(e) {
@@ -2381,12 +2402,29 @@ function importBackupJSON(e) {
   reader.onload = (event) => {
     try {
       const data = JSON.parse(event.target.result);
+      if (!data || typeof data !== 'object') {
+        throw new Error("Arquivo não contém um objeto JSON válido.");
+      }
+
+      // 1. Extração e Aplicação Imediata de Cores / Tema
+      const importedTheme = data.theme || (data.siteContent && data.siteContent.theme);
+      if (importedTheme && importedTheme.primaryColor) {
+        commitAndPersistTheme(importedTheme);
+      }
+
+      // 2. Importação do Portfólio (Serviços e Soluções)
       if (data.portfolioServices && Array.isArray(data.portfolioServices)) {
         portfolioServices = data.portfolioServices;
         localStorage.setItem('dash_portfolio_services', JSON.stringify(portfolioServices));
       }
+
+      // 3. Importação do Conteúdo Geral do Site
       if (data.siteContent) {
-        siteContent = { ...defaultSiteContent, ...data.siteContent };
+        siteContent = {
+          ...defaultSiteContent,
+          ...data.siteContent,
+          theme: importedTheme && importedTheme.primaryColor ? { ...defaultSiteContent.theme, ...importedTheme } : (siteContent.theme || defaultSiteContent.theme)
+        };
         localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
         renderBrandLogo();
         renderStatsSection();
@@ -2395,13 +2433,26 @@ function importBackupJSON(e) {
         renderHeroCarousel();
         applyGeneralTextsToDOM();
       }
+
+      // 4. Confirmação da aplicação das cores importadas
+      if (importedTheme && importedTheme.primaryColor) {
+        commitAndPersistTheme(siteContent.theme);
+      }
+
+      // 5. Atualização visual do portfólio
       renderPortfolioCards();
       renderCMSPortfolioTable();
       populateContactServiceCheckboxes();
-      showToast('Backup importado e aplicado com sucesso!');
+
+      // Limpa o input para permitir selecionar o mesmo arquivo novamente
+      e.target.value = '';
+
+      showToast('🎉 Backup importado com sucesso! Cores, serviços e conteúdos restaurados.');
       closeAdminDrawer();
     } catch (err) {
-      alert("Arquivo de backup inválido.");
+      console.error("Erro ao importar backup:", err);
+      alert("Arquivo de backup inválido: " + err.message);
+      e.target.value = '';
     }
   };
   reader.readAsText(file);

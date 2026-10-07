@@ -1232,35 +1232,47 @@
         <!-- Aba 5: Backup & Configurações -->
         <div class="admin-tab-content" id="tab-backup">
           <h4 style="font-size:1.15rem; color:#FFFFFF; margin-bottom:8px;">Segurança de Dados e Restauração</h4>
-          <p style="font-size:0.875rem; color:var(--text-muted); margin-bottom:24px;">
-            Você pode exportar todas as suas alterações em um arquivo JSON para backup ou restaurar os dados originais a
-            qualquer momento.
+          <p style="font-size:0.875rem; color:var(--text-muted); margin-bottom:18px;">
+            Exporte ou importe um arquivo JSON completo contendo todas as customizações do site, incluindo a paleta de cores e identidade visual da marca.
           </p>
 
-          <div style="display:flex; flex-direction:column; gap:16px; max-width:400px;">
-            <button class="btn btn-secondary" id="btn-export-backup">
+          <!-- Card de Resumo do que está incluído no Backup -->
+          <div style="background:rgba(var(--bg-navy-rgb),0.6); border:1px solid var(--border-glass); border-radius:10px; padding:16px; margin-bottom:24px; max-width:520px;">
+            <div style="font-size:0.85rem; font-weight:700; color:#FFFFFF; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
+              <span style="color:var(--gold-light);">🎨 O que este backup guarda:</span>
+            </div>
+            <ul style="font-size:0.8rem; color:var(--text-muted); margin:0; padding-left:18px; line-height:1.6;">
+              <li><strong>Paleta de Cores e Identidade Visual:</strong> Cores primária, secundária, fundos e tons customizados.</li>
+              <li><strong>Marca e Logotipo:</strong> Tipo de logo, monograma, imagens, nomes e slogans.</li>
+              <li><strong>Cards de Soluções:</strong> Todos os serviços, descrições, entregáveis e tags.</li>
+              <li><strong>Conteúdo Institucional:</strong> Métricas, Sobre Nós, Framework e Carrossel.</li>
+            </ul>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:16px; max-width:440px;">
+            <button class="btn btn-secondary" id="btn-export-backup" style="justify-content:flex-start; padding:12px 18px;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="7 10 12 15 17 10"></polyline>
                 <line x1="12" y1="15" x2="12" y2="3"></line>
               </svg>
-              <span>Exportar Backup do Site (JSON)</span>
+              <span>Exportar Backup Completo (.json)</span>
             </button>
 
-            <button class="btn btn-secondary" id="btn-import-backup">
+            <button class="btn btn-secondary" id="btn-import-backup" style="justify-content:flex-start; padding:12px 18px;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="17 8 12 3 7 8"></polyline>
                 <line x1="12" y1="3" x2="12" y2="15"></line>
               </svg>
-              <span>Importar Backup (JSON)</span>
+              <span>Importar Backup (.json)</span>
             </button>
             <input type="file" id="import-file-input" accept=".json" style="display:none;">
 
             <hr style="border-color:var(--border-glass); margin:8px 0;">
 
-            <button class="btn btn-danger" id="btn-reset-defaults">
-              <span>Restaurar Configurações Originais</span>
+            <button class="btn btn-danger" id="btn-reset-defaults" style="justify-content:flex-start; padding:12px 18px;">
+              <span>Restaurar Configurações Originais (Fábrica)</span>
             </button>
           </div>
         </div>
