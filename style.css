@@ -1217,6 +1217,9 @@ body.admin-active .brand-header-edit-btn {
   margin-bottom: 12px;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 /* Carousel Editor in Admin Modal */
@@ -1513,6 +1516,9 @@ body.admin-active .brand-header-edit-btn {
 .section-admin-control {
   display: none;
   justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
   margin-bottom: 24px;
 }
 
@@ -1543,11 +1549,27 @@ body.admin-active .section-admin-control {
   box-shadow: var(--shadow-gold);
 }
 
+.section-edit-btn.gold {
+  background: var(--gold-gradient);
+  color: var(--navy-blue);
+  border-color: var(--royal-gold);
+  font-weight: 800;
+  box-shadow: var(--shadow-gold);
+}
+
+.section-edit-btn.gold:hover {
+  background: #FFFFFF;
+  color: var(--navy-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(185, 145, 91, 0.45);
+}
+
 .card-admin-bar {
   display: none;
   align-items: center;
   justify-content: flex-end;
   gap: 8px;
+  flex-wrap: wrap;
   margin-bottom: 14px;
   padding-bottom: 10px;
   border-bottom: 1px dashed var(--border-subtle);

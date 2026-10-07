@@ -1696,6 +1696,58 @@ function renderAboutSection() {
 }
 
 /* ==========================================================================
+   RENDERIZAÇÃO DA SEÇÃO NOSSO FRAMEWORK (PASSOS DINÂMICOS & METODOLOGIA)
+   ========================================================================== */
+function renderFrameworkSection() {
+  const fw = siteContent.framework || defaultSiteContent.framework;
+  if (!fw) return;
+
+  const tagEl = document.getElementById('framework-tag-text');
+  if (tagEl) tagEl.textContent = fw.tag || 'NOSSO FRAMEWORK';
+
+  const titleEl = document.getElementById('framework-title-text');
+  if (titleEl) titleEl.innerHTML = fw.title || defaultSiteContent.framework.title;
+
+  const subEl = document.getElementById('framework-subtitle-text');
+  if (subEl) subEl.textContent = fw.subtitle || defaultSiteContent.framework.subtitle;
+
+  const grid = document.getElementById('framework-steps-grid');
+  if (!grid) return;
+
+  const steps = fw.steps || defaultSiteContent.framework.steps || [];
+
+  let html = steps.map((s, index) => `
+    <div class="step-card" data-step-index="${index}">
+      <div class="card-admin-bar">
+        <button type="button" class="card-admin-btn" onclick="openSingleStepModal(${index})" title="Editar este passo">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Editar
+        </button>
+        <button type="button" class="card-admin-btn danger" onclick="deleteStep(${index})" title="Excluir este passo">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          Excluir
+        </button>
+      </div>
+      <div class="step-number">${escapeHtml(s.num || String(index + 1).padStart(2, '0'))}</div>
+      <h3 class="step-title">${escapeHtml(s.title || '')}</h3>
+      <p class="step-desc">${escapeHtml(s.desc || '')}</p>
+    </div>
+  `).join('');
+
+  if (isUserAdmin()) {
+    html += `
+      <div class="add-new-card-cta" onclick="openSingleStepModal(null)" style="padding:28px 20px; cursor:pointer;" title="Incluir novo passo no framework">
+        <div class="icon-plus" style="width:40px; height:40px; font-size:1.5rem; margin-bottom:8px;">+</div>
+        <div style="font-size:0.95rem; font-weight:700; color:#FFFFFF;">Adicionar Passo</div>
+        <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">Nova etapa do processo</div>
+      </div>
+    `;
+  }
+
+  grid.innerHTML = html;
+}
+
+/* ==========================================================================
    APLICAÇÃO DOS TEXTOS GERAIS NO DOM (CADA CAMPO DE TEXTO DO SITE)
    ========================================================================== */
 function applyGeneralTextsToDOM() {
@@ -1804,6 +1856,10 @@ function initAdminSystem() {
       document.body.classList.add('admin-active');
       closeAdminLoginModal();
       showToast('Autenticado com sucesso como Administrador Dash!');
+      renderHeroBadges();
+      renderStatsSection();
+      renderAboutSection();
+      renderFrameworkSection();
       renderPortfolioCards();
     } else {
       showToast('Usuário ou senha inválidos.');
@@ -1817,7 +1873,12 @@ function initAdminSystem() {
     closeAdminDrawer();
     closeMetricsEditorModal();
     closeAboutEditorModal();
+    closeFrameworkEditorModal();
     showToast('Sessão administrativa encerrada.');
+    renderHeroBadges();
+    renderStatsSection();
+    renderAboutSection();
+    renderFrameworkSection();
     renderPortfolioCards();
   });
 
@@ -1899,15 +1960,8 @@ function initAdminSystem() {
   document.querySelectorAll('.modal-overlay, .admin-drawer-overlay').forEach(overlay => {
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
-        if (overlay.id === 'admin-drawer-overlay') closeAdminDrawer();
-        else if (overlay.id === 'about-editor-modal') closeAboutEditorModal();
-        else if (overlay.id === 'metrics-editor-modal') closeMetricsEditorModal();
-        else if (overlay.id === 'card-editor-modal') closeCardEditorModal();
-        else if (overlay.id === 'framework-editor-modal') closeFrameworkEditorModal();
-        else if (overlay.id === 'hero-carousel-editor-modal') closeHeroCarouselEditorModal();
-        else if (overlay.id === 'brand-editor-modal') closeBrandEditorModal();
-        else if (overlay.id === 'admin-login-modal') closeAdminLoginModal();
-        else if (overlay.id === 'service-modal-overlay') closeServiceModal();
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
       }
     });
   });
@@ -1915,15 +1969,10 @@ function initAdminSystem() {
   // Fechar qualquer modal ativo com tecla ESC
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      closeBrandEditorModal();
-      closeAboutEditorModal();
-      closeMetricsEditorModal();
-      closeCardEditorModal();
-      closeFrameworkEditorModal();
-      closeHeroCarouselEditorModal();
-      closeAdminLoginModal();
-      closeAdminDrawer();
-      closeServiceModal();
+      document.querySelectorAll('.modal-overlay.active, .admin-drawer-overlay.active').forEach(modal => {
+        modal.classList.remove('active');
+      });
+      document.body.style.overflow = '';
     }
   });
 }
@@ -2082,6 +2131,16 @@ window.closeMetricsEditorModal = function() {
 };
 
 function populateMetricsInputs() {
+  const m = siteContent.metrics || defaultSiteContent.metrics || [];
+  for (let i = 0; i < 4; i++) {
+    const item = m[i] || { val: '', label: '', desc: '' };
+    const valEl = document.getElementById(`edit-metric-${i}-val`);
+    const labelEl = document.getElementById(`edit-metric-${i}-label`);
+    const descEl = document.getElementById(`edit-metric-${i}-desc`);
+    if (valEl) valEl.value = item.val || '';
+    if (labelEl) labelEl.value = item.label || '';
+    if (descEl) descEl.value = item.desc || '';
+  }
   renderCMSMetricsList();
 }
 
@@ -2111,7 +2170,27 @@ function renderCMSMetricsList() {
 }
 
 window.saveMetricsFromForm = function() {
+  if (!siteContent.metrics) siteContent.metrics = [...defaultSiteContent.metrics];
+  for (let i = 0; i < 4; i++) {
+    const val = document.getElementById(`edit-metric-${i}-val`)?.value.trim() || '';
+    const label = document.getElementById(`edit-metric-${i}-label`)?.value.trim() || '';
+    const desc = document.getElementById(`edit-metric-${i}-desc`)?.value.trim() || '';
+    if (siteContent.metrics[i]) {
+      siteContent.metrics[i].val = val;
+      siteContent.metrics[i].label = label;
+      siteContent.metrics[i].desc = desc;
+    } else {
+      siteContent.metrics.push({
+        id: `m-${i + 1}`,
+        val,
+        label,
+        desc
+      });
+    }
+  }
+  localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
   renderStatsSection();
+  renderCMSMetricsList();
   closeMetricsEditorModal();
   showToast('Métricas atualizadas com sucesso!');
 };
@@ -3767,6 +3846,22 @@ function initNavbarScroll() {
     link.addEventListener('mouseenter', () => {
       if (window.innerWidth > 992) {
         moveIndicatorTo(link, true);
+      }
+    });
+  });
+
+  // Rolagem suave para todos os botões e links CTA com âncora (#)
+  document.querySelectorAll('a[href^="#"]:not(.nav-link):not(.brand-logo)').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const href = btn.getAttribute('href');
+      if (href && href.length > 1 && href.startsWith('#')) {
+        const targetSection = document.getElementById(href.substring(1));
+        if (targetSection) {
+          e.preventDefault();
+          const headerHeight = header ? header.offsetHeight : 75;
+          const targetY = targetSection.getBoundingClientRect().top + window.scrollY - headerHeight + 5;
+          window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+        }
       }
     });
   });

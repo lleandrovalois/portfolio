@@ -215,7 +215,7 @@
           </svg>
           <span>Editar Textos & CTAs da Hero</span>
         </button>
-        <button class="section-edit-btn" onclick="openSingleBadgeModal(null)" style="background:var(--primary-gold); color:var(--deep-dark); font-weight:700;">
+        <button class="section-edit-btn gold" onclick="openSingleBadgeModal(null)">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -284,7 +284,7 @@
   <section class="stats-section">
     <div class="container">
       <div class="section-admin-control">
-        <button class="section-edit-btn" onclick="openSingleMetricModal(null)" style="background:var(--primary-gold); color:var(--deep-dark); font-weight:700;">
+        <button class="section-edit-btn gold" onclick="openSingleMetricModal(null)">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -368,7 +368,7 @@
   <section class="about-section" id="sobre">
     <div class="container">
       <div class="section-admin-control">
-        <button class="section-edit-btn" onclick="openSinglePillarModal(null)" style="background:var(--primary-gold); color:var(--deep-dark); font-weight:700;">
+        <button class="section-edit-btn gold" onclick="openSinglePillarModal(null)">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -394,7 +394,7 @@
   <section class="methodology-section" id="metodologia">
     <div class="container">
       <div class="section-admin-control">
-        <button class="section-edit-btn" onclick="openSingleStepModal(null)" style="background:var(--primary-gold); color:var(--deep-dark); font-weight:700;">
+        <button class="section-edit-btn gold" onclick="openSingleStepModal(null)">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -1981,8 +1981,8 @@
 
             <!-- Amostra Botões -->
             <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <button type="button" class="btn btn-primary btn-sm">Botão Principal</button>
-              <button type="button" class="btn btn-secondary btn-sm">Secundário</button>
+              <button type="button" class="btn btn-primary btn-sm" onclick="showToast('Demonstração: Botão Primário no estilo do tema atual')">Botão Principal</button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="showToast('Demonstração: Botão Secundário no estilo do tema atual')">Secundário</button>
             </div>
 
             <!-- Amostra Badge & Título Serif -->
