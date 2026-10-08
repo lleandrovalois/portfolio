@@ -256,7 +256,6 @@
             <!-- Renderizado dinamicamente por renderHeroBadges() -->
           </div>
         </div>
-        </div>
 
         <!-- Right Column (Luxury Hero Image Carousel & Live Operations Showcase) -->
         <div class="hero-visual">
@@ -763,7 +762,7 @@
       </div>
 
       <div class="modal-body">
-        <form id="metrics-editor-form">
+        <form id="metrics-editor-form" onsubmit="event.preventDefault(); saveMetricsFromForm();">
           <div style="display:flex; flex-direction:column; gap:20px;">
             <!-- Métrica 1 -->
             <div
@@ -771,12 +770,12 @@
               <h4 style="color:var(--gold-light); font-size:0.95rem; margin-bottom:10px;">Indicador 1 (ex: Uptime)</h4>
               <div class="form-grid">
                 <div class="form-group">
-                  <label class="form-label" for="edit-metric-0-val">Valor em Destaque *</label>
-                  <input class="form-input" type="text" id="edit-metric-0-val" required placeholder="+99.9%">
+                  <label class="form-label" for="edit-metric-0-val">Valor em Destaque</label>
+                  <input class="form-input" type="text" id="edit-metric-0-val" placeholder="+99.9%">
                 </div>
                 <div class="form-group">
-                  <label class="form-label" for="edit-metric-0-label">Rótulo / Título *</label>
-                  <input class="form-input" type="text" id="edit-metric-0-label" required
+                  <label class="form-label" for="edit-metric-0-label">Rótulo / Título</label>
+                  <input class="form-input" type="text" id="edit-metric-0-label"
                     placeholder="Uptime Garantido">
                 </div>
                 <div class="form-group full-width">
@@ -793,12 +792,12 @@
               <h4 style="color:var(--gold-light); font-size:0.95rem; margin-bottom:10px;">Indicador 2 (ex: Gestão)</h4>
               <div class="form-grid">
                 <div class="form-group">
-                  <label class="form-label" for="edit-metric-1-val">Valor em Destaque *</label>
-                  <input class="form-input" type="text" id="edit-metric-1-val" required placeholder="100%">
+                  <label class="form-label" for="edit-metric-1-val">Valor em Destaque</label>
+                  <input class="form-input" type="text" id="edit-metric-1-val" placeholder="100%">
                 </div>
                 <div class="form-group">
-                  <label class="form-label" for="edit-metric-1-label">Rótulo / Título *</label>
-                  <input class="form-input" type="text" id="edit-metric-1-label" required
+                  <label class="form-label" for="edit-metric-1-label">Rótulo / Título</label>
+                  <input class="form-input" type="text" id="edit-metric-1-label"
                     placeholder="Gestão Sob Medida">
                 </div>
                 <div class="form-group full-width">
@@ -816,12 +815,12 @@
               </h4>
               <div class="form-grid">
                 <div class="form-group">
-                  <label class="form-label" for="edit-metric-2-val">Valor em Destaque *</label>
-                  <input class="form-input" type="text" id="edit-metric-2-val" required placeholder="+10 anos">
+                  <label class="form-label" for="edit-metric-2-val">Valor em Destaque</label>
+                  <input class="form-input" type="text" id="edit-metric-2-val" placeholder="+10 anos">
                 </div>
                 <div class="form-group">
-                  <label class="form-label" for="edit-metric-2-label">Rótulo / Título *</label>
-                  <input class="form-input" type="text" id="edit-metric-2-label" required
+                  <label class="form-label" for="edit-metric-2-label">Rótulo / Título</label>
+                  <input class="form-input" type="text" id="edit-metric-2-label"
                     placeholder="Experiência Corporativa">
                 </div>
                 <div class="form-group full-width">
@@ -839,12 +838,12 @@
               </h4>
               <div class="form-grid">
                 <div class="form-group">
-                  <label class="form-label" for="edit-metric-3-val">Valor em Destaque *</label>
-                  <input class="form-input" type="text" id="edit-metric-3-val" required placeholder="24/7">
+                  <label class="form-label" for="edit-metric-3-val">Valor em Destaque</label>
+                  <input class="form-input" type="text" id="edit-metric-3-val" placeholder="24/7">
                 </div>
                 <div class="form-group">
-                  <label class="form-label" for="edit-metric-3-label">Rótulo / Título *</label>
-                  <input class="form-input" type="text" id="edit-metric-3-label" required
+                  <label class="form-label" for="edit-metric-3-label">Rótulo / Título</label>
+                  <input class="form-input" type="text" id="edit-metric-3-label"
                     placeholder="Sustentação Crítica">
                 </div>
                 <div class="form-group full-width">
@@ -893,7 +892,7 @@
       </div>
 
       <div class="modal-body">
-        <form id="about-editor-form">
+        <form id="about-editor-form" onsubmit="event.preventDefault(); saveAboutFromForm();">
           <div style="display:flex; flex-direction:column; gap:20px;">
             <!-- Textos Principais -->
             <div
@@ -928,27 +927,24 @@
               <h4 style="color:var(--gold-light); font-size:1rem; margin-bottom:12px;">Os 3 Pilares Metodológicos</h4>
               <div class="form-grid">
                 <div class="form-group full-width">
-                  <label class="form-label" for="edit-pillar-1-title">Pilar 01 - Título *</label>
-                  <input class="form-input" type="text" id="edit-pillar-1-title" required>
-                  <label class="form-label" for="edit-pillar-1-desc" style="margin-top:6px;">Pilar 01 - Descrição
-                    *</label>
-                  <textarea class="form-textarea" id="edit-pillar-1-desc" style="min-height:60px;" required></textarea>
+                  <label class="form-label" for="edit-pillar-1-title">Pilar 01 - Título</label>
+                  <input class="form-input" type="text" id="edit-pillar-1-title" placeholder="Governança e Método Rigoroso">
+                  <label class="form-label" for="edit-pillar-1-desc" style="margin-top:6px;">Pilar 01 - Descrição</label>
+                  <textarea class="form-textarea" id="edit-pillar-1-desc" style="min-height:60px;"></textarea>
                 </div>
 
                 <div class="form-group full-width" style="margin-top:10px;">
-                  <label class="form-label" for="edit-pillar-2-title">Pilar 02 - Título *</label>
-                  <input class="form-input" type="text" id="edit-pillar-2-title" required>
-                  <label class="form-label" for="edit-pillar-2-desc" style="margin-top:6px;">Pilar 02 - Descrição
-                    *</label>
-                  <textarea class="form-textarea" id="edit-pillar-2-desc" style="min-height:60px;" required></textarea>
+                  <label class="form-label" for="edit-pillar-2-title">Pilar 02 - Título</label>
+                  <input class="form-input" type="text" id="edit-pillar-2-title" placeholder="Segurança por Design (Zero-Trust)">
+                  <label class="form-label" for="edit-pillar-2-desc" style="margin-top:6px;">Pilar 02 - Descrição</label>
+                  <textarea class="form-textarea" id="edit-pillar-2-desc" style="min-height:60px;"></textarea>
                 </div>
 
                 <div class="form-group full-width" style="margin-top:10px;">
-                  <label class="form-label" for="edit-pillar-3-title">Pilar 03 - Título *</label>
-                  <input class="form-input" type="text" id="edit-pillar-3-title" required>
-                  <label class="form-label" for="edit-pillar-3-desc" style="margin-top:6px;">Pilar 03 - Descrição
-                    *</label>
-                  <textarea class="form-textarea" id="edit-pillar-3-desc" style="min-height:60px;" required></textarea>
+                  <label class="form-label" for="edit-pillar-3-title">Pilar 03 - Título</label>
+                  <input class="form-input" type="text" id="edit-pillar-3-title" placeholder="Inovação Pragmática com IA">
+                  <label class="form-label" for="edit-pillar-3-desc" style="margin-top:6px;">Pilar 03 - Descrição</label>
+                  <textarea class="form-textarea" id="edit-pillar-3-desc" style="min-height:60px;"></textarea>
                 </div>
               </div>
             </div>
@@ -1397,7 +1393,7 @@
       </div>
 
       <div class="modal-body">
-        <form id="card-editor-form">
+        <form id="card-editor-form" onsubmit="event.preventDefault(); saveCardFromForm();">
           <div class="form-grid">
             <div class="form-group full-width">
               <label class="form-label" for="edit-card-title">Título da Solução *</label>
@@ -1483,7 +1479,7 @@
       </div>
 
       <div class="modal-body">
-        <form id="framework-editor-form">
+        <form id="framework-editor-form" onsubmit="event.preventDefault(); saveFrameworkFromForm();">
           <div style="display:flex; flex-direction:column; gap:20px;">
             <!-- Cabeçalho da Seção -->
             <div
@@ -1515,57 +1511,57 @@
                 <!-- Passo 1 -->
                 <div class="form-group">
                   <label class="form-label" for="edit-step-0-num">Número Passo 01</label>
-                  <input class="form-input" type="text" id="edit-step-0-num" required placeholder="01">
+                  <input class="form-input" type="text" id="edit-step-0-num" placeholder="01">
                 </div>
                 <div class="form-group">
-                  <label class="form-label" for="edit-step-0-title">Título Passo 01 *</label>
-                  <input class="form-input" type="text" id="edit-step-0-title" required>
+                  <label class="form-label" for="edit-step-0-title">Título Passo 01</label>
+                  <input class="form-input" type="text" id="edit-step-0-title" placeholder="Diagnóstico & Assessment">
                 </div>
                 <div class="form-group full-width">
-                  <label class="form-label" for="edit-step-0-desc">Descrição Passo 01 *</label>
-                  <textarea class="form-textarea" id="edit-step-0-desc" style="min-height:60px;" required></textarea>
+                  <label class="form-label" for="edit-step-0-desc">Descrição Passo 01</label>
+                  <textarea class="form-textarea" id="edit-step-0-desc" style="min-height:60px;"></textarea>
                 </div>
 
                 <!-- Passo 2 -->
                 <div class="form-group" style="margin-top:10px;">
                   <label class="form-label" for="edit-step-1-num">Número Passo 02</label>
-                  <input class="form-input" type="text" id="edit-step-1-num" required placeholder="02">
+                  <input class="form-input" type="text" id="edit-step-1-num" placeholder="02">
                 </div>
                 <div class="form-group" style="margin-top:10px;">
-                  <label class="form-label" for="edit-step-1-title">Título Passo 02 *</label>
-                  <input class="form-input" type="text" id="edit-step-1-title" required>
+                  <label class="form-label" for="edit-step-1-title">Título Passo 02</label>
+                  <input class="form-input" type="text" id="edit-step-1-title" placeholder="Arquitetura & Desenho">
                 </div>
                 <div class="form-group full-width">
-                  <label class="form-label" for="edit-step-1-desc">Descrição Passo 02 *</label>
-                  <textarea class="form-textarea" id="edit-step-1-desc" style="min-height:60px;" required></textarea>
+                  <label class="form-label" for="edit-step-1-desc">Descrição Passo 02</label>
+                  <textarea class="form-textarea" id="edit-step-1-desc" style="min-height:60px;"></textarea>
                 </div>
 
                 <!-- Passo 3 -->
                 <div class="form-group" style="margin-top:10px;">
                   <label class="form-label" for="edit-step-2-num">Número Passo 03</label>
-                  <input class="form-input" type="text" id="edit-step-2-num" required placeholder="03">
+                  <input class="form-input" type="text" id="edit-step-2-num" placeholder="03">
                 </div>
                 <div class="form-group" style="margin-top:10px;">
-                  <label class="form-label" for="edit-step-2-title">Título Passo 03 *</label>
-                  <input class="form-input" type="text" id="edit-step-2-title" required>
+                  <label class="form-label" for="edit-step-2-title">Título Passo 03</label>
+                  <input class="form-input" type="text" id="edit-step-2-title" placeholder="Implantação & Hardening">
                 </div>
                 <div class="form-group full-width">
-                  <label class="form-label" for="edit-step-2-desc">Descrição Passo 03 *</label>
-                  <textarea class="form-textarea" id="edit-step-2-desc" style="min-height:60px;" required></textarea>
+                  <label class="form-label" for="edit-step-2-desc">Descrição Passo 03</label>
+                  <textarea class="form-textarea" id="edit-step-2-desc" style="min-height:60px;"></textarea>
                 </div>
 
                 <!-- Passo 4 -->
                 <div class="form-group" style="margin-top:10px;">
                   <label class="form-label" for="edit-step-3-num">Número Passo 04</label>
-                  <input class="form-input" type="text" id="edit-step-3-num" required placeholder="04">
+                  <input class="form-input" type="text" id="edit-step-3-num" placeholder="04">
                 </div>
                 <div class="form-group" style="margin-top:10px;">
-                  <label class="form-label" for="edit-step-3-title">Título Passo 04 *</label>
-                  <input class="form-input" type="text" id="edit-step-3-title" required>
+                  <label class="form-label" for="edit-step-3-title">Título Passo 04</label>
+                  <input class="form-input" type="text" id="edit-step-3-title" placeholder="Sustentação & Evolução 24/7">
                 </div>
                 <div class="form-group full-width">
-                  <label class="form-label" for="edit-step-3-desc">Descrição Passo 04 *</label>
-                  <textarea class="form-textarea" id="edit-step-3-desc" style="min-height:60px;" required></textarea>
+                  <label class="form-label" for="edit-step-3-desc">Descrição Passo 04</label>
+                  <textarea class="form-textarea" id="edit-step-3-desc" style="min-height:60px;"></textarea>
                 </div>
               </div>
             </div>
@@ -2328,6 +2324,34 @@
             <div class="form-group">
               <label class="form-label" for="hero-form-secondary-btn-link">Link do Botão Secundário</label>
               <input class="form-input" type="text" id="hero-form-secondary-btn-link" placeholder="#contato">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="hero-form-top-city">Cidade / Localização (Topo)</label>
+              <input class="form-input" type="text" id="hero-form-top-city" placeholder="Belém • Pará">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="hero-form-nav-cta-text">Texto do Botão do Menu (Navbar)</label>
+              <input class="form-input" type="text" id="hero-form-nav-cta-text" placeholder="Falar com Especialista">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="hero-form-nav-cta-link">Link do Botão do Menu</label>
+              <input class="form-input" type="text" id="hero-form-nav-cta-link" placeholder="#contato">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="hero-form-announcement-badge">Emblema da Barra Superior</label>
+              <input class="form-input" type="text" id="hero-form-announcement-badge" placeholder="EXCLUSIVO">
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label" for="hero-form-announcement-text">Texto da Barra Superior</label>
+              <input class="form-input" type="text" id="hero-form-announcement-text" placeholder="Excelência em Infraestrutura e Transformação Digital Corporativa |">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="hero-form-announcement-link-text">Texto do Link da Barra Superior</label>
+              <input class="form-input" type="text" id="hero-form-announcement-link-text" placeholder="Agende um diagnóstico técnico gratuito">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="hero-form-announcement-link-url">URL do Link da Barra Superior</label>
+              <input class="form-input" type="text" id="hero-form-announcement-link-url" placeholder="#contato">
             </div>
           </div>
           <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:20px;">

@@ -1,11 +1,11 @@
 {
-  "preset": "default",
-  "name": "Ouro & Marinho Nobre",
-  "primaryColor": "#B9915B",
-  "secondaryColor": "#C9A96E",
-  "darkAccent": "#977342",
-  "bgMain": "#001F35",
-  "bgDeep": "#01121E",
-  "bgSurface": "#06263F",
-  "updatedAt": "2026-10-07T12:00:00.000Z"
+  "preset": "emerald",
+  "primaryColor": "#10B981",
+  "secondaryColor": "#34D399",
+  "darkAccent": "#059669",
+  "bgMain": "#062822",
+  "bgDeep": "#021411",
+  "bgSurface": "#0A3830",
+  "name": "Esmeralda & Noite Tech",
+  "updatedAt": "2026-10-08T12:53:47.166Z"
 }

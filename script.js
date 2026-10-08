@@ -237,7 +237,7 @@ const defaultSiteContent = {
     newsletterTitle: "Radar Tecnológico",
     newsletterDesc: "Receba insights executivos sobre tendências de IA, cibersegurança e infraestrutura para negócios.",
     newsletterBtnText: "Assinar",
-    copyrightText: "Dash Solutions. Todos os direitos reservados.",
+    copyrightText: "© 2026 Dash Solutions. Todos os direitos reservados.",
     socialLinkedin: "https://linkedin.com",
     socialInstagram: "https://instagram.com",
     socialYoutube: "https://youtube.com"
@@ -998,7 +998,11 @@ window.saveBrandFromForm = function() {
   siteContent.brand = brandObj;
   localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
 
+  const footerDescEl = document.getElementById('footer-form-desc');
+  if (footerDescEl) footerDescEl.value = brandObj.footerDesc;
+
   renderBrandLogo();
+  applyGeneralTextsToDOM();
   closeBrandEditorModal();
   showToast('Identidade visual e logotipo atualizados com sucesso!');
 };
@@ -1792,39 +1796,51 @@ function applyGeneralTextsToDOM() {
 
   // Contact Section
   const ct = siteContent.contact || defaultSiteContent.contact;
+  const currentEmail = ct.companyEmail || siteContent.companyEmail || defaultSiteContent.companyEmail;
+  const currentPhone = ct.companyPhone || siteContent.companyPhone || defaultSiteContent.companyPhone;
+  const currentAddress = ct.companyAddress || siteContent.companyAddress || defaultSiteContent.companyAddress;
+  const currentPhoneLink = ct.companyPhoneLink || (currentPhone ? `https://wa.me/55${currentPhone.replace(/\D/g, '')}` : defaultSiteContent.contact.companyPhoneLink);
+
   bind('contact-tag-text', ct.tag);
   bind('contact-title-text', ct.title);
   bind('contact-subtitle-text', ct.subtitle);
   bind('contact-address-title', ct.addressTitle || 'Endereço Corporativo');
-  bind('company-address-text', ct.companyAddress || siteContent.companyAddress);
+  bind('company-address-text', currentAddress);
   bind('contact-email-title', ct.emailTitle || 'E-mail de Contato');
-  bind('company-email-text', ct.companyEmail || siteContent.companyEmail);
-  bind('company-email-link-text', ct.companyEmail || siteContent.companyEmail);
-  bindAttr('company-email-link', 'href', `mailto:${ct.companyEmail || siteContent.companyEmail}`);
+  bind('company-email-text', currentEmail);
+  bindAttr('company-email-text', 'href', `mailto:${currentEmail}`);
+  bind('company-email-link', currentEmail);
+  bindAttr('company-email-link', 'href', `mailto:${currentEmail}`);
   bind('contact-phone-title', ct.phoneTitle || 'Telefone & WhatsApp');
-  bind('company-phone-text', ct.companyPhone || siteContent.companyPhone);
-  bindAttr('company-phone-link', 'href', ct.companyPhoneLink || `https://wa.me/5591987325580`);
+  bind('company-phone-text', currentPhone);
+  bindAttr('company-phone-link', 'href', currentPhoneLink);
   bind('contact-form-title', ct.formTitle || 'Solicite uma Proposta sob Medida');
   bind('contact-form-subtitle', ct.formSubtitle || 'Preencha os campos abaixo. Retornamos em menos de 2 horas em dias úteis.');
   bind('contact-form-btn-text', ct.formButtonText || 'Enviar Solicitação de Diagnóstico');
 
   // Floating WhatsApp
-  if (ct.companyPhoneLink) {
-    bindAttr('floating-whatsapp-btn', 'href', ct.companyPhoneLink);
-  }
+  bindAttr('floating-whatsapp-btn', 'href', currentPhoneLink);
 
   // Footer Section
   const ft = siteContent.footer || defaultSiteContent.footer;
-  bind('footer-brand-desc', siteContent.brand?.footerDesc || defaultSiteContent.brand.footerDesc);
-  bind('footer-solutions-title', ft.solutionsTitle || 'Principais Soluções');
-  bind('footer-nav-title', ft.navTitle || 'Navegação');
-  bind('footer-newsletter-title', ft.newsletterTitle || 'Radar Tecnológico');
-  bind('footer-newsletter-desc', ft.newsletterDesc || 'Receba insights executivos sobre tendências de IA, cibersegurança e infraestrutura para negócios.');
-  bind('footer-newsletter-btn-text', ft.newsletterBtnText || 'Assinar');
-  bind('footer-copyright-text', ft.copyrightText || 'Dash Solutions. Todos os direitos reservados.');
-  bindAttr('footer-social-linkedin', 'href', ft.socialLinkedin || '#');
-  bindAttr('footer-social-instagram', 'href', ft.socialInstagram || '#');
-  bindAttr('footer-social-youtube', 'href', ft.socialYoutube || '#');
+  const brand = getActiveBrand();
+  bind('footer-brand-desc', brand?.footerDesc || defaultSiteContent.brand.footerDesc);
+  bind('footer-solutions-title', ft.solutionsTitle || defaultSiteContent.footer.solutionsTitle);
+  bind('footer-nav-title', ft.navTitle || defaultSiteContent.footer.navTitle);
+  bind('footer-newsletter-title', ft.newsletterTitle || defaultSiteContent.footer.newsletterTitle);
+  bind('footer-newsletter-desc', ft.newsletterDesc || defaultSiteContent.footer.newsletterDesc);
+  bind('footer-newsletter-btn-text', ft.newsletterBtnText || defaultSiteContent.footer.newsletterBtnText);
+
+  const copyEl = document.getElementById('footer-copyright-text');
+  if (copyEl) {
+    const brandName = `${brand.nameFirst || ''} ${brand.nameSecond || ''}`.trim() || 'Dash Solutions';
+    const copyText = ft.copyrightText || `© 2026 ${brandName}. Todos os direitos reservados.`;
+    copyEl.textContent = copyText;
+  }
+
+  bindAttr('footer-social-linkedin', 'href', ft.socialLinkedin || defaultSiteContent.footer.socialLinkedin);
+  bindAttr('footer-social-instagram', 'href', ft.socialInstagram || defaultSiteContent.footer.socialInstagram);
+  bindAttr('footer-social-youtube', 'href', ft.socialYoutube || defaultSiteContent.footer.socialYoutube);
 }
 
 /* ==========================================================================
@@ -1918,17 +1934,50 @@ function initAdminSystem() {
   // Formulário de Edição de Conteúdos Gerais
   document.getElementById('site-content-form')?.addEventListener('submit', (e) => {
     e.preventDefault();
-    siteContent.heroTitle = document.getElementById('edit-hero-title').value;
-    siteContent.heroSubtitle = document.getElementById('edit-hero-subtitle').value;
-    siteContent.heroTag = document.getElementById('edit-hero-tag').value;
-    siteContent.announcementText = document.getElementById('edit-announcement-text').value;
-    siteContent.companyEmail = document.getElementById('edit-company-email').value;
-    siteContent.companyPhone = document.getElementById('edit-company-phone').value;
-    siteContent.companyAddress = document.getElementById('edit-company-address').value;
+    const heroTitle = document.getElementById('edit-hero-title')?.value.trim();
+    const heroSubtitle = document.getElementById('edit-hero-subtitle')?.value.trim();
+    const heroTag = document.getElementById('edit-hero-tag')?.value.trim();
+    const announcementText = document.getElementById('edit-announcement-text')?.value.trim();
+    const email = document.getElementById('edit-company-email')?.value.trim();
+    const phone = document.getElementById('edit-company-phone')?.value.trim();
+    const address = document.getElementById('edit-company-address')?.value.trim();
+
+    if (heroTitle !== undefined && heroTitle !== '') siteContent.heroTitle = heroTitle;
+    if (heroSubtitle !== undefined && heroSubtitle !== '') siteContent.heroSubtitle = heroSubtitle;
+    if (heroTag !== undefined && heroTag !== '') siteContent.heroTag = heroTag;
+    if (announcementText !== undefined && announcementText !== '') siteContent.announcementText = announcementText;
+
+    if (!siteContent.contact) siteContent.contact = { ...defaultSiteContent.contact };
+
+    if (email !== undefined && email !== '') {
+      siteContent.companyEmail = email;
+      siteContent.contact.companyEmail = email;
+    }
+    if (phone !== undefined && phone !== '') {
+      siteContent.companyPhone = phone;
+      siteContent.contact.companyPhone = phone;
+      siteContent.contact.companyPhoneLink = `https://wa.me/55${phone.replace(/\D/g, '')}`;
+    }
+    if (address !== undefined && address !== '') {
+      siteContent.companyAddress = address;
+      siteContent.contact.companyAddress = address;
+    }
+
+    const syncVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el && val !== undefined) el.value = val;
+    };
+    syncVal('hero-form-title', siteContent.heroTitle);
+    syncVal('hero-form-subtitle', siteContent.heroSubtitle);
+    syncVal('hero-form-tag', siteContent.heroTag);
+    syncVal('hero-form-announcement-text', siteContent.announcementText);
+    syncVal('contact-form-email-text', email);
+    syncVal('contact-form-phone-text', phone);
+    syncVal('contact-form-address-text', address);
 
     localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
     applyGeneralTextsToDOM();
-    showToast('Textos salvos com sucesso!');
+    showToast('Textos e canais de contato salvos com sucesso!');
   });
 
   // Formulário do Card (Criar / Editar)
@@ -2012,13 +2061,17 @@ function openAdminDrawer(tabName = 'portfolio') {
   populateFrameworkInputs();
 
   // Popula textos gerais
-  document.getElementById('edit-hero-title').value = siteContent.heroTitle || '';
-  document.getElementById('edit-hero-subtitle').value = siteContent.heroSubtitle || '';
-  document.getElementById('edit-hero-tag').value = siteContent.heroTag || '';
-  document.getElementById('edit-announcement-text').value = siteContent.announcementText || '';
-  document.getElementById('edit-company-email').value = siteContent.companyEmail || '';
-  document.getElementById('edit-company-phone').value = siteContent.companyPhone || '';
-  document.getElementById('edit-company-address').value = siteContent.companyAddress || '';
+  const setDrawerVal = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.value = val || '';
+  };
+  setDrawerVal('edit-hero-title', siteContent.heroTitle);
+  setDrawerVal('edit-hero-subtitle', siteContent.heroSubtitle);
+  setDrawerVal('edit-hero-tag', siteContent.heroTag);
+  setDrawerVal('edit-announcement-text', siteContent.announcementText);
+  setDrawerVal('edit-company-email', siteContent.contact?.companyEmail || siteContent.companyEmail);
+  setDrawerVal('edit-company-phone', siteContent.contact?.companyPhone || siteContent.companyPhone);
+  setDrawerVal('edit-company-address', siteContent.contact?.companyAddress || siteContent.companyAddress);
 
   renderCMSPortfolioTable();
 }
@@ -2310,6 +2363,15 @@ function populateAboutInputs() {
   setVal('edit-about-title', ab.title);
   setVal('edit-about-quote-field', ab.quote);
   setVal('edit-about-desc-field', ab.desc);
+
+  const pillars = ab.pillars || defaultSiteContent.about.pillars || [];
+  setVal('edit-pillar-1-title', pillars[0]?.title);
+  setVal('edit-pillar-1-desc', pillars[0]?.desc);
+  setVal('edit-pillar-2-title', pillars[1]?.title);
+  setVal('edit-pillar-2-desc', pillars[1]?.desc);
+  setVal('edit-pillar-3-title', pillars[2]?.title);
+  setVal('edit-pillar-3-desc', pillars[2]?.desc);
+
   setVal('edit-ecosystem-title', ab.ecosystemTitle);
   setVal('edit-ecosystem-subtitle', ab.ecosystemSubtitle);
   setVal('edit-ecosystem-techs', (ab.technologies || []).join(', '));
@@ -2355,15 +2417,33 @@ window.saveAboutFromForm = function() {
     .map(s => s.trim())
     .filter(Boolean);
 
+  let currentPillars = siteContent.about?.pillars ? JSON.parse(JSON.stringify(siteContent.about.pillars)) : JSON.parse(JSON.stringify(defaultSiteContent.about.pillars));
+  const p1Title = getVal('edit-pillar-1-title');
+  const p1Desc = getVal('edit-pillar-1-desc');
+  const p2Title = getVal('edit-pillar-2-title');
+  const p2Desc = getVal('edit-pillar-2-desc');
+  const p3Title = getVal('edit-pillar-3-title');
+  const p3Desc = getVal('edit-pillar-3-desc');
+
+  if (p1Title || p1Desc) {
+    currentPillars[0] = { ...currentPillars[0], num: currentPillars[0]?.num || '01', title: p1Title || currentPillars[0]?.title, desc: p1Desc || currentPillars[0]?.desc };
+  }
+  if (p2Title || p2Desc) {
+    currentPillars[1] = { ...currentPillars[1], num: currentPillars[1]?.num || '02', title: p2Title || currentPillars[1]?.title, desc: p2Desc || currentPillars[1]?.desc };
+  }
+  if (p3Title || p3Desc) {
+    currentPillars[2] = { ...currentPillars[2], num: currentPillars[2]?.num || '03', title: p3Title || currentPillars[2]?.title, desc: p3Desc || currentPillars[2]?.desc };
+  }
+
   siteContent.about = {
     ...siteContent.about,
-    tag: getVal('edit-about-tag') || 'SOBRE NÓS',
-    title: getVal('edit-about-title'),
-    quote: getVal('edit-about-quote-field'),
-    desc: getVal('edit-about-desc-field'),
-    pillars: siteContent.about?.pillars || defaultSiteContent.about.pillars,
-    ecosystemTitle: getVal('edit-ecosystem-title'),
-    ecosystemSubtitle: getVal('edit-ecosystem-subtitle'),
+    tag: getVal('edit-about-tag') || defaultSiteContent.about.tag,
+    title: getVal('edit-about-title') || defaultSiteContent.about.title,
+    quote: getVal('edit-about-quote-field') || defaultSiteContent.about.quote,
+    desc: getVal('edit-about-desc-field') || defaultSiteContent.about.desc,
+    pillars: currentPillars,
+    ecosystemTitle: getVal('edit-ecosystem-title') || defaultSiteContent.about.ecosystemTitle,
+    ecosystemSubtitle: getVal('edit-ecosystem-subtitle') || defaultSiteContent.about.ecosystemSubtitle,
     technologies: techs.length ? techs : defaultSiteContent.about.technologies,
     certifications: certs.length ? certs : defaultSiteContent.about.certifications
   };
@@ -2491,6 +2571,14 @@ function populateFrameworkInputs() {
   setVal('edit-framework-title', fw.title);
   setVal('edit-framework-subtitle', fw.subtitle);
 
+  const steps = fw.steps || defaultSiteContent.framework.steps || [];
+  for (let i = 0; i < 4; i++) {
+    const s = steps[i] || {};
+    setVal(`edit-step-${i}-num`, s.num || `0${i + 1}`);
+    setVal(`edit-step-${i}-title`, s.title || '');
+    setVal(`edit-step-${i}-desc`, s.desc || '');
+  }
+
   renderCMSStepsList();
 }
 
@@ -2521,12 +2609,34 @@ function renderCMSStepsList() {
 window.saveFrameworkFromForm = function() {
   const getVal = (id) => document.getElementById(id)?.value.trim() || '';
 
+  const currentSteps = [...(siteContent.framework?.steps || defaultSiteContent.framework.steps || [])];
+  const updatedSteps = [];
+  for (let i = 0; i < 4; i++) {
+    const num = getVal(`edit-step-${i}-num`) || currentSteps[i]?.num || `0${i + 1}`;
+    const title = getVal(`edit-step-${i}-title`) || currentSteps[i]?.title || '';
+    const desc = getVal(`edit-step-${i}-desc`) || currentSteps[i]?.desc || '';
+    if (title || desc) {
+      updatedSteps.push({
+        id: currentSteps[i]?.id || `step-${i + 1}`,
+        num,
+        title,
+        desc
+      });
+    }
+  }
+
+  if (currentSteps.length > 4) {
+    for (let i = 4; i < currentSteps.length; i++) {
+      updatedSteps.push(currentSteps[i]);
+    }
+  }
+
   siteContent.framework = {
     ...siteContent.framework,
     tag: getVal('edit-framework-tag') || 'NOSSO FRAMEWORK',
-    title: getVal('edit-framework-title'),
-    subtitle: getVal('edit-framework-subtitle'),
-    steps: siteContent.framework?.steps || defaultSiteContent.framework.steps
+    title: getVal('edit-framework-title') || defaultSiteContent.framework.title,
+    subtitle: getVal('edit-framework-subtitle') || defaultSiteContent.framework.subtitle,
+    steps: updatedSteps.length ? updatedSteps : currentSteps
   };
 
   localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
@@ -2678,25 +2788,28 @@ window.savePortfolioHeaderFromForm = function() {
 
 window.openHeroTextsModal = function() {
   closeAdminDrawer();
-  const setVal = (id, val) => {
-    const el = document.getElementById(id);
-    if (el) el.value = val || '';
+  const setVal = (ids, val) => {
+    const idList = Array.isArray(ids) ? ids : [ids];
+    idList.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = val || '';
+    });
   };
 
-  setVal('edit-hero-tag', siteContent.heroTag);
-  setVal('edit-hero-title', siteContent.heroTitle);
-  setVal('edit-hero-subtitle', siteContent.heroSubtitle);
-  setVal('edit-hero-primary-text', siteContent.heroPrimaryCtaText);
-  setVal('edit-hero-primary-link', siteContent.heroPrimaryCtaLink);
-  setVal('edit-hero-secondary-text', siteContent.heroSecondaryCtaText);
-  setVal('edit-hero-secondary-link', siteContent.heroSecondaryCtaLink);
-  setVal('edit-announcement-badge', siteContent.announcementBadge);
-  setVal('edit-announcement-text', siteContent.announcementText);
-  setVal('edit-announcement-link-text', siteContent.announcementLinkText);
-  setVal('edit-announcement-link-url', siteContent.announcementLinkUrl);
-  setVal('edit-top-city', siteContent.topCity);
-  setVal('edit-nav-cta-text', siteContent.navCtaText);
-  setVal('edit-nav-cta-link', siteContent.navCtaLink);
+  setVal(['hero-form-tag', 'edit-hero-tag'], siteContent.heroTag);
+  setVal(['hero-form-title', 'edit-hero-title'], siteContent.heroTitle);
+  setVal(['hero-form-subtitle', 'edit-hero-subtitle'], siteContent.heroSubtitle);
+  setVal(['hero-form-primary-btn-text', 'edit-hero-primary-text'], siteContent.heroPrimaryCtaText);
+  setVal(['hero-form-primary-btn-link', 'edit-hero-primary-link'], siteContent.heroPrimaryCtaLink);
+  setVal(['hero-form-secondary-btn-text', 'edit-hero-secondary-text'], siteContent.heroSecondaryCtaText);
+  setVal(['hero-form-secondary-btn-link', 'edit-hero-secondary-link'], siteContent.heroSecondaryCtaLink);
+  setVal(['hero-form-announcement-badge', 'edit-announcement-badge'], siteContent.announcementBadge);
+  setVal(['hero-form-announcement-text', 'edit-announcement-text'], siteContent.announcementText);
+  setVal(['hero-form-announcement-link-text', 'edit-announcement-link-text'], siteContent.announcementLinkText);
+  setVal(['hero-form-announcement-link-url', 'edit-announcement-link-url'], siteContent.announcementLinkUrl);
+  setVal(['hero-form-top-city', 'edit-top-city'], siteContent.topCity);
+  setVal(['hero-form-nav-cta-text', 'edit-nav-cta-text'], siteContent.navCtaText);
+  setVal(['hero-form-nav-cta-link', 'edit-nav-cta-link'], siteContent.navCtaLink);
 
   const modal = document.getElementById('hero-texts-editor-modal');
   modal?.classList.add('active');
@@ -2710,22 +2823,31 @@ window.closeHeroTextsModal = function() {
 };
 
 window.saveHeroTextsFromForm = function() {
-  const getVal = (id) => document.getElementById(id)?.value.trim() || '';
+  const getVal = (...ids) => {
+    for (const id of ids) {
+      const el = document.getElementById(id);
+      if (el && el.value !== undefined) {
+        const v = el.value.trim();
+        if (v !== '') return v;
+      }
+    }
+    return '';
+  };
 
-  siteContent.heroTag = getVal('edit-hero-tag') || defaultSiteContent.heroTag;
-  siteContent.heroTitle = document.getElementById('edit-hero-title')?.value || defaultSiteContent.heroTitle;
-  siteContent.heroSubtitle = getVal('edit-hero-subtitle') || defaultSiteContent.heroSubtitle;
-  siteContent.heroPrimaryCtaText = getVal('edit-hero-primary-text') || defaultSiteContent.heroPrimaryCtaText;
-  siteContent.heroPrimaryCtaLink = getVal('edit-hero-primary-link') || defaultSiteContent.heroPrimaryCtaLink;
-  siteContent.heroSecondaryCtaText = getVal('edit-hero-secondary-text') || defaultSiteContent.heroSecondaryCtaText;
-  siteContent.heroSecondaryCtaLink = getVal('edit-hero-secondary-link') || defaultSiteContent.heroSecondaryCtaLink;
-  siteContent.announcementBadge = getVal('edit-announcement-badge') || defaultSiteContent.announcementBadge;
-  siteContent.announcementText = getVal('edit-announcement-text') || defaultSiteContent.announcementText;
-  siteContent.announcementLinkText = getVal('edit-announcement-link-text') || defaultSiteContent.announcementLinkText;
-  siteContent.announcementLinkUrl = getVal('edit-announcement-link-url') || defaultSiteContent.announcementLinkUrl;
-  siteContent.topCity = getVal('edit-top-city') || defaultSiteContent.topCity;
-  siteContent.navCtaText = getVal('edit-nav-cta-text') || defaultSiteContent.navCtaText;
-  siteContent.navCtaLink = getVal('edit-nav-cta-link') || defaultSiteContent.navCtaLink;
+  siteContent.heroTag = getVal('hero-form-tag', 'edit-hero-tag') || defaultSiteContent.heroTag;
+  siteContent.heroTitle = getVal('hero-form-title', 'edit-hero-title') || defaultSiteContent.heroTitle;
+  siteContent.heroSubtitle = getVal('hero-form-subtitle', 'edit-hero-subtitle') || defaultSiteContent.heroSubtitle;
+  siteContent.heroPrimaryCtaText = getVal('hero-form-primary-btn-text', 'edit-hero-primary-text') || defaultSiteContent.heroPrimaryCtaText;
+  siteContent.heroPrimaryCtaLink = getVal('hero-form-primary-btn-link', 'edit-hero-primary-link') || defaultSiteContent.heroPrimaryCtaLink;
+  siteContent.heroSecondaryCtaText = getVal('hero-form-secondary-btn-text', 'edit-hero-secondary-text') || defaultSiteContent.heroSecondaryCtaText;
+  siteContent.heroSecondaryCtaLink = getVal('hero-form-secondary-btn-link', 'edit-hero-secondary-link') || defaultSiteContent.heroSecondaryCtaLink;
+  siteContent.announcementBadge = getVal('hero-form-announcement-badge', 'edit-announcement-badge') || defaultSiteContent.announcementBadge;
+  siteContent.announcementText = getVal('hero-form-announcement-text', 'edit-announcement-text') || defaultSiteContent.announcementText;
+  siteContent.announcementLinkText = getVal('hero-form-announcement-link-text', 'edit-announcement-link-text') || defaultSiteContent.announcementLinkText;
+  siteContent.announcementLinkUrl = getVal('hero-form-announcement-link-url', 'edit-announcement-link-url') || defaultSiteContent.announcementLinkUrl;
+  siteContent.topCity = getVal('hero-form-top-city', 'edit-top-city') || defaultSiteContent.topCity;
+  siteContent.navCtaText = getVal('hero-form-nav-cta-text', 'edit-nav-cta-text') || defaultSiteContent.navCtaText;
+  siteContent.navCtaLink = getVal('hero-form-nav-cta-link', 'edit-nav-cta-link') || defaultSiteContent.navCtaLink;
 
   localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
   applyGeneralTextsToDOM();
@@ -2736,24 +2858,27 @@ window.saveHeroTextsFromForm = function() {
 window.openContactEditorModal = function() {
   closeAdminDrawer();
   const ct = siteContent.contact || defaultSiteContent.contact;
-  const setVal = (id, val) => {
-    const el = document.getElementById(id);
-    if (el) el.value = val || '';
+  const setVal = (ids, val) => {
+    const idList = Array.isArray(ids) ? ids : [ids];
+    idList.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = val || '';
+    });
   };
 
-  setVal('edit-contact-tag', ct.tag);
-  setVal('edit-contact-title', ct.title);
-  setVal('edit-contact-subtitle', ct.subtitle);
-  setVal('edit-contact-address-title', ct.addressTitle);
-  setVal('edit-company-address', ct.companyAddress || siteContent.companyAddress);
-  setVal('edit-contact-email-title', ct.emailTitle);
-  setVal('edit-company-email', ct.companyEmail || siteContent.companyEmail);
-  setVal('edit-contact-phone-title', ct.phoneTitle);
-  setVal('edit-company-phone', ct.companyPhone || siteContent.companyPhone);
-  setVal('edit-company-phone-link', ct.companyPhoneLink);
-  setVal('edit-contact-form-title', ct.formTitle);
-  setVal('edit-contact-form-subtitle', ct.formSubtitle);
-  setVal('edit-contact-form-btn-text', ct.formButtonText);
+  setVal(['contact-form-tag', 'edit-contact-tag'], ct.tag);
+  setVal(['contact-form-title-input', 'edit-contact-title'], ct.title);
+  setVal(['contact-form-subtitle-input', 'edit-contact-subtitle'], ct.subtitle);
+  setVal(['contact-form-address-title', 'edit-contact-address-title'], ct.addressTitle);
+  setVal(['contact-form-address-text', 'edit-company-address'], ct.companyAddress || siteContent.companyAddress);
+  setVal(['contact-form-email-title', 'edit-contact-email-title'], ct.emailTitle);
+  setVal(['contact-form-email-text', 'edit-company-email'], ct.companyEmail || siteContent.companyEmail);
+  setVal(['contact-form-phone-title', 'edit-contact-phone-title'], ct.phoneTitle);
+  setVal(['contact-form-phone-text', 'edit-company-phone'], ct.companyPhone || siteContent.companyPhone);
+  setVal(['contact-form-whatsapp-url', 'edit-company-phone-link'], ct.companyPhoneLink || siteContent.companyPhoneLink);
+  setVal(['contact-form-card-title', 'edit-contact-form-title'], ct.formTitle);
+  setVal(['contact-form-card-subtitle', 'edit-contact-form-subtitle'], ct.formSubtitle);
+  setVal(['contact-form-btn-text-input', 'edit-contact-form-btn-text'], ct.formButtonText);
 
   const modal = document.getElementById('contact-editor-modal');
   modal?.classList.add('active');
@@ -2767,30 +2892,53 @@ window.closeContactEditorModal = function() {
 };
 
 window.saveContactFromForm = function() {
-  const getVal = (id) => document.getElementById(id)?.value.trim() || '';
+  const getVal = (...ids) => {
+    for (const id of ids) {
+      const el = document.getElementById(id);
+      if (el && el.value !== undefined) {
+        const v = el.value.trim();
+        if (v !== '') return v;
+      }
+    }
+    return '';
+  };
 
-  const address = getVal('edit-company-address');
-  const email = getVal('edit-company-email');
-  const phone = getVal('edit-company-phone');
+  const address = getVal('contact-form-address-text', 'edit-company-address');
+  const email = getVal('contact-form-email-text', 'edit-company-email');
+  const phone = getVal('contact-form-phone-text', 'edit-company-phone');
+  const phoneLink = getVal('contact-form-whatsapp-url', 'edit-company-phone-link');
 
-  siteContent.companyAddress = address;
-  siteContent.companyEmail = email;
-  siteContent.companyPhone = phone;
+  if (address) {
+    siteContent.companyAddress = address;
+    const el = document.getElementById('edit-company-address');
+    if (el) el.value = address;
+  }
+  if (email) {
+    siteContent.companyEmail = email;
+    const el = document.getElementById('edit-company-email');
+    if (el) el.value = email;
+  }
+  if (phone) {
+    siteContent.companyPhone = phone;
+    const el = document.getElementById('edit-company-phone');
+    if (el) el.value = phone;
+  }
+  if (phoneLink) siteContent.companyPhoneLink = phoneLink;
 
   siteContent.contact = {
-    tag: getVal('edit-contact-tag') || 'FALE CONOSCO',
-    title: getVal('edit-contact-title'),
-    subtitle: getVal('edit-contact-subtitle'),
-    addressTitle: getVal('edit-contact-address-title') || 'Endereço Corporativo',
-    companyAddress: address,
-    emailTitle: getVal('edit-contact-email-title') || 'E-mail de Contato',
-    companyEmail: email,
-    phoneTitle: getVal('edit-contact-phone-title') || 'Telefone & WhatsApp',
-    companyPhone: phone,
-    companyPhoneLink: getVal('edit-company-phone-link') || `https://wa.me/55${phone.replace(/\D/g, '')}`,
-    formTitle: getVal('edit-contact-form-title') || 'Solicite uma Proposta sob Medida',
-    formSubtitle: getVal('edit-contact-form-subtitle') || 'Preencha os campos abaixo. Retornamos em menos de 2 horas em dias úteis.',
-    formButtonText: getVal('edit-contact-form-btn-text') || 'Enviar Solicitação de Diagnóstico'
+    tag: getVal('contact-form-tag', 'edit-contact-tag') || 'FALE CONOSCO',
+    title: getVal('contact-form-title-input', 'edit-contact-title') || defaultSiteContent.contact.title,
+    subtitle: getVal('contact-form-subtitle-input', 'edit-contact-subtitle') || defaultSiteContent.contact.subtitle,
+    addressTitle: getVal('contact-form-address-title', 'edit-contact-address-title') || 'Endereço Corporativo',
+    companyAddress: address || siteContent.companyAddress || defaultSiteContent.contact.companyAddress,
+    emailTitle: getVal('contact-form-email-title', 'edit-contact-email-title') || 'E-mail de Contato',
+    companyEmail: email || siteContent.companyEmail || defaultSiteContent.contact.companyEmail,
+    phoneTitle: getVal('contact-form-phone-title', 'edit-contact-phone-title') || 'Telefone & WhatsApp',
+    companyPhone: phone || siteContent.companyPhone || defaultSiteContent.contact.companyPhone,
+    companyPhoneLink: phoneLink || (phone ? `https://wa.me/55${phone.replace(/\D/g, '')}` : defaultSiteContent.contact.companyPhoneLink),
+    formTitle: getVal('contact-form-card-title', 'edit-contact-form-title') || 'Solicite uma Proposta sob Medida',
+    formSubtitle: getVal('contact-form-card-subtitle', 'edit-contact-form-subtitle') || defaultSiteContent.contact.formSubtitle,
+    formButtonText: getVal('contact-form-btn-text-input', 'edit-contact-form-btn-text') || 'Enviar Solicitação de Diagnóstico'
   };
 
   localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
@@ -2802,21 +2950,28 @@ window.saveContactFromForm = function() {
 window.openFooterEditorModal = function() {
   closeAdminDrawer();
   const ft = siteContent.footer || defaultSiteContent.footer;
-  const setVal = (id, val) => {
-    const el = document.getElementById(id);
-    if (el) el.value = val || '';
+  const brand = getActiveBrand();
+  const setVal = (ids, val) => {
+    const idList = Array.isArray(ids) ? ids : [ids];
+    idList.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = val || '';
+    });
   };
 
-  setVal('edit-footer-desc', siteContent.brand?.footerDesc || defaultSiteContent.brand.footerDesc);
-  setVal('edit-footer-solutions-title', ft.solutionsTitle);
-  setVal('edit-footer-nav-title', ft.navTitle);
-  setVal('edit-footer-newsletter-title', ft.newsletterTitle);
-  setVal('edit-footer-newsletter-desc', ft.newsletterDesc);
-  setVal('edit-footer-newsletter-btn-text', ft.newsletterBtnText);
-  setVal('edit-footer-copyright', ft.copyrightText);
-  setVal('edit-footer-social-linkedin', ft.socialLinkedin);
-  setVal('edit-footer-social-instagram', ft.socialInstagram);
-  setVal('edit-footer-social-youtube', ft.socialYoutube);
+  const brandName = `${brand.nameFirst || ''} ${brand.nameSecond || ''}`.trim() || 'Dash Solutions';
+  const copyrightVal = ft.copyrightText || `© 2026 ${brandName}. Todos os direitos reservados.`;
+
+  setVal(['footer-form-desc', 'edit-footer-desc'], brand.footerDesc || defaultSiteContent.brand.footerDesc);
+  setVal(['footer-form-solutions-title', 'edit-footer-solutions-title'], ft.solutionsTitle || defaultSiteContent.footer.solutionsTitle);
+  setVal(['footer-form-nav-title', 'edit-footer-nav-title'], ft.navTitle || defaultSiteContent.footer.navTitle);
+  setVal(['footer-form-newsletter-title', 'edit-footer-newsletter-title'], ft.newsletterTitle || defaultSiteContent.footer.newsletterTitle);
+  setVal(['footer-form-newsletter-desc', 'edit-footer-newsletter-desc'], ft.newsletterDesc || defaultSiteContent.footer.newsletterDesc);
+  setVal(['footer-form-newsletter-btn', 'edit-footer-newsletter-btn-text'], ft.newsletterBtnText || defaultSiteContent.footer.newsletterBtnText);
+  setVal(['footer-form-copyright', 'edit-footer-copyright'], copyrightVal);
+  setVal(['footer-form-linkedin', 'edit-footer-social-linkedin'], ft.socialLinkedin || defaultSiteContent.footer.socialLinkedin);
+  setVal(['footer-form-instagram', 'edit-footer-social-instagram'], ft.socialInstagram || defaultSiteContent.footer.socialInstagram);
+  setVal(['footer-form-youtube', 'edit-footer-social-youtube'], ft.socialYoutube || defaultSiteContent.footer.socialYoutube);
 
   const modal = document.getElementById('footer-editor-modal');
   modal?.classList.add('active');
@@ -2830,25 +2985,41 @@ window.closeFooterEditorModal = function() {
 };
 
 window.saveFooterFromForm = function() {
-  const getVal = (id) => document.getElementById(id)?.value.trim() || '';
+  const getVal = (...ids) => {
+    for (const id of ids) {
+      const el = document.getElementById(id);
+      if (el && el.value !== undefined) {
+        const v = el.value.trim();
+        if (v !== '') return v;
+      }
+    }
+    return '';
+  };
 
-  if (siteContent.brand) {
-    siteContent.brand.footerDesc = getVal('edit-footer-desc');
+  const footerDesc = getVal('footer-form-desc', 'edit-footer-desc');
+  if (!siteContent.brand) {
+    siteContent.brand = { ...defaultSiteContent.brand };
   }
+  siteContent.brand.footerDesc = footerDesc || defaultSiteContent.brand.footerDesc;
+
+  // Sincroniza o input no modal da Marca se existir
+  const brandFooterDescInput = document.getElementById('brand-footer-desc-input');
+  if (brandFooterDescInput) brandFooterDescInput.value = siteContent.brand.footerDesc;
 
   siteContent.footer = {
-    solutionsTitle: getVal('edit-footer-solutions-title') || 'Principais Soluções',
-    navTitle: getVal('edit-footer-nav-title') || 'Navegação',
-    newsletterTitle: getVal('edit-footer-newsletter-title') || 'Radar Tecnológico',
-    newsletterDesc: getVal('edit-footer-newsletter-desc'),
-    newsletterBtnText: getVal('edit-footer-newsletter-btn-text') || 'Assinar',
-    copyrightText: getVal('edit-footer-copyright') || defaultSiteContent.footer.copyrightText,
-    socialLinkedin: getVal('edit-footer-social-linkedin') || '#',
-    socialInstagram: getVal('edit-footer-social-instagram') || '#',
-    socialYoutube: getVal('edit-footer-social-youtube') || '#'
+    solutionsTitle: getVal('footer-form-solutions-title', 'edit-footer-solutions-title') || defaultSiteContent.footer.solutionsTitle,
+    navTitle: getVal('footer-form-nav-title', 'edit-footer-nav-title') || defaultSiteContent.footer.navTitle,
+    newsletterTitle: getVal('footer-form-newsletter-title', 'edit-footer-newsletter-title') || defaultSiteContent.footer.newsletterTitle,
+    newsletterDesc: getVal('footer-form-newsletter-desc', 'edit-footer-newsletter-desc') || defaultSiteContent.footer.newsletterDesc,
+    newsletterBtnText: getVal('footer-form-newsletter-btn', 'edit-footer-newsletter-btn-text') || defaultSiteContent.footer.newsletterBtnText,
+    copyrightText: getVal('footer-form-copyright', 'edit-footer-copyright') || defaultSiteContent.footer.copyrightText,
+    socialLinkedin: getVal('footer-form-linkedin', 'edit-footer-social-linkedin') || defaultSiteContent.footer.socialLinkedin,
+    socialInstagram: getVal('footer-form-instagram', 'edit-footer-social-instagram') || defaultSiteContent.footer.socialInstagram,
+    socialYoutube: getVal('footer-form-youtube', 'edit-footer-social-youtube') || defaultSiteContent.footer.socialYoutube
   };
 
   localStorage.setItem('dash_site_content', JSON.stringify(siteContent));
+  renderBrandLogo();
   applyGeneralTextsToDOM();
   closeFooterEditorModal();
   showToast('Rodapé e redes sociais atualizados com sucesso!');

@@ -837,10 +837,15 @@ body.admin-active .brand-header-edit-btn {
 .hero-content {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
-  gap: 56px;
+  gap: 52px;
   align-items: center;
   position: relative;
   z-index: 2;
+}
+
+.hero-text-block {
+  display: flex;
+  flex-direction: column;
 }
 
 .hero-tag {
@@ -856,7 +861,8 @@ body.admin-active .brand-header-edit-btn {
   color: var(--gold-light);
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+  align-self: flex-start;
 }
 
 .hero-tag .dot {
@@ -874,20 +880,20 @@ body.admin-active .brand-header-edit-btn {
 }
 
 .hero-title {
-  font-size: 3.5rem;
+  font-size: 3.25rem;
   font-weight: 800;
-  line-height: 1.15;
-  margin-bottom: 24px;
+  line-height: 1.16;
+  margin-bottom: 20px;
   letter-spacing: -1px;
 }
 
 .hero-subtitle {
-  font-size: 1.2rem;
+  font-size: 1.125rem;
   font-weight: 300;
   color: var(--text-muted);
   line-height: 1.6;
-  margin-bottom: 36px;
-  max-width: 600px;
+  margin-bottom: 32px;
+  max-width: 580px;
 }
 
 .hero-ctas {
@@ -895,15 +901,16 @@ body.admin-active .brand-header-edit-btn {
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 48px;
+  margin-bottom: 36px;
 }
 
 .hero-badges-list {
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding-top: 24px;
+  gap: 12px 16px;
+  padding-top: 20px;
   border-top: 1px solid var(--border-glass);
+  flex-wrap: wrap;
 }
 
 .hero-badge-item {
@@ -1047,12 +1054,15 @@ body.admin-active .brand-header-edit-btn {
 .hero-carousel-container {
   position: relative;
   width: 100%;
-  height: 480px;
+  max-width: 480px;
+  aspect-ratio: 1 / 1;
+  height: auto;
   border-radius: var(--radius-xl);
   overflow: hidden;
   border: 1px solid var(--royal-gold);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(var(--primary-rgb), 0.2);
   background: var(--maua-blue);
+  margin: 0 auto;
 }
 
 .hero-carousel-slides {
@@ -1086,11 +1096,11 @@ body.admin-active .brand-header-edit-btn {
 .hero-slide-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 18, 32, 0.35) 0%, rgba(0, 24, 40, 0.55) 40%, rgba(0, 10, 18, 0.95) 100%);
+  background: linear-gradient(180deg, rgba(0, 18, 32, 0.3) 0%, rgba(0, 24, 40, 0.45) 45%, rgba(0, 10, 18, 0.95) 100%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 28px 32px;
+  padding: 22px;
 }
 
 .slide-header-tags {
@@ -1125,27 +1135,27 @@ body.admin-active .brand-header-edit-btn {
 }
 
 .slide-bottom-info {
-  background: rgba(0, 18, 32, 0.8);
+  background: rgba(0, 18, 32, 0.82);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 18px 24px;
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
   backdrop-filter: blur(14px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 
 .slide-title {
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: #FFFFFF;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   line-height: 1.3;
 }
 
 .slide-desc {
-  font-size: 0.875rem;
+  font-size: 0.825rem;
   color: var(--royal-silver);
-  line-height: 1.5;
+  line-height: 1.45;
   margin: 0;
 }
 
@@ -1153,8 +1163,8 @@ body.admin-active .brand-header-edit-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: rgba(0, 18, 32, 0.8);
   border: 1px solid var(--border-subtle);
@@ -1177,16 +1187,16 @@ body.admin-active .brand-header-edit-btn {
 }
 
 .hero-carousel-nav.prev {
-  left: 14px;
+  left: 12px;
 }
 
 .hero-carousel-nav.next {
-  right: 14px;
+  right: 12px;
 }
 
 .hero-carousel-dots {
   position: absolute;
-  bottom: 14px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -1220,6 +1230,10 @@ body.admin-active .brand-header-edit-btn {
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
 
 /* Carousel Editor in Admin Modal */
@@ -2717,6 +2731,10 @@ body.admin-active .site-header {
   
   .hero-title {
     font-size: 2.75rem;
+  }
+
+  .hero-carousel-container {
+    max-width: 440px;
   }
   
   .solutions-grid {
